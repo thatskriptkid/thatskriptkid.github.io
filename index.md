@@ -156,6 +156,12 @@
 
 ![](/assets/images/telegram_external.png)
 
+Приложения mEGOV и ENPF, требуют, чтобы ЭЦП находилась в External Storage:
+
+![](/assets/images/egov.png)
+
+![](/assets/images/enpf.png)
+
 Google в курсе проблемы и [собирается изменить](https://developer.android.com/preview/privacy/scoped-storage?hl=ru) READ_EXTERNAL_STORAGE в Android Q. Цитата:
 
 > In order to access any other file that another app has created, including files in a "downloads" directory, your app must use the Storage Access Framework, which allows the user to select a specific file. 
