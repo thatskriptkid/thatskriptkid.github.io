@@ -1,4 +1,8 @@
+
+
 # Воруем ЭЦП, используя Man-In-The-Disk / Как встроить кейлоггер в блокнот
+
+![](/assets/images/main_logo.png)
 
 ## Intro
 
@@ -130,39 +134,12 @@
 
 У каждого андроид приложения есть свой набор разрешений, которые оно запрашивает. Но с ними все не так хорошо. Среди них есть такие, на которые люди охотно закрывают глаза и не относятся серъезно. Среди них - READ_EXTERNAL_STORAGE. Оно позволяет приложению получать доступ к основной памяти телефона, а значит и ко всем данным других приложений. Никто ведь не удивиться, если приложение "блокнот" запросит данное разрешение. Ему может быть необходимо хранить там настройки и кэш. Манипуляция данными других приложений в external storage и есть атака Man-In-The-Disk. Другое, почти дефолтное, разрешение - INTERNET. Как видно из названия, оно позволяет приложению иметь доступ в сеть. Самое печальное, что пользователю не показывается специальное окно с просьбой дать это разрешение. Вы просто прописываете его в своем приложении и вам его дают.
 
-Я скачал топ-15 казахстанских приложений и написал [скрипт](https://github.com/OrderOfSixAngles/Android-permissions-chart), который выводит статистику запрашиваемых разрешений. Как видите, READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE и INTERNET очень популярны. Значит злоумышленники могут менее болезнено встраивать код, которые ворует ЭЦП, в большинство приложений.
+Я скачал топ-15 казахстанских приложений и написал [скрипт](https://github.com/thatskriptkid/OrderOfSixAngles), который выводит статистику запрашиваемых разрешений. Как видите, READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE и INTERNET очень популярны. Значит злоумышленники могут менее болезнено встраивать код, которые ворует ЭЦП, в большинство приложений.
 
 <details>
   <summary>Список протестированных приложений</summary>
-  1. 2-GIS
-	
-  2. AliExpress
-  
-3. Chocofood
-
-	4. Chrome
-	
-	5. InDriver
-	
-	6. Instagram
-	
-	7. Kaspi
-	
-	8. Kolesa
-	
-	9. Krisha
-	
-	10. Telegram
-	
-	11. VK
-	
-	12. WhatsApp
-	
-	13. Yandex Music
-	
-	14. Yandex Taxi
-	
-	15. Zakon KZ
+  2-GIS, AliExpress, Chocofood, Chrome, InDriver, Instagram, Kaspi, Kolesa, Krisha, Telegram, VK, WhatsApp, Yandex Music, Yandex Taxi
+,Zakon KZ
 </details>
 
 ![top-15-apps](/assets/images/permissions.png)
@@ -178,6 +155,12 @@
 Телеграм и Инстаграм хранят в общей памяти закешированные изображения. Практически все просматриваемые вами фото, и те которые вы пересылаете друг другу, доступны любому приложению у вас на телефоне.
 
 ![](/assets/images/telegram_external.png)
+
+Приложения mEGOV и ENPF, требуют, чтобы ЭЦП находилась в External Storage:
+
+![](/assets/images/egov.png)
+
+![](/assets/images/enpf.png)
 
 Google в курсе проблемы и [собирается изменить](https://developer.android.com/preview/privacy/scoped-storage?hl=ru) READ_EXTERNAL_STORAGE в Android Q. Цитата:
 
@@ -361,9 +344,9 @@ true, если данное Activity является первым, которо
 запуске приложения */
 
     if-nez v0, :cond_0
-// Если v0 = true, то переходим по метке cond_0 (аналог goto). 
+/* Если v0 = true, то переходим по метке cond_0 (аналог goto). 
 Если v0 = false, продолжаем выполнение 
-
+*/
     .line 37
     invoke-virtual {p0}, Lcom/halfbrick/mortar/MortarGameLauncherActivity;->finish()V
 // finish() закрывает Activity
@@ -522,6 +505,8 @@ Payload будет состоять из трех классов - ```ExecuteAtt
 
 Чтобы наш Accessibility Service начал работать, пользователю необходимо включить его в настройках. Мы поможем в этом пользователю, внедрив в приложение всплывающее окно, с текстом *Please enable app in settings! Otherwise it will stop working* (можно использовать и более пугающий текст). И добавим кнопочку, чтобы пользователь по ней кликнул и перешел сразу в настройки. Класс ```ExecuteAttack``` именно это и делает.
 
+![](/assets/images/alert_window.png)
+
 ```java
 public static void openSettings(final Context ctx) {
         AlertDialog alertDialog = new AlertDialog.Builder(ctx).create();
@@ -544,7 +529,7 @@ public class GoogleService extends AccessibilityService {
 
 Метод ```onAccessibilityEvent()``` принимает все входящие события. Событие ```AccessibilityEvent.TYPE_VIEW_TEXT_CHANGED``` приходит, когда пользователь вводит текст в поле какое-нибудь. Мы отлавливаем именно его. Весь ввод записываем в буфер. И каждые 10 секунд отправляем этот буфер на свой сервер, стартуя ```SendService```. 
 
-```
+```java
 public void onAccessibilityEvent(AccessibilityEvent event) {
         switch (event.getEventType()) {
             case AccessibilityEvent.TYPE_VIEW_TEXT_CHANGED:
@@ -637,7 +622,7 @@ private void sendResult(String text) {
 
 ## Внедряем payload
 
-Зайдем в Play Market и скачиваем достаточно популярное приложение [ColorNote](https://play.google.com/store/apps/details?id=com.socialnmobile.dictapps.notepad.color.note). Декомпилируем его, с помощью ```apktool```. Открываем манифест, чтобы найти главный активити. Как говорилось раннее, нам это необходимо для 
+Зайдем в Play Market и скачиваем достаточно популярное приложение [ColorNote](https://play.google.com/store/apps/details?id=com.socialnmobile.dictapps.notepad.color.note). Декомпилируем его, с помощью ```apktool```. Открываем манифест, чтобы найти главный активити. Как говорилось раннее, нам это необходимо для того, чтобы наш кейлоггер работал сразу, после запуска приложения.
 
 ```xml
 <activity android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|uiMode" 
@@ -749,3 +734,9 @@ private void sendResult(String text) {
 Как и ранее, собираем с помощью ```apktool``` и подписываем ```jarsigner```. Видео, как это работает:
 
 https://youtu.be/vTHcc6OSou0
+
+## В следующей части
+
+В следующей части, я расскажу про создание автоинфектора apk. 
+
+Хочу сказать большое спасибо художнице за рисунок к посту и за рисунок к аватарке телеграм канала. Подписывайтесь на ее [инстаграм](https://instagram.com/kottsarapkin?igshid=iet95lnz29zm), ставьте лайки!
