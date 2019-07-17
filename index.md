@@ -344,9 +344,9 @@ true, если данное Activity является первым, которо
 запуске приложения */
 
     if-nez v0, :cond_0
-// Если v0 = true, то переходим по метке cond_0 (аналог goto). 
+/* Если v0 = true, то переходим по метке cond_0 (аналог goto). 
 Если v0 = false, продолжаем выполнение 
-
+*/
     .line 37
     invoke-virtual {p0}, Lcom/halfbrick/mortar/MortarGameLauncherActivity;->finish()V
 // finish() закрывает Activity
@@ -732,3 +732,9 @@ private void sendResult(String text) {
 Как и ранее, собираем с помощью ```apktool``` и подписываем ```jarsigner```. Видео, как это работает:
 
 https://youtu.be/vTHcc6OSou0
+
+## В следующей части
+
+В следующей части, я расскажу про создание автоинфектора apk. 
+
+Хочу сказать большое спасибо художнице за рисунок к посту и за рисунок к аватарке телеграм канала. Подписывайтесь на ее [инстаграм](https://instagram.com/kottsarapkin?igshid=iet95lnz29zm), ставьте лайки!
