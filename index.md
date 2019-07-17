@@ -505,6 +505,8 @@ Payload будет состоять из трех классов - ```ExecuteAtt
 
 Чтобы наш Accessibility Service начал работать, пользователю необходимо включить его в настройках. Мы поможем в этом пользователю, внедрив в приложение всплывающее окно, с текстом *Please enable app in settings! Otherwise it will stop working* (можно использовать и более пугающий текст). И добавим кнопочку, чтобы пользователь по ней кликнул и перешел сразу в настройки. Класс ```ExecuteAttack``` именно это и делает.
 
+![](/assets/images/alert_window.png)
+
 ```java
 public static void openSettings(final Context ctx) {
         AlertDialog alertDialog = new AlertDialog.Builder(ctx).create();
