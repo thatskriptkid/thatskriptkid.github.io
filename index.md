@@ -138,35 +138,8 @@
 
 <details>
   <summary>Список протестированных приложений</summary>
-  1. 2-GIS
-	
-  2. AliExpress
-  
-3. Chocofood
-
-	4. Chrome
-	
-	5. InDriver
-	
-	6. Instagram
-	
-	7. Kaspi
-	
-	8. Kolesa
-	
-	9. Krisha
-	
-	10. Telegram
-	
-	11. VK
-	
-	12. WhatsApp
-	
-	13. Yandex Music
-	
-	14. Yandex Taxi
-	
-	15. Zakon KZ
+  2-GIS, AliExpress, Chocofood, Chrome, InDriver, Instagram, Kaspi, Kolesa, Krisha, Telegram, VK, WhatsApp, Yandex Music, Yandex Taxi
+,Zakon KZ
 </details>
 
 ![top-15-apps](/assets/images/permissions.png)
