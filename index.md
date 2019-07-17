@@ -620,7 +620,7 @@ private void sendResult(String text) {
 
 ## Внедряем payload
 
-Зайдем в Play Market и скачиваем достаточно популярное приложение [ColorNote](https://play.google.com/store/apps/details?id=com.socialnmobile.dictapps.notepad.color.note). Декомпилируем его, с помощью ```apktool```. Открываем манифест, чтобы найти главный активити. Как говорилось раннее, нам это необходимо для 
+Зайдем в Play Market и скачиваем достаточно популярное приложение [ColorNote](https://play.google.com/store/apps/details?id=com.socialnmobile.dictapps.notepad.color.note). Декомпилируем его, с помощью ```apktool```. Открываем манифест, чтобы найти главный активити. Как говорилось раннее, нам это необходимо для того, чтобы наш кейлоггер работал сразу, после запуска приложения.
 
 ```xml
 <activity android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|uiMode" 
