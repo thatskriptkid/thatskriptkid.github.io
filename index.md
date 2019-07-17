@@ -1,3 +1,5 @@
+
+
 # Воруем ЭЦП, используя Man-In-The-Disk / Как встроить кейлоггер в блокнот
 
 ![](/assets/images/main_logo.png)
