@@ -731,7 +731,7 @@ private void sendResult(String text) {
         </service>
 ```
 
-Как и ранее, собираем с помощью ```apktool``` и подписываем ```jarsigner```. Видео, как это работает:
+Как и ранее, собираем с помощью ```apktool``` и подписываем ```jarsigner```. [Virustotal говорит, что мы чисты](https://www.virustotal.com/gui/file-analysis/YmQxODExMjJiNjljZDVlOTRiZDFjYWI4N2YxYjYxNDQ6MTU2MzM3MDY4Ng==/detection). Видео, как это работает:
 
 https://youtu.be/vTHcc6OSou0
 
