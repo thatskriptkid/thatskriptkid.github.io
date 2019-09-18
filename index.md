@@ -2,6 +2,8 @@
 
 # Воруем ЭЦП, используя Man-In-The-Disk / Как встроить кейлоггер в блокнот
 
+{% post_url 2019-09-18-sepsis-malware-analysis %}
+
 ![](/assets/images/main_logo.png)
 
 ## Intro
