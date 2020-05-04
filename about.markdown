@@ -6,7 +6,7 @@ permalink: /about/
 
 Me:
 
-1. Security researcher interested in reverse-engineering and malware analysis.
+1. Security researcher from Kazakhstan interested in reverse-engineering and malware analysis.
 
 2. Representative of [r0crew](https://forum.reverse4you.org/) in Kazakhstan
 
@@ -20,5 +20,5 @@ Contacts:
 
 [Telegram](https://t.me/Thatskriptkid)
 
-Email: admin@orderofsixangles.com
+Email: admin(at)orderofsixangles.com
 
