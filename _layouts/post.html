@@ -1,3 +1,19 @@
+<!--
+---
+layout: default
+---
+
+<small>{{ page.date | date: "%-d %B %Y" }}</small>
+
+<p>
+    {% if page.tags %}
+    <small>tags: <em>{{ page.tags | join: "</em> - <em>" }}</em></small>
+    {% endif %}
+</p>
+
+{{content}}
+-->
+
 <!DOCTYPE html>
 <html lang="{{ site.lang | default: "en-US" }}">
   <head>
@@ -5,9 +21,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
-
-    
-
 
 {% seo %}
   </head>
@@ -22,21 +35,17 @@
       </div>
     </header>
 
-    <div class="container">
-      <section id="main_content">
-        <ul>
-          {% for post in site.posts %}
-            <li>
-              <a href="{{ post.url }}">{{ post.title }}</a>
-            </li>
-          {% endfor %}
-        </ul>
-        
-      </section>
-    </div>
+    
 
     <div class="container">
       <section id="main_content">
+        <small>{{ page.date | date: "%-d %B %Y" }}</small>
+
+        <p>
+            {% if page.tags %}
+            <small>tags: <em>{{ page.tags | join: "</em> - <em>" }}</em></small>
+            {% endif %}
+        </p>
         {{ content }}
       </section>
     </div>
@@ -47,3 +56,4 @@
     {% endif %}
   </body>
 </html>
+
