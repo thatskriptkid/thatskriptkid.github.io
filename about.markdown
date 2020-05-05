@@ -4,7 +4,7 @@ title: About
 permalink: /about/
 ---
 
-Me:
+## Me:
 
 1. Security researcher from Kazakhstan interested in reverse-engineering and malware analysis.
 
@@ -14,7 +14,11 @@ Me:
 
 4. Founder of [OrderOfSixAngles](https://t.me/orderofsixangles) Telegram channel
 
-Contacts:
+5. Languages: Russian/English
+
+
+
+## Contacts:
 
 [Twitter](https://twitter.com/thatskriptkid)
 
