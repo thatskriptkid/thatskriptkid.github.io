@@ -8,8 +8,10 @@ permalink: /ru
     <ul>
         {% for post in category[1] %}
         <li>
-            <a href="{{ post.url }}">{{ post.title }}</a>  <sub><small>(<em>{{ post.tags | join: "</em> - <em>" }}</em>)</small></sub>
-            </li>
+            <p>
+              <a href="{{ post.url }}">{{ post.title }}</a>  <sub><small>(<em>{{ post.tags | join: "</em> - <em>" }}</em>)</small></sub>
+            </p>
+        </li>
         {% endfor %}
     </ul>
     {% endif %}
