@@ -24,5 +24,7 @@ permalink: /about/
 
 [Telegram](https://t.me/Thatskriptkid)
 
+[Soundcloud](https://soundcloud.com/aba-bab-52977964/sets)
+
 Email: admin(at)orderofsixangles.com
 
