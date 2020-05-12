@@ -26,5 +26,7 @@ permalink: /about/
 
 [Soundcloud](https://soundcloud.com/aba-bab-52977964/sets)
 
+Discord ID: 487315490151202816
+
 Email: admin(at)orderofsixangles.com
 
