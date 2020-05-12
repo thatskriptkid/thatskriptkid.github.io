@@ -11,4 +11,6 @@ permalink: /tools
 
 [Android permission parser](https://github.com/thatskriptkid/Android-permissions-chart/blob/master/README.md) 
 
+[Indriver parser](https://github.com/thatskriptkid/IndriverParser/tree/master)
+
 
