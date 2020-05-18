@@ -13,4 +13,6 @@ permalink: /tools
 
 [Indriver parser](https://github.com/thatskriptkid/IndriverParser/tree/master)
 
+[Kaitai Struct for binary AndroidManifest.xml](https://github.com/thatskriptkid/Kaitai-Struct-Android-Manifest-binary-XML)
+
 
