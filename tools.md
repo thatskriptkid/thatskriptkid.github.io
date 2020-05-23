@@ -15,4 +15,6 @@ permalink: /tools
 
 [Kaitai Struct for binary AndroidManifest.xml](https://github.com/thatskriptkid/Kaitai-Struct-Android-Manifest-binary-XML)
 
+[Eyecon-parser](https://github.com/thatskriptkid/Eyecon-parsing-script/tree/master)
+
 
