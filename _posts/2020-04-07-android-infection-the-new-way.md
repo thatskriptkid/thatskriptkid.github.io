@@ -23,7 +23,7 @@ category: [en]
 
 **Idea authors: Erbol & Thatskriptkid**
 
-**Author of drawing:**
+**Author of drawing: @alphin.fault [instagram](https://www.instagram.com/alphin.fault)**
 
 **Author of the article and proof-of-concept code: Thatskriptkid**
 

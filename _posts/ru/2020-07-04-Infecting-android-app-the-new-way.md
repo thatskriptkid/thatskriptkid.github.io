@@ -23,7 +23,7 @@ category: [ru]
 
 **Авторы идеи: Ербол & Thatskriptkid**
 
-**Автор рисунка:**
+**Автор рисунка: @alphin.fault [instagram](https://www.instagram.com/alphin.fault)**
 
 **Автор статьи и proof-of-concept кода: Thatskriptkid**
 
