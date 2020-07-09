@@ -1,7 +1,7 @@
 ---
 layout: post
 title: VX vs Коммерция
-category: [translations]
+category: [draft]
 tag: [translation]
 ---
 

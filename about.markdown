@@ -6,11 +6,11 @@ permalink: /about/
 
 ## Me:
 
-1. Security researcher from Kazakhstan interested in reverse-engineering and malware analysis.
+1. Passionate information security researcher mainly interested in reverse-engineering, malware and malware analysis. 
 
 2. Representative of [r0crew](https://forum.reverse4you.org/) in Kazakhstan
 
-3. Translator of [VX-underground](https://vxug.fakedoma.in/ru.html) papers from eng to russian
+3. [VX-underground](https://vxug.fakedoma.in/ru.html) member
 
 4. Founder of [OrderOfSixAngles](https://t.me/orderofsixangles) Telegram channel
 
