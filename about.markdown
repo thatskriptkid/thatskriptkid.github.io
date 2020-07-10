@@ -20,13 +20,27 @@ permalink: /about/
 
 ## Contacts:
 
-[Twitter](https://twitter.com/thatskriptkid)
+<style>
+img {
+    height: 64px;
+    weight: 64px;
+}
+</style>
 
-[Telegram](https://t.me/Thatskriptkid)
+<div>
+<a href="https://twitter.com/thatskriptkid"><img src="/assets/images/social_icons/twitter.png" alt="Twitter"/></a>
 
-[Soundcloud](https://soundcloud.com/aba-bab-52977964/sets)
+<a href="https://t.me/Thatskriptkid"><img src="/assets/images/social_icons/telegram.png" alt="Telegram"/></a>
+
+<a href="https://soundcloud.com/aba-bab-52977964/sets"><img src="/assets/images/social_icons/soundcloud.png" alt="Soundcloud"/></a>
+
+<a href="https://github.com/thatskriptkid/"><img src="/assets/images/social_icons/github.png" alt="Github"/></a>
+
+<a href="https://www.reddit.com/user/thatskriptkid"><img src="/assets/images/social_icons/reddit.png" alt="Reddit"/></a>
+</div>
 
 Discord ID: 487315490151202816
+
 
 Email: admin(at)orderofsixangles.com
 
