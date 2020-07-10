@@ -10,7 +10,7 @@ permalink: /about/
 
 2. Representative of [r0crew](https://forum.reverse4you.org/) in Kazakhstan
 
-3. [VX-underground](https://vxug.fakedoma.in/ru.html) member
+3. [VX-underground](https://vx-underground.org/index.html) member (as *neogram*)
 
 4. Founder of [OrderOfSixAngles](https://t.me/orderofsixangles) Telegram channel
 
