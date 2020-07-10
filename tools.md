@@ -5,7 +5,6 @@ permalink: /tools
 
 [IDAPython](https://github.com/thatskriptkid/IDAPython) (Example scripts for IDAPython)
 
-
 [ChromePass](https://github.com/thatskriptkid/ChromePass) (Chrome browser password dumper)
 
 [CVE-2017-11826 exploit](https://github.com/thatskriptkid/CVE-2017-11826) (Script for building malicious docs)
@@ -18,6 +17,6 @@ permalink: /tools
 
 [Eyecon-parser](https://github.com/thatskriptkid/Eyecon-parsing-script/tree/master) (Script for parsing Eyecon mobile app user info)
 
-[apk-infector](https://github.com/thatskriptkid/apk-infector-Archinome-PoC) (PoC that demonstrates the new infection technique)
+[Apk infector](https://github.com/thatskriptkid/apk-infector-Archinome-PoC) (PoC for the new infection technique)
 
 
