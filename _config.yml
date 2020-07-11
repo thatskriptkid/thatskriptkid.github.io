@@ -19,9 +19,9 @@
 # in the templates via {{ site.myvariable }}.
 
 title: Order Of Six Angles
-email: admin@orderofsixangles.com
+email: admin(at)orderofsixangles.com
 description: >- # this means to ignore newlines until "baseurl:"
-    A security researcher's blog about reverse-engineering, malware and malware analysis.
+    A security researcher's blog about reverse-engineering, malware and malware analysis
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://orderofsixangles.com" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: thatskriptkid

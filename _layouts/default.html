@@ -21,7 +21,7 @@
     <header>
       <div class="container">
         <h1>{{ site.title }}</h1>
-        <a href="/assets/images/site_ava.jpg"><img src="/assets/images/site_ava.jpg" style="width:100px;height:100px;" alt="Main Logo"/></a>
+        <a href="/assets/images/orderofsixangles_art/kali.png"><img src="/assets/images/site_ava.jpg" style="width:100px;height:100px;" alt="Main Logo"/></a>
         <h2>{{ site.description | default: site.github.project_tagline }}</h2>
         <p><h1>{% include header.html %}</h1></p>
       </div>
@@ -30,10 +30,11 @@
     <div class="container">
       <section id="main_content">
         {{ content }}
+        <a href="#" title="Вернуться к началу страницы" class="topNubex">Вверх</a>
       </section>
     </div>
     
-   <a href="#" title="Вернуться к началу страницы" class="topNubex">Вверх</a>
+   
    
     <!--JEKYLL_ENV=production jekyll build-->
     {% if jekyll.environment == 'production' %}

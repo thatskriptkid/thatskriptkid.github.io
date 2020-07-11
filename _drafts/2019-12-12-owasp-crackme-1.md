@@ -2,7 +2,7 @@
 layout: post
 title: Cracking "OWASP UnCrackable App for Android Level 1" and learning smali
 tags: [android, malware]
-category: [draft]
+category: [en]
 ---
 
 This article is about solution of [OWASP android crackme](https://github.com/OWASP/owasp-mstg/tree/master/Crackmes). These crackmes are given as demo examples in the [OWASP Mobile Security Testing Guide](https://www.owasp.org/index.php/OWASP_Mobile_Security_Testing_Guide). I have not read this guide. I will try to solve crackmes based only on my knowledge about the android. 
