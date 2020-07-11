@@ -6,7 +6,6 @@ permalink: /art
 <style>
     img {
         max-width:100%;
-        min-width:600px;
         height:auto;
     }
 </style>
