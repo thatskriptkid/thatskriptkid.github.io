@@ -9,7 +9,7 @@ permalink: /tools
 
 [CVE-2017-11826 exploit](https://github.com/thatskriptkid/CVE-2017-11826) (Script for building malicious docs)
 
-[Android permission parser](https://github.com/thatskriptkid/Android-permissions-chart/blob/master/README.md) (Script for paarsing android permissions)
+[Android permission parser](https://github.com/thatskriptkid/Android-permissions-chart/blob/master/README.md) (Script for parsing android permissions)
 
 [Indriver parser](https://github.com/thatskriptkid/IndriverParser/tree/master) (Script for parsing driver info)
 
