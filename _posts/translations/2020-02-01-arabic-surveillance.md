@@ -2,12 +2,12 @@
 layout: post
 title: Массовая слежка от ОАЭ. Исследование очень популярного приложения для iOS с тёмной стороной
 category: [translations]
-tag: [translation]
+tag: [ios, reverse-engineering]
 ---
 
 [Ссылка на оригинал](https://objective-see.com/blog/blog_0x52.html)
 
-Спасибо большое за помощь @Franky_T!
+Спасибо большое за ревью перевода @Franky_T!
 
 ## Intro
 
@@ -16,6 +16,8 @@ tag: [translation]
 Я загрузил расшифрованную копию приложения и расшифровку перехватов трафика:
 
 Скачать: [ToTok.zip](https://objective-see.com/downloads/blog/blog_0x52/ToTok.zip), [Traffic.zip](https://objective-see.com/downloads/blog/blog_0x52/Traffic.zip)
+
+*Прим.пер. - файлы перезалиты на мой сайт - [ToTok.zip](/assets/files/ToTok.zip), [Traffic.zip](/assets/files/Traffic.zip)*
 
 ## Как все начиналось
 
