@@ -5,7 +5,7 @@ category: [translations]
 tag: [windows, malware]
 ---
 
-[Оригинал](https://vxug.fakedoma.in/papers/Detailed%20Guide%20To%20Pe%20Infection.txt)
+[Оригинал](https://vxug.fakedoma.in/papers/VXUG/Mirrors/DetailedGuideToPeInfection.txt)
  
 
  
