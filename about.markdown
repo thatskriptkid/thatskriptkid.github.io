@@ -10,7 +10,7 @@ permalink: /about/
 
 2. Representative of [r0crew](https://forum.reverse4you.org/) in Kazakhstan. I've organized two r0crewKZ meetups: [First](https://www.instagram.com/p/B4-Wql3JOAN/), [Second](https://www.instagram.com/p/B6a-YWTpggt/).
 
-3. Admin (RU) of [VX-underground](https://vxug.fakedoma.in) (as Neogram)
+3. Admin (RU) of [VX-underground Telegram Channel](https://t.me/vxunderground). aka Neogram
 
 4. Founder of [OrderOfSixAngles](https://t.me/orderofsixangles) Telegram channel
 
