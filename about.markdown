@@ -6,17 +6,19 @@ permalink: /about/
 
 ## Me:
 
-1. Passionate information security researcher mainly interested in reverse-engineering, malware and malware analysis. 
+1. Passionate information security researcher mainly interested in reverse-engineering, malware and malware analysis 
 
-2. Representative of [r0crew](https://forum.reverse4you.org/) in Kazakhstan. I've organized two r0crewKZ meetups: [First](https://www.instagram.com/p/B4-Wql3JOAN/), [Second](https://www.instagram.com/p/B6a-YWTpggt/).
+2. Representative of [r0crew](https://forum.reverse4you.org/) in Kazakhstan. I've organized two r0crewKZ meetups: [First](https://www.instagram.com/p/B4-Wql3JOAN/), [Second](https://www.instagram.com/p/B6a-YWTpggt/)
 
-3. Admin (RU) of [VX-underground Telegram Channel](https://t.me/vxunderground). aka Neogram
+3. Admin (RU) of [VX-underground](https://t.me/vxunderground) Telegram Channel
 
 4. Founder of [OrderOfSixAngles](https://t.me/orderofsixangles) Telegram channel
 
 5. Translator of information security materials from English into Russian
 
-6. Languages: Russian/English
+6. My nicknames: Thatskriptkid, Neogram
+
+7. Languages: Russian/English
 
 
 
