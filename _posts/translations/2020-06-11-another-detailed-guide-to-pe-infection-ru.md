@@ -2,7 +2,7 @@
 layout: post
 title: Еще один детальный гайд по заражению PE
 category: [translations]
-tag: [translation]
+tag: [windows, malware]
 ---
 
 [оригинал](https://vxug.fakedoma.in/papers/VXUG/Mirrors/AnotherdetailedguidetoPEinfection.txt)
