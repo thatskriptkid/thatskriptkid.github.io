@@ -3,17 +3,13 @@ layout: default
 permalink: /translations
 ---
 
-<p>
-Другие мои переводы читайте на сайте <a href="https://vxug.fakedoma.in/translations.html">vxunderground</a>, раздел "Russian"
-</p>
-
 {% for category in site.categories %}
   {% if category[0] == 'translations' %}
     <ul>
         {% for post in category[1] %}
         <li>
             <p>
-                <a href="{{ post.url }}">{{ post.title }}</a>
+                <a href="{{ post.url }}">{{ post.title }}</a>  <sub><small>(<em>{{ post.tags | join: "</em> - <em>" }}</em>)</small></sub>
             </p>
             
             </li>
