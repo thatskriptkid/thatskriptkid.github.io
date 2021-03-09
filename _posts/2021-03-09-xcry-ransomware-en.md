@@ -43,7 +43,7 @@ Nim strings can be created as objects with the function [newObjRC1](https://gith
 
 or in a [heap memory](https://github.com/nim-lang/Nim/blob/662c5080755eb5a42df2c3acb84c044876571a46/lib/system/mm/boehm.nim#L13)
 
-``nim
+```nim
 
 proc boehmAllocAtomic(size: int): pointer {.
 
