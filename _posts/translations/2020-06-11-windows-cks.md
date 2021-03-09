@@ -2,10 +2,10 @@
 layout: post
 title: Windows10 - Custom Kernel Signers
 category: [translations]
-tag: [translation]
+tag: [windows, kernel]
 ---
 
-[Оригинал](https://vxug.fakedoma.in/papers/Windows10-CustomKernelSigners-master/)
+[Оригинал](https://github.com/HyperSine/Windows10-CustomKernelSigners)
 
 ## 1. Что такое Custom Kernel Signers?
 
@@ -113,7 +113,7 @@ localhost-pk.pfx
    signtool sign /fd sha256 /p7co 1.3.6.1.4.1.311.79.1 /p7 . /f .\localhost-pk.pfx /p <password of localhost-pk.pfx> SiPolicy.bin
    ```
 
-   __Пожалуйста пропишите пароль от вашего `localhost-pk.pfx` в `<password of localhost-pk.pfx>`.__
+   __Пожалуйста, пропишите пароль от вашего `localhost-pk.pfx` в `<password of localhost-pk.pfx>`.__
 
    После этого вы получите файл `SiPolicy.bin.p7` в текущей директории.
 

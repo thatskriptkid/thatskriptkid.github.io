@@ -2,10 +2,10 @@
 layout: post
 title: Еще один детальный гайд по заражению PE
 category: [translations]
-tag: [translation]
+tag: [windows, malware]
 ---
 
-[оригинал](https://vxug.fakedoma.in/papers/Another%20detailed%20guide%20to%20PE%20infection.txt)
+[оригинал](https://vxug.fakedoma.in/papers/VXUG/Mirrors/AnotherdetailedguidetoPEinfection.txt)
 
 Я передаю привет всем друзьям сайта rohitab.com!
 
