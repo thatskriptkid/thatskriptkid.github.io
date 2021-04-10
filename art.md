@@ -12,6 +12,9 @@ permalink: /art
 
 # Art that was made for the Order
 
+### by [nico nowak](https://twitter.com/nowk_n)
+<a href="/assets/images/orderofsixangles_art/ada_art.png"><img src="/assets/images/orderofsixangles_art/ada_art.png" alt="Angles"/></a>
+
 ### by [kot_tsarapkin](https://www.instagram.com/kottsarapkin/)
 
 <a href="/assets/images/orderofsixangles_art/kali.png"><img src="/assets/images/orderofsixangles_art/kali_resized.png" alt="Kali"/></a>
