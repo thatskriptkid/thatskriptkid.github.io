@@ -10,7 +10,7 @@ permalink: /about/
 
 - Representative of [r0crew](https://forum.reverse4you.org/) in Kazakhstan. I've organized two r0crewKZ meetups: [First](https://www.instagram.com/p/B4-Wql3JOAN/), [Second](https://www.instagram.com/p/B6a-YWTpggt/)
 
-- Admin (RU) of [VX-underground](https://t.me/vxunderground)
+- Admin (RU) of [VX-underground](https://t.me/vxunderground) && Creator of [VX-underground RU](https://vxug.fakedoma.in/ru)
 
 - Translator of information security materials from English into Russian
 
