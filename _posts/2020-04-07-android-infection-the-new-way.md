@@ -29,7 +29,7 @@ category: [en]
 
 **[Proof-of-Concept Link](https://github.com/thatskriptkid/apk-infector-Archinome-PoC)**
 
-Target audience of the article - people who have an idea of the current way of infecting android applications through smali code patching and want to learn about a new and more effective way. If you are not familiar with the current infection practice, read my article - [How to steal digital signature using Man-In-The-Disk]({% post_url en/2019-07-17-steal-ds-en %}), chapter - "Creating payload". The technique described here was completely invented by us; there is no description of such a method in the Internet. 
+Target audience of the article - people who have an idea of the current way of infecting android applications through smali code patching and want to learn about a new and more effective way. If you are not familiar with the current infection practice, read my article - [How to steal digital signature using Man-In-The-Disk]({% post_url 2019-07-17-steal-ds-en %}), chapter - "Creating payload". The technique described here was completely invented by us; there is no description of such a method in the Internet. 
 
 Our technique:
 1. Does not use bugs or android vulnerabilities

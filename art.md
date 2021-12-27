@@ -10,7 +10,7 @@ permalink: /art
     }
 </style>
 
-# Art that was made for the Order
+# OrderOfSixAngles Art
 
 ### by [nico nowak](https://twitter.com/nowk_n)
 <a href="/assets/images/orderofsixangles_art/ada_art.png"><img src="/assets/images/orderofsixangles_art/ada_art.png" alt="Angles"/></a>
