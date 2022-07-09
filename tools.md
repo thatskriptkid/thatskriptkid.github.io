@@ -3,6 +3,8 @@ layout: default
 permalink: /tools
 ---
 
+[Chrononz](https://github.com/thatskriptkid/chrononz) (get approximate timestamp of a golang elf binary)
+
 [Neossins fork](https://github.com/thatskriptkid/neossins) (show relations between .NET malware samples)
 
 [IDAPython](https://github.com/thatskriptkid/IDAPython) (Example scripts for IDAPython)
