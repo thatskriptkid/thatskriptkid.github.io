@@ -96,7 +96,9 @@ I decided to implement this idea in the code. The [gore](github.com/goretk/gore)
 If you look closely, you'll find that Golang represents dependency versions in three ways:
 
 1.v0.0.0-20160902184237-e75332964ef5
+
 2.v3.21.11+incompatible\cpu
+
 3.v0.3.10
 
 In the first form, the version of the dependency is always v0.0.0, that is, the dependency has no releases, which means that the version string itself contains the creation date. Therefore, we simply take the date from the string.
