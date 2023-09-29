@@ -24,7 +24,7 @@ permalink: /art
 
 <a href="/assets/images/orderofsixangles_art/kali.png"><img src="/assets/images/orderofsixangles_art/kali_resized.png" alt="Kali"/></a>
 
-<p>Этот арт был сделан для статьи "Воруем ЭЦП, используя Man-In-The-Disk". Это одна из первых статей, которые и послужили фундаментом создания Ордена, сайта и телеграм канала. Зеленый трансформер - отсылка к моей аватарке в телеграме.</p>
+<p>Этот арт был сделан для статьи "Воруем ЭЦП, используя Man-In-The-Disk". Это одна из первых статей, которая и послужила фундаментом создания Ордена, сайта и телеграм канала. Зеленый трансформер - отсылка к моей аватарке в телеграме.</p>
 
 <a href="/assets/images/orderofsixangles_art/man_in_the_disk.png"><img src="/assets/images/orderofsixangles_art/man_in_the_disk_resized.png" alt="Man in the disk"/></a>
 
@@ -33,3 +33,11 @@ permalink: /art
 <p>Этот арт является очередной иллюстрацией к статье "Новый способ внедрения вредоносного кода в андроид приложения". Она отражает мое состояние на момент написания статьи.</p>
 
 <a href="/assets/images/orderofsixangles_art/silent_night.png"><img src="/assets/images/orderofsixangles_art/silent_night_resized.png" alt="Silent night"/></a>
+
+### by [Vinnie Hager](https://twitter.com/VinnieHager)
+
+Это первый NFT арт в коллекции Ордена! Автор создал коллекцию <a href="https://opensea.io/collection/diary-by-vinnie-hager">"Diary"</a> в тяжелые времена, потеряв брата и маму. Она отражает его стремление забыться и творить.
+
+ <img src="https://i.seadn.io/gcs/files/900772088f9bd966a9b039180051d97b.png?auto=format&dpr=1&w=1000" width="500" height="600"> 
+
+[NFT коллекция Ордена](https://opensea.io/Thatskriptkid)
