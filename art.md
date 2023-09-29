@@ -30,9 +30,14 @@ permalink: /art
 
 ### by [alphin.fault](https://www.instagram.com/alphin.fault)
 
-<p>Этот арт является очередной иллюстрацией к статье "Новый способ внедрения вредоносного кода в андроид приложения". Она отражает мое состояние на момент написания статьи.</p>
+<p>Арт "Silent Night" является очередной иллюстрацией к статье "Новый способ внедрения вредоносного кода в андроид приложения". Она отражает мое состояние на момент написания статьи.</p>
 
 <a href="/assets/images/orderofsixangles_art/silent_night.png"><img src="/assets/images/orderofsixangles_art/silent_night_resized.png" alt="Silent night"/></a>
+
+Вот так выглядел первоначальный драфт, составленный по моему описанию:
+
+<a href="/assets/images/orderofsixangles_art/silent_night.png"><img src="/assets/images/photo_2020-01-22_18-43-56.jpg" alt="Silent night" width="600" height="600"/></a>
+
 
 ### by [Vinnie Hager](https://twitter.com/VinnieHager)
 
