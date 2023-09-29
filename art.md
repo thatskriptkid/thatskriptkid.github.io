@@ -36,8 +36,7 @@ permalink: /art
 
 ### by [Vinnie Hager](https://twitter.com/VinnieHager)
 
-Это первый NFT арт в коллекции Ордена! Автор создал коллекцию <a href="https://opensea.io/collection/diary-by-vinnie-hager">"Diary"</a> в тяжелые времена, потеряв брата и маму. Она отражает его стремление забыться и творить. [Фильм о бэк стори коллекции Diary](https://twitter.com/VinnieHager/status/1699119536904012141).
+Это первый [NFT арт](https://opensea.io/assets/ethereum/0xbaea7422effc762b0810f5e312bfa2e13f0801f3/204) в [коллекции Ордена](https://opensea.io/Thatskriptkid)! Автор создал коллекцию <a href="https://opensea.io/collection/diary-by-vinnie-hager">"Diary"</a> в тяжелые времена, потеряв брата и маму. Она отражает его стремление забыться и творить. [Фильм о бэк стори коллекции Diary](https://twitter.com/VinnieHager/status/1699119536904012141).
 
  <img src="https://i.seadn.io/gcs/files/900772088f9bd966a9b039180051d97b.png?auto=format&dpr=1&w=1000" width="500" height="600"> 
 
-[NFT коллекция Ордена](https://opensea.io/Thatskriptkid)
