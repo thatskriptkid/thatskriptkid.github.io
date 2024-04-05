@@ -18,6 +18,8 @@ permalink: /art
 
 <a href="/assets/images/orderofsixangles_art/ada_art.png"><img src="/assets/images/orderofsixangles_art/ada_art.png" alt="Angles"/></a>
 
+*<a href="/assets/images/orderofsixangles_art/ADA_02.zip">Ссылка</a> на архив с оригиналами в разных модификациях арта*
+
 ### by [kot_tsarapkin](https://www.instagram.com/kottsarapkin/)
 
 <p>Этот арт был первоначальной аватаркой телеграм канала Ордена. На нем изображена Богиня Кали, которая символизирует Всё. Я попросил автора добавить "злости" в арт. В результате были нарисованы два зеленых существа по бокам, что как мне кажется, идеально вписались в общую тематику.</p>
