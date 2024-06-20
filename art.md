@@ -47,3 +47,8 @@ permalink: /art
 
  <img src="https://i.seadn.io/gcs/files/900772088f9bd966a9b039180051d97b.png?auto=format&dpr=1&w=1000" width="500" height="600"> 
 
+### by [Dana](https://danateifel.artstation.com/)
+
+Я был организатором r0crewKZ, провел 7 митапов, и к анонсу одного из митапов заказывал у Dana превью картинку:
+
+<img src="/assets/images/orderofsixangles_art/ro-cre3.png"> 
