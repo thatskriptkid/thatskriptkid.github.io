@@ -5,8 +5,6 @@ tags: [note]
 category: [ru]
 ---
 
-# Frida note
-
 Это не полноценная статья! Это мои заметки по изучению фриды. Когда нужно быстро вспомнить какой-то аспект фриды, можно будет к ним быстро вернуться. 
 
 ## Frida General
@@ -734,8 +732,21 @@ if(shh != null){
 
 ![](/assets/images/ru/frida_notes/tls_5.png)
 
+# Frinet
+
+Плагин для трейсинга с помощью фриды. Опция загрузки трейса становится доступна после загрузки бинарника. 
+
+Ссылки:
+
+https://hex-rays.com/blog/plugin-focus-frinet/
+
+https://blog.ret2.io/2021/04/20/tenet-trace-explorer/
+
+
 # Полезные ссылки
 
 Для [2600 митапа](https://t.me/ast2600/333) я подготавливал [презентацию](https://github.com/thatskriptkid/thatskriptkid.github.io/blob/master/assets/files/2600/%D0%A7%D1%82%D0%BE%20%D1%82%D0%B0%D0%BA%D0%BE%D0%B5%20Frida_%202600.pdf) по возможностям фриды. 
 
 [Android greybox fuzzing with AFL++ Frida mode](https://blog.quarkslab.com/android-greybox-fuzzing-with-afl-frida-mode.html)
+
+https://8ksec.io/advanced-frida-usage-part-1-ios-encryption-libraries-8ksec-blogs/
