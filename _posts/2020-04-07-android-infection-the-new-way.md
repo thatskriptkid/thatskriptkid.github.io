@@ -659,6 +659,10 @@ This technique will not work with applications that meet all conditions simultan
 2. Do not use in dependencies library `androidx.multidex:multidex` or `com.android.support:multidex`.
 3. Runs on android versions lower than Android 5.0 (API level 21). 
 
+or
+
+1. Android Manifest has `android:extractNativeLibs=false`. In this case, when apk is installed, the error will be `INSTALL_FAILED_INVALID_APK: Failed to extract native libraries, res=-2`
+
 Thus, it is assumed that the application has one DEX file. The restriction applies because the android versions before Android 5.0 (API level 21) use the Dalvik virtual machine to run the code. By default, Dalvik only accepts a single DEX file in the APK. To get around this limitation, you should use the above libraries. Android versions after Android 5.0 (API level 21), instead of Dalvik, use the ART system, which natively supports multiple DEX files in an application, because when you install an application, it will compile all DEXs into one .oat file. See [official documentation](https://developer.android.com/studio/build/multidex) for details.
 
 ## Further PoC improvements
@@ -667,6 +671,7 @@ Thus, it is assumed that the application has one DEX file. The restriction appli
 2. Adding your tags to AndroidManifest.xml
 3. APK signing
 4. Getting rid of AndroidManifest.xml decoding
+5. Mitigate `android:extractNativeLibs=false`
 
 ## FAQ
 
