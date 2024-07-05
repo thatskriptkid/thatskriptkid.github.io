@@ -660,10 +660,26 @@ Proof-of-Concept код, разработанный для статьи, реа�
 2. Не используют в зависимостях библиотеку `androidx.multidex:multidex` или `com.android.support:multidex`
 3. Запускаются на андроиде версии меньше, чем Android 5.0 (API level 21) 
 
-либо одному условию:
+или если класс Application оригинального приложения имеет модификатор `final`. В этом случае ошибка будет выглядеть следующим образом (пример):
 
-1. У приложения манифесте существует опция `android:extractNativeLibs=false`. В этом случае, при установке apk вы будете получать ошибку `INSTALL_FAILED_INVALID_APK: Failed to extract native libraries, res=-2`
-
+```
+07-05 06:37:07.759 11446 11446 E AndroidRuntime: java.lang.IncompatibleClassChangeError: Superclass xxx.App of aaaaaaaa.aaaaaaaaaaaaaaaaaaaa.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.aaaaaaaaaaaaaaaaaaaaaa.InjectedApp is declared final (declaration of 'aaaaaaaa.aaaaaaaaaaaaaaaaaaaa.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.aaaaaaaaaaaaaaaaaaaaaa.InjectedApp' appears in /data/app/xxxx-sPY0UxWPhWrZuzj1iXsaEQ==/base.apk:classes4.dex)
+07-05 06:37:07.759 11446 11446 E AndroidRuntime: 	at java.lang.VMClassLoader.findLoadedClass(Native Method)
+07-05 06:37:07.759 11446 11446 E AndroidRuntime: 	at java.lang.ClassLoader.findLoadedClass(ClassLoader.java:738)
+07-05 06:37:07.759 11446 11446 E AndroidRuntime: 	at java.lang.ClassLoader.loadClass(ClassLoader.java:363)
+07-05 06:37:07.759 11446 11446 E AndroidRuntime: 	at java.lang.ClassLoader.loadClass(ClassLoader.java:312)
+07-05 06:37:07.759 11446 11446 E AndroidRuntime: 	at android.app.Instrumentation.newApplication(Instrumentation.java:1086)
+07-05 06:37:07.759 11446 11446 E AndroidRuntime: 	at android.app.LoadedApk.makeApplication(LoadedApk.java:965)
+07-05 06:37:07.759 11446 11446 E AndroidRuntime: 	at android.app.ActivityThread.handleBindApplication(ActivityThread.java:5765)
+07-05 06:37:07.759 11446 11446 E AndroidRuntime: 	at android.app.ActivityThread.-wrap1(Unknown Source:0)
+07-05 06:37:07.759 11446 11446 E AndroidRuntime: 	at android.app.ActivityThread$H.handleMessage(ActivityThread.java:1661)
+07-05 06:37:07.759 11446 11446 E AndroidRuntime: 	at android.os.Handler.dispatchMessage(Handler.java:105)
+07-05 06:37:07.759 11446 11446 E AndroidRuntime: 	at android.os.Looper.loop(Looper.java:164)
+07-05 06:37:07.759 11446 11446 E AndroidRuntime: 	at android.app.ActivityThread.main(ActivityThread.java:6541)
+07-05 06:37:07.759 11446 11446 E AndroidRuntime: 	at java.lang.reflect.Method.invoke(Native Method)
+07-05 06:37:07.759 11446 11446 E AndroidRuntime: 	at com.android.internal.os.Zygote$MethodAndArgsCaller.run(Zygote.java:240)
+07-05 06:37:07.759 11446 11446 E AndroidRuntime: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:767)
+``` 
 
 Тем самым предполагается, что приложение имеет один DEX файл. Ограничение применимо из-за того, что версии андроида до Android 5.0 (API level 21) используют виртуальную машину Dalvik, для запуска кода. По умолчанию, Dalvik воспринимает только один DEX файл в APK. Чтобы обойти это ограничение, необходимо использовать вышеприведенные библиотеки. Версии андроида после Android 5.0 (API level 21), вместо Dalvik, используют систему ART, которая нативно поддерживает несколько DEX файлов в приложении, так как при установке приложения она прекомпилирует все DEX в один .oat файл. Подробности написаны в [официальной документации](https://developer.android.com/studio/build/multidex).
 
@@ -673,7 +689,6 @@ Proof-of-Concept код, разработанный для статьи, реа�
 2. Добавление в AndroidManifest.xml своих тегов
 3. Подписание APK
 4. Избавление от декодирования AndroidManifest.xml
-5. Обход ошибки при установке приложений, с опцией манифест `android:extractNativeLibs=false`
 
 ## FAQ
 
