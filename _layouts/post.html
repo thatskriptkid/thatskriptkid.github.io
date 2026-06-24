@@ -2,17 +2,24 @@
 layout: default
 ---
 
-<small>{{ page.date | date: "%-d %B %Y" }}</small>
+<article class="post">
+  <header class="post__header">
+    <p class="terminal-line">cat {{ page.path }}</p>
+    <small class="post__date">{{ page.date | date: "%-d %B %Y" }}</small>
 
-<p>
     {% if page.tags %}
-    <small>tags: <em>{{ page.tags | join: "</em> - <em>" }}</em></small>
-    
+      <div class="tag-row" aria-label="Post tags">
+        {% for tag in page.tags %}
+          <span class="tag">{{ tag }}</span>
+        {% endfor %}
+      </div>
     {% endif %}
-</p>
 
-<h1> {{ page.title }} </h1>
+    <h1>{{ page.title }}</h1>
+  </header>
 
-{{content}}
-
+  <div class="post__body">
+    {{ content }}
+  </div>
+</article>
 

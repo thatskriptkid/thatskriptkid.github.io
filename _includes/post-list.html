@@ -1,0 +1,38 @@
+{% assign posts = "" | split: "" %}
+{% for category in site.categories %}
+  {% if category[0] == include.category %}
+    {% assign posts = category[1] %}
+  {% endif %}
+{% endfor %}
+
+<section class="post-index" aria-labelledby="post-index-{{ include.category }}">
+  <div class="section-heading">
+    <p class="terminal-line">ls ./{{ include.category }}</p>
+    <h2 id="post-index-{{ include.category }}">{{ include.title }}</h2>
+  </div>
+
+  {% if posts and posts.size > 0 %}
+    <ol class="post-grid">
+      {% for post in posts %}
+        {% assign post_tags = post.tags %}
+        {% if post_tags == nil or post_tags == empty %}
+          {% assign post_tags = post.tag %}
+        {% endif %}
+        <li class="post-card">
+          <article>
+            <a class="post-card__title" href="{{ post.url | relative_url }}">{{ post.title }}</a>
+            <div class="post-card__meta">
+              <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y.%m.%d" }}</time>
+              {% if post_tags %}
+                <span>{{ post_tags | join: " / " }}</span>
+              {% endif %}
+            </div>
+            <p>{{ post.excerpt | strip_html | strip_newlines | truncate: 180 }}</p>
+          </article>
+        </li>
+      {% endfor %}
+    </ol>
+  {% else %}
+    <p class="empty-state">{{ include.empty }}</p>
+  {% endif %}
+</section>

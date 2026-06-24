@@ -1,7 +1,6 @@
-<!-- <style>
-    a {
-        font-size:10vw;
-    }
-</style> -->
-
-<a href="{{site.url}}"> Home</a> | <a href="{{site.url}}/ru"> RU</a> | <a href="{{site.url}}/translations"> Translations</a> | <a href="{{site.url}}/art"> Art</a> |  <a href="{{site.url}}/feed.xml">Feed.xml</a></p>
+<nav class="site-nav" aria-label="Primary navigation">
+  <a class="site-nav__link{% if page.url == '/' %} is-active{% endif %}" href="{{ '/' | relative_url }}">Home</a>
+  <a class="site-nav__link{% if page.url == '/ru/' %} is-active{% endif %}" href="{{ '/ru/' | relative_url }}">RU</a>
+  <a class="site-nav__link{% if page.url == '/translations/' %} is-active{% endif %}" href="{{ '/translations/' | relative_url }}">Translations</a>
+  <a class="site-nav__link{% if page.url == '/art/' %} is-active{% endif %}" href="{{ '/art/' | relative_url }}">Art</a>
+</nav>

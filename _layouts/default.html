@@ -5,37 +5,40 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
-
-    <style>
-      .topNubex {
-      position: fixed;
-      right: 45px;
-      bottom: 45px;
-       }
-      </style>
 {% seo %}
   </head>
 
   <body>
+    <div class="screen-grid" aria-hidden="true"></div>
 
-    <header>
-      <div class="container">
-        <h1>{{ site.title }}</h1>
-        <a href="/assets/images/orderofsixangles_art/ada_art.png"><img src="/assets/images/orderofsixangles_art/ada.png" style="width:100px;height:100px;" alt="Main Logo"/></a>
-        <h2>{{ site.description | default: site.github.project_tagline }}</h2>
-        <p><h1>{% include header.html %}</h1></p>
+    <header class="site-header">
+      <div class="container site-header__inner">
+        <a class="brand" href="{{ '/' | relative_url }}" aria-label="{{ site.title }}">
+          <img class="brand__mark" src="{{ '/assets/images/orderofsixangles_art/ada.png' | relative_url }}" alt="Order Of Six Angles logo">
+          <span class="brand__copy">
+            <span class="brand__eyebrow">security research</span>
+            <span class="brand__title">{{ site.title }}</span>
+          </span>
+        </a>
+        {% include header.html %}
       </div>
     </header>
 
-    <div class="container">
-      <section id="main_content">
+    <main class="site-main">
+      <div class="container content-shell" id="main_content">
         {{ content }}
-        <a href="#" title="Вернуться к началу страницы" class="topNubex">Вверх</a>
-      </section>
-    </div>
-    
-   
-   
+      </div>
+    </main>
+
+    <a href="#" title="Вернуться к началу страницы" class="back-to-top">TOP</a>
+
+    <footer class="site-footer">
+      <div class="container site-footer__inner">
+        <span>{{ site.title }}</span>
+        <span>{{ site.description | default: site.github.project_tagline }}</span>
+      </div>
+    </footer>
+
     <!--JEKYLL_ENV=production jekyll build-->
     {% if jekyll.environment == 'production' %}
     {% endif %}

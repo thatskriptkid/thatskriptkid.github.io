@@ -21,9 +21,10 @@
 title: Order Of Six Angles
 email: admin(at)orderofsixangles.com
 description: >- # this means to ignore newlines until "baseurl:"
-    Х.Р.А.М Сатаны
+    Reverse engineering and malware analysis notes
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://orderofsixangles.com" # the base hostname & protocol for your site, e.g. http://example.com
+repository: thatskriptkid/thatskriptkid.github.io
 twitter_username: thatskriptkid
 github_username: thatskriptkid
 telegram_username: thatskriptkid 
@@ -32,6 +33,7 @@ telegram_username: thatskriptkid
 theme: jekyll-theme-hacker
 plugins:
   - jekyll-feed
+  - jekyll-seo-tag
 
 # Exclude from processing.
 # The following items will not be processed, by default.

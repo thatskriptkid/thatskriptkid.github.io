@@ -1,0 +1,19 @@
+---
+layout: default
+---
+
+<article class="response-page">
+  <header class="response-page__header">
+    <p class="terminal-line">less ./local-model-testing/responses/{{ page.slug | default: page.title }}</p>
+    <p class="response-page__eyebrow">Full model answer</p>
+    <h1>{{ page.title }}</h1>
+    <div class="response-page__links">
+      <a class="button-link button-link--ghost" href="{{ '/en/2026/06/24/local-model-testing-en.html' | relative_url }}">English article</a>
+      <a class="button-link button-link--ghost" href="{{ '/ru/2026/06/24/local-model-testing-ru.html' | relative_url }}">Russian article</a>
+    </div>
+  </header>
+
+  <div class="post__body response-page__body">
+    {{ content }}
+  </div>
+</article>

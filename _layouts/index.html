@@ -2,16 +2,28 @@
 layout: default
 ---
 
-{% for category in site.categories %}
-{% if category[0] == 'en' %}
-  <ul>
-      {% for post in category[1] %}
-      <li>
-          <p>
-            <a href="{{ post.url }}">{{ post.title }}</a>  <sub><small>(<em>{{ post.tags | join: "</em> - <em>" }}</em>)</small></sub>
-          </p>
-        </li>
-      {% endfor %}
-  </ul>
-  {% endif %}
-{% endfor %}
+<section class="hero" aria-labelledby="home-title">
+  <div class="hero__copy">
+    <p class="terminal-line">root@orderofsixangles:~$ ./decode_signal --feed en</p>
+    <h1 id="home-title">{{ site.title }}</h1>
+    <p class="hero__summary">
+      Reverse engineering, malware analysis, Android internals, exploit notes and translated security research.
+    </p>
+    <div class="hero__actions">
+      <a class="button-link" href="{{ '/ru/' | relative_url }}">RU archive</a>
+      <a class="button-link button-link--ghost" href="{{ '/translations/' | relative_url }}">Translations</a>
+    </div>
+  </div>
+
+  <aside class="signal-card" aria-label="Order Of Six Angles artwork">
+    <a href="{{ '/assets/images/orderofsixangles_art/ada_art.png' | relative_url }}">
+      <img src="{{ '/assets/images/orderofsixangles_art/ada_art.png' | relative_url }}" alt="Order Of Six Angles Ada Lovelace artwork">
+    </a>
+    <div class="signal-card__meta">
+      <span>signal</span>
+      <strong>{{ site.description | default: site.github.project_tagline }}</strong>
+    </div>
+  </aside>
+</section>
+
+{% include post-list.html category='en' title='Latest English Notes' empty='No English posts found.' %}

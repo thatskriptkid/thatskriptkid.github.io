@@ -1,14 +1,7 @@
 ---
 layout: default
-permalink: /art
+permalink: /art/
 ---
-
-<style>
-    img {
-        max-width:100%;
-        height:auto;
-    }
-</style>
 
 # OrderOfSixAngles Art
 
@@ -51,4 +44,4 @@ permalink: /art
 
 Я был организатором r0crewKZ, провел 7 митапов, и к анонсу одного из митапов заказывал у Dana превью картинку:
 
-<img src="/assets/images/orderofsixangles_art/ro-cre3.png" width="600" height="600"> 
+<img src="/assets/images/orderofsixangles_art/ro-cre3.png" width="600" height="600">
