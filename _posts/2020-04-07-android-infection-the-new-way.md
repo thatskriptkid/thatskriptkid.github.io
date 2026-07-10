@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Infecting android applications - The new way
+title: A new approach to infecting Android applications
 tags: [android, malware]
 category: [en]
 ---
@@ -21,50 +21,51 @@ category: [en]
 
 ## Foreword
 
-**Idea authors: Erbol & Thatskriptkid**
+**Concept by Erbol and Thatskriptkid**
 
-**Author of drawing: @alphin.fault [instagram](https://www.instagram.com/alphin.fault)**
+**Illustration by @alphin.fault on [Instagram](https://www.instagram.com/alphin.fault)**
 
-**Author of the article and proof-of-concept code: Thatskriptkid**
+**Article and proof-of-concept code by Thatskriptkid**
 
-**[Proof-of-Concept Link](https://github.com/thatskriptkid/apk-infector-Archinome-PoC)**
+**[Proof-of-concept repository](https://github.com/thatskriptkid/apk-infector-Archinome-PoC)**
 
-Target audience of the article - people who have an idea of the current way of infecting android applications through smali code patching and want to learn about a new and more effective way. If you are not familiar with the current infection practice, read my article - [How to steal digital signature using Man-In-The-Disk]({% post_url 2019-07-17-steal-ds-en %}), chapter - "Creating payload". The technique described here was completely invented by us; there is no description of such a method in the Internet. 
+This article is intended for readers familiar with the conventional method of infecting Android applications by patching smali code who want to explore a different, more efficient approach. If you are unfamiliar with the conventional technique, read the "Creating payload" section of my article [How to steal a digital signature with a Man-in-the-Disk attack]({% post_url 2019-07-17-steal-ds-en %}). We developed the technique described here independently and could not find any prior public description of it.
 
 Our technique:
-1. Does not use bugs or android vulnerabilities
-2. Not intended for cracking applications (removing ads, licenses, etc.). 
-3. Designed to add malicious code without any interference with the target application or its appearance.
+
+1. Does not rely on Android vulnerabilities.
+2. Is not intended for cracking applications, removing ads, or bypassing licenses.
+3. Adds code without changing the target application's behavior or appearance.
 
 ## Disadvantages of the current approach
 
-The way to inject malicious code by decoding the application to smali code and patching it is the only and widely practiced method to date. [smali/backsmali](https://github.com/JesusFreke/smali) is the only tool used for this. It is the basis for all known apk infectors, for example:
+The conventional and widely used approach is to disassemble an application into smali code and patch it. [smali/baksmali](https://github.com/JesusFreke/smali) provides the underlying tooling for well-known APK infectors such as:
 
 1. [backdoor-apk](https://github.com/dana-at-cp/backdoor-apk).
-2. [TheFatRat](https://github.com/Screetsec/TheFatRat)
-3. [apkwash](https://github.com/jbreed/apkwash)
-4. [kwetza](https://github.com/sensepost/kwetza)
+2. [TheFatRat](https://github.com/Screetsec/TheFatRat).
+3. [apkwash](https://github.com/jbreed/apkwash).
+4. [kwetza](https://github.com/sensepost/kwetza).
 
-Malware also uses smali/backsmali and patching. The work algorithm of the Trojan [Android.InfectionAds.1](https://vms.drweb.com/virus/?i=17771929&lng=en):
+Malware also uses smali/baksmali-based patching. The diagram below shows the workflow of the [Android.InfectionAds.1](https://vms.drweb.com/virus/?i=17771929&lng=en) trojan:
 
 ![](/assets/images/infecting_android/img_for_paper/android_infection_ads_01_en.png)
 
-Decoding and patching involves changing the original classesN.dex file. This leads to two problems:
+Disassembling and patching modifies the original `classesN.dex` file, which creates two problems:
 
-1. Overstepping [the limit of 65536](https://developer.android.com/studio/build/multidex#about) methods [in one DEX file](https://github.com/JesusFreke/smali/issues/629) if there is too much malicious code.
-2. The application can check the integrity of DEX files
+1. Additional code may exceed the [65,536-method limit](https://developer.android.com/studio/build/multidex#about) of [a single DEX file](https://github.com/JesusFreke/smali/issues/629).
+2. The application may verify the integrity of its DEX files.
 
-DEX decoding/disassembling is a complex process that requires constant updating and [highly dependent on the android version](https://github.com/JesusFreke/smali/issues/595). 
+DEX disassembly is complex, requires continual tool maintenance, and is [highly dependent on the Android version](https://github.com/JesusFreke/smali/issues/595).
 
-Almost all available infection/modification tools are written in Java and/or depend on JVM - this greatly narrows the scope of use and makes it impossible to launch the infectors on routers, embedded systems, systems without JVM, etc.
+Almost all available infection and modification tools are written in Java or depend on the JVM. This limits where they can run and excludes routers, many embedded systems, and other environments without a JVM.
 
 ## Description of a new approach
 
-There are several types of starting applications in the android, one of which is called cold start. Cold start happens when application is started for the first time. 
+Android has several application startup states. A cold start occurs when the system launches an application whose process is not already running.
 
 ![](/assets/images/infecting_android/img_for_paper/cold_launch.png)
 
-The execution of an application starts with the creation of an Application object. Most android applications have their own Application class, which should extends the main class `android.app.Applciation`. An example of a class:
+Application initialization begins with the creation of an `Application` object. Many Android applications define a custom `Application` class that extends `android.app.Application`. For example:
 
 ```java
 package test.pkg;
@@ -80,7 +81,7 @@ public class TestApp extends Application {
 }
 ```
 
-The class `test.pkg.TestApp` should be registered in AndroidManifest.xml:
+The `test.pkg.TestApp` class must be registered in `AndroidManifest.xml`:
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -96,18 +97,18 @@ The class `test.pkg.TestApp` should be registered in AndroidManifest.xml:
 </manifest>
 ```
 
-The process of launching such an application:
+The startup sequence for this application is:
 
 ![](/assets/images/infecting_android/img_for_paper/Usual_app_launch.png)
 
-The basic requirements for our infection techniques have been defined:
+This sequence suggests two basic requirements for the infection technique:
 
-1. Execution of malicious code, at application launch 
-2. Saving all steps of the process of launching the original application
+1. Execute the injected code when the application starts.
+2. Preserve every step in the original application's startup sequence.
    
-The injection of the malicious code took place at the stage of the *cold start*:*Application Object creation->Application Object Constructor*. A malicious Application class was created, injected in the APK and spelled out in *AndroidManifest.xml*, instead of the original one. To preserve the previous execution chain, it was inherited from `test.pkg.TestApp`.
+We inject the code during the cold-start sequence, between creation of the `Application` object and execution of its constructor. We create a new `Application` subclass, add it to the APK, and register it in `AndroidManifest.xml` in place of the original class. To preserve the startup chain, the injected class inherits from `test.pkg.TestApp`.
 
-Malicious Application class:
+The injected `Application` class:
 
 ```java
 package my.malicious;
@@ -137,28 +138,28 @@ Modified AndroidManifest.xml:
 </manifest>
 ```
 
-The process of launching malicious code inside an infected application (modifications are marked in red):
+The resulting startup sequence is shown below, with modifications marked in red:
 
 ![](/assets/images/infecting_android/img_for_paper/Infected_app_launch.png)
 
-Applied modifications:
+The technique makes two changes:
 
-1. The class `my.malicious.InjectedApp` was added to the original APK
-2. In AndroidManifest.xml the line `test.pkg.TestApp` has been replaced with `my.malicious.InjectedApp`
+1. Add `my.malicious.InjectedApp` to the original APK.
+2. Replace `test.pkg.TestApp` with `my.malicious.InjectedApp` in `AndroidManifest.xml`.
 
 ## The benefits of the new approach
 
-It is possible to apply necessary modifications to the APK:
+The required changes can be made:
 
-1. Without AndroidManifest.xml decoding/encoding
-2. Without DEX dissasembling/assembling
-3. Without making changes to the original DEX files
+1. Without decoding or re-encoding `AndroidManifest.xml`.
+2. Without disassembling or reassembling DEX files.
+3. Without modifying the original DEX files.
 
-These facts allow you to infect almost any existing application without restrictions. Adding your own class and modifying the manifest works much faster than decoding DEX. The malicious code injected by our technology starts immediately, as we are injected right at the beginning of the application launch process. The described infection technique doesn't depend on the architecture and version of the android (with a few exceptions). 
+These properties make the technique applicable to a wide range of applications. Adding a class and patching the manifest is much faster than disassembling a DEX file. Because the injected class runs at the start of application initialization, its code executes immediately. With a few exceptions described below, the technique is independent of CPU architecture and Android version.
 
-The PoC for demonstration was written in Go and is capable to be extended to a full featured tool. PoC is compiled into one binary file and does not use any runtime dependencies. Using Go allows using cross compilation to build an infector for almost any architecture and OS.
+The demonstration PoC is written in Go and can be extended into a full-featured tool. It compiles to a single binary with no runtime dependencies, and Go's cross-compilation support makes it possible to build it for many operating systems and architectures.
 
-Testing of infected APK by PoC was on:
+We tested APKs modified by the PoC on:
 
 ```
 NOX player 6.6.0.8006-7.1.2700200616, Android 7.1.2 (API 25), ARMv7-32
@@ -180,19 +181,19 @@ Android Studio Emulator, Android API 30, x86
 Xiaomi Mi A1
 ```
 
-We managed to successfully infect a huge number of applications (for obvious reasons, the names are hidden). We managed to successfully infect applications that cannot be decoded using smali/backsmali, and therefore by existing tool.
+We successfully tested the technique on many applications; their names are omitted for obvious reasons. This included applications that smali/baksmali could not disassemble and that existing infection tools therefore could not modify.
 
 ## Identifying necessary modifications in AndroidManifest.xml and patching
 
-One of the modifications required for the infection is to replace the string in AndroidManifest.xml. It is possible to patch the string without decoding/encoding the manifest. 
+One required modification is to replace a string in `AndroidManifest.xml`. The string can be patched without decoding and re-encoding the manifest.
 
-APKs contain the manifest in binary encoded form. The structure of the binary manifest is undocumented and represents a custom XML encoding algorithm from Google. For convenience, [was created](https://github.com/thatskriptkid/Kaitai-Struct-Android-Manifest-binary-XML) a description in [Kaitai Struct](https://kaitai.io/) that can be used as documentation.
+APKs store the manifest in a binary XML format. To make the format easier to inspect, I created a [Kaitai Struct description](https://github.com/thatskriptkid/Kaitai-Struct-Android-Manifest-binary-XML) that can also serve as documentation.
 
-AndroidManifest.xml structure (in brackets - size in bytes):
+The structure of `AndroidManifest.xml`, with sizes in bytes shown in parentheses:
 
 ![](/assets/images/infecting_android/img_for_paper/Manifest_draw.png)
 
-Two applications with different class names were developed to detect changes in the manifest, after patching the original Application class name to a malicious one. The applications were built into an APK and unpacked to produce binary manifests.
+To identify which fields the patch affects, we built two applications that differed only in the length of their `Application` class names. We then unpacked the APKs and compared their binary manifests.
 
 An example of the original manifest:
 
@@ -228,9 +229,9 @@ An example of a patched manifest:
 </manifest>
 ```
 
-The length of the fully-qualified class name has increased by 9 characters. Both files were opened in [HexCmp](https://www.fairdell.com/hexcmp/), to get the diff. 
+The fully qualified class name in the second manifest is nine characters longer. We opened both files in [HexCmp](https://www.fairdell.com/hexcmp/) and compared them.
 
-Changes to the manifest and explanation of reasons:
+The following table explains the differences between the manifests:
 
 <style type="text/css">
 .tg  {border-collapse:collapse;border-spacing:0;}
@@ -256,21 +257,21 @@ Changes to the manifest and explanation of reasons:
     <td class="tg-0pky">0x4</td>
     <td class="tg-0pky">Total file length</td>
     <td class="tg-0pky">0x10</td>
-    <td class="tg-0pky">In the original manifest there was 0x2 bytes of alignment, in the modified version they are not required. <br>Strings in the binary manifest are stored in UTF-16 format, i.e. one character takes 0x2 bytes.<br>In total, we increased the string by 9 characters (0x12 bytes) minus 0x2 alignment bytes, it equals to 0x10 byte difference</td>.
+    <td class="tg-0pky">The original manifest has 0x2 padding bytes, which the modified version does not require.<br>Strings in the binary manifest use UTF-16, so each added character occupies 0x2 bytes.<br>Adding nine characters increases the string by 0x12 bytes; removing the 0x2 padding bytes produces a net difference of 0x10 bytes.</td>
   </tr>
   <tr>
     <td class="tg-0pky">header.string_table_len</td>
     <td class="tg-0pky">0xC</td>
-    <td class="tg-0pky">Length of array of strings</td>
+    <td class="tg-0pky">Length of the string array</td>
     <td class="tg-0pky">0x10</td>
-    <td class="tg-0pky">The string is in an array of strings. The explanation for the 0x10 byte difference is the same as for header.file_len.</td>
+    <td class="tg-0pky">The modified value belongs to the string array. The 0x10-byte difference has the same cause as the change to header.file_len.</td>
   </tr>
   <tr>
     <td class="tg-0pky">string_offset_table.offset</td>
     <td class="tg-0pky">0x7C</td>
-    <td class="tg-0pky">Offset to the line following the modified</td>
+    <td class="tg-0pky">Offset of the string after the modified string</td>
     <td class="tg-0pky">0x12</td>
-    <td class="tg-0pky">string_offset_table stores offset up to strings in an array of manifest strings. Since the length of the string has increased, <br>the line following it has been moved further by 0x12 bytes. Alignment is not taken into account here, as it <br> is located before the array of strings.</td>.
+    <td class="tg-0pky">string_offset_table stores offsets into the manifest's string array. Because the modified string is 0x12 bytes longer, the following string moves forward by 0x12 bytes.<br>Padding does not affect this value because it appears before the string array.</td>
   </tr>
 </tbody>
 </table>
@@ -301,64 +302,64 @@ Changes to the manifest and explanation of reasons:
     <td class="tg-0pky">0x2EA</td>
     <td class="tg-0pky">String length</td>
     <td class="tg-0pky">0x9</td>
-    <td class="tg-0pky">The number of characters by which the string has increased</td>
+    <td class="tg-0pky">The number of characters added to the string</td>
   </tr>
 </tbody>
 </table>
 
 ![](/assets/images/infecting_android/img_for_paper/Manifest_diff_2.png)
 
-In the structure of the manifest given at the beginning, after `strings` follows `padding` to align `resource_header`. In the original manifest, the last line of `uses-sdk` ends on the offset `0x322` (orange), which means that two bytes of alignment (green) for `resource_header` have been added.
+In the manifest structure shown earlier, `padding` follows `strings` to align `resource_header`. In the original manifest, the final `uses-sdk` string ends at offset `0x322` (orange), so two padding bytes (green) are inserted before `resource_header`.
 
 ![](/assets/images/infecting_android/img_for_paper/Manifest_alignment_original.png)
 
-In the modified version, `string_table` ends in offset `0x334` (orange) and then immediately follows `resource_header` (red), which does not require alignment.
+In the modified manifest, `string_table` ends at offset `0x334` (orange) and is immediately followed by `resource_header` (red), so no padding is required.
 
 ![](/assets/images/infecting_android/img_for_paper/Manifest_alignment_longer.png)
 
-AndroidManifest.xml structure scheme, with an indication of fields to be patched, to replace the name of the original Applciation class with a malicious one (marked in red):
+The diagram below marks the fields that must be patched to replace the original `Application` class name with the injected one:
 
 ![](/assets/images/infecting_android/img_for_paper/Manifest_draw_modified.png)
 
-The Proof-of-Concept code developed for the article implements these modifications in the `manifest.Patch()` method.
+The proof-of-concept code implements these changes in `manifest.Patch()`.
 
 ## Creating files to be injected in the target application
 
-The second modification needed to infect is the injection of a class with malicious code. In order to save the original application startup chain, an Application class must be injected into the APK, the parent class of which must be the original Application class. At the stage of preparing the files to be injected, it is unknown. Therefore, when creating the class, it was necessary to use the name placeholder - `z.z.z`. 
+The second required modification is to add a class that contains the injected code. To preserve the original startup chain, the new `Application` class must inherit from the target's original `Application` class. Because that class name is unknown when the injection files are prepared, the new class initially uses the placeholder `z.z.z`.
 
-The initial state of the application and the DEX to be injected:
+The initial state of the target application and the DEX to be injected:
 
 ![](/assets/images/infecting_android/img_for_paper/DEX_initial_state.png)
 
-After receiving the original name of the Application class from the manifest, the placeholder was patched:
+After extracting the original `Application` class name from the manifest, the PoC replaces the placeholder:
 
 ![](/assets/images/infecting_android/img_for_paper/DEX_state_after_patching.png)
 
-The infection process ends with the addition of the malicious DEX to the target application:
+The process ends by adding the new DEX to the target application:
 
 ![](/assets/images/infecting_android/img_for_paper/DEX_state_after_injection.png)
 
-Since classes with malicious code can have different code, they were put into a separate DEX. This was also done to simplify the patching of the placeholder:
+The payload classes are stored in a separate DEX so they can vary independently and so that patching the placeholder remains simple:
 
 ![](/assets/images/infecting_android/img_for_paper/DEX_split.png)
 
-The class names in DEX are arranged alphabetically. The Application class name of the target application can start with any letter. For predictable string order, after the patching, the name of the placeholder was chosen to be `z.z.z`. 
+Class names in a DEX file are sorted alphabetically, while the target application's class name may begin with any letter. We chose `z.z.z` as the placeholder to keep its position in the string table predictable after patching.
 
 ![](/assets/images/infecting_android/img_for_paper/DEX_strings.png)
 
-To prepare the files to be injected, a project was created in Android Studio, with three classes.
+We created an Android Studio project containing three classes to prepare the injection files.
 
-Class `InjectedApp`. Its full name:
+The first class is `InjectedApp`, with the following fully qualified name:
 
 `aaaaaaaa.aaaaaaaaaaaaaaaaaaaa.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.aaaaaaaaaaaaaaaaaaaaaa.InjectedApp`
 
-This name must meet two rules:
+The name must satisfy two requirements:
 
-1. It must be longer than any Application class name of any target application
+1. It must be longer than the `Application` class name in any target application.
 
-2. It must be higher in alphabetical order of any Application Class name of any application
+2. It must sort before any possible target `Application` class name.
 
-The `InjectedApp` class that will be executed instead of the Application class of the target application:
+The `InjectedApp` class executes in place of the target application's original `Application` class:
 
 ```java
 package aaaaaaaa.aaaaaaaaaaaaaaaaaaaa.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.aaaaaaaaaaaaaaaaaaaaaa;
@@ -375,14 +376,14 @@ public class InjectedApp extends z {
 }
 ```
 
-The main goal of the class is to start executing a malicious code that is in another DEX:
+Its purpose is to invoke code stored in another DEX:
 
 ```java
         payload p = new payload();
         p.executePayload();
 ```
 
-The `payload` class contains malicious code:
+The `payload` class contains the code to be executed:
 
 ```java
 package aaaaaaaaaaaa;
@@ -397,21 +398,21 @@ public class payload {
 }
 ```
 
-The full name of the class must satisfy the following rule:
+Its fully qualified name must satisfy one requirement:
 
-1. It must be alphabetically higher than any Application class name of any application 
+1. It must sort before any possible target `Application` class name.
 
-To inject arbitrary malicious code, you must create a DEX file that must comply with the conditions:
+To supply arbitrary code, create a DEX file that meets these conditions:
 
-1. Contain a class with a name:
+1. It contains a class named:
 
 `aaaaaaaaaaaaaa.payload`
 
-2. The class must contain the method
+2. The class implements the method:
 
 `public void executePayload()`
 
-A placeholder class `z.z.z`, whose full name will be patched to the full name of the Applciation class of the target application.
+The third class is the `z.z.z` placeholder. Its fully qualified name will be replaced with the target application's `Application` class name.
 
 ```java
 package z.z;
@@ -422,27 +423,27 @@ public class z extends Application {
 }
 ```
 
-The class must comply with the conditions:
+The placeholder must satisfy two requirements:
 
-1. The full name of the class must be alphabetically lower than the full names of the classes `InjectedApp` and `payload`
+1. Its fully qualified name must sort after the names of `InjectedApp` and `payload`.
 
-2. The full name of the class must be shorter than any of the full names of the Application classes of any application
+2. Its fully qualified name must be shorter than any target `Application` class name.
 
-According to the developed injection scheme, the `InjectedApp` and `payload` classes were compiled into separate DEXs. For this purpose, Android Studio built the APK with `Android Studio->Generate Signed Bundle/APK->release`. The compiled .class files were created in the folder `app\build\intermediates\javac\release\classes`.
+Following this design, we compile `InjectedApp` and `payload` into separate DEX files. Build the APK with **Android Studio > Generate Signed Bundle/APK > release**. The compiled `.class` files appear in `app\build\intermediates\javac\release\classes`.
 
-Compile .class files into DEX, using [d8](https://developer.android.com/studio/command-line/d8):
+Compile the `.class` files into DEX files with [d8](https://developer.android.com/studio/command-line/d8):
 
 `d8 --release --min-api 16 --no-desugaring InjectedApp.class --output .`
 
 `d8 --release --min-api 16 --no-desugaring payload.class --output .`
 
-The resulting DEX should be added to the target application.
+The resulting DEX files can then be added to the target application.
 
 ## Identifying the necessary modifications in DEX and patching
 
-After patching the placeholder `z.z.z` to the full name of the Application class of the target application, the DEX structure will change. To detect modifications, two applications with class names of different lengths were created in Android Studio.
+Replacing `z.z.z` with the target application's fully qualified `Application` class name changes the DEX structure. To identify every affected field, we created two Android Studio applications whose class names had different lengths.
 
-The `InjectedApp` class, inherited from `z.z.z`, in the first application:
+In the first application, `InjectedApp` inherits from `z.z.z`:
 
 ```java
 package aaaaaaaa.aaaaaaaaaaaaaaaaaaaa.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.aaaaaaaaaaaaaaaaaaaaaa;
@@ -459,7 +460,7 @@ public class InjectedApp extends z {
 }
 ```
 
-Class `InjectedApp`, inherited from `z.z.zzzzzzzzzzzzzzzzzzzzzzzz` in the second application:
+In the second application, `InjectedApp` inherits from `z.z.zzzzzzzzzzzzzzzzzzzzzzzz`:
 
 ```java
 package aaaaaaaa.aaaaaaaaaaaaaaaaaaaa.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.aaaaaaaaaaaaaaaaaaaaaa;
@@ -476,11 +477,11 @@ public class InjectedApp extends zzzzzzzzzzzzzzzz {
 }
 ```
 
-The length of the class name increased by 15 characters. Classes were compiled separately into DEX:
+The second class name is 15 characters longer. We compiled each class into a separate DEX file:
 
 `d8 --release --min-api 16 --no-desugaring InjectedApp.class --output .`
 
-Let's open the resulting DEX in HexCMP:
+We then opened the resulting DEX files in HexCmp:
 
 *[Official documentation on the DEX structure](https://source.android.com/devices/tech/dalvik/dex-format)*
 
@@ -509,49 +510,49 @@ Let's open the resulting DEX in HexCMP:
     <td class="tg-0pky">0x8</td>
     <td class="tg-0pky">Checksum</td>
     <td class="tg-0pky">full</td>
-    <td class="tg-0pky">Any change in DEX, the checksum is recalculated.</td>
+    <td class="tg-0pky">The checksum must be recalculated after any change to the DEX file.</td>
   </tr>
   <tr>
     <td class="tg-0pky">header_item.signature</td>
     <td class="tg-0pky">0xC</td>
     <td class="tg-0pky">Hash</td>
     <td class="tg-0pky">full</td>
-    <td class="tg-0pky">Any change in the DEX hash is recalculated</td>
+    <td class="tg-0pky">The signature hash must be recalculated after any change to the DEX file.</td>
   </tr>
   <tr>
     <td class="tg-0pky">header_item.file_size</td>
     <td class="tg-0pky">0x20</td>
     <td class="tg-0pky">File size</td>
     <td class="tg-0pky">0x10</td>
-    <td class="tg-0pky">String size increased by 0xF, plus 0x1 bytes of alignment.</td>
+    <td class="tg-0pky">The string grows by 0xF bytes and requires one additional padding byte.</td>
   </tr>
   <tr>
     <td class="tg-0pky">header_item.map_off</td>
     <td class="tg-0pky">0x34</td>
     <td class="tg-0pky">map offset</td>
     <td class="tg-0pky">0x10</td>
-    <td class="tg-0pky">the map goes after an array of strings, so the offset was increased, taking into account the alignment</td>
+    <td class="tg-0pky">The map follows the string array, so its offset increases by the string growth plus padding.</td>
   </tr>
   <tr>
     <td class="tg-0pky">header_item.data_size</td>
     <td class="tg-0pky">0x68</td>
     <td class="tg-0pky">data section size</td>
     <td class="tg-0pky">0x10</td>
-    <td class="tg-0pky">The data section is located after an array of strings, so the offset was enlarged, taking into account the alignment</td>
+    <td class="tg-0pky">The data section follows the string array, so its size increases by the string growth plus padding.</td>
   </tr>
   <tr>
     <td class="tg-0pky">map.class_def_item.class_data_off</td>
     <td class="tg-0pky">0xE8</td>
     <td class="tg-0pky">offset to class data</td>
     <td class="tg-0pky">0xF</td>
-    <td class="tg-0pky">This structure does not require alignment, so the value increased by the number of added characters</td>
+    <td class="tg-0pky">This structure requires no alignment, so the offset increases only by the number of added bytes.</td>
   </tr>
   <tr>
     <td class="tg-0pky">map_list.debug_info_item</td>
     <td class="tg-0pky">0x114</td>
     <td class="tg-0pky">debug info offset</td>
     <td class="tg-0pky">Not important</td>
-    <td class="tg-0pky">The field stores the data needed for the correct output when it is crashed. The field can be ignored.</td>
+    <td class="tg-0pky">This field points to debugging metadata used for stack traces. The PoC can ignore it.</td>
   </tr>
 </tbody>
 </table>
@@ -582,14 +583,14 @@ Let's open the resulting DEX in HexCMP:
     <td class="tg-0pky">0x1B3</td>
     <td class="tg-0pky">string length</td>
     <td class="tg-0pky">0xF</td>
-    <td class="tg-0pky">Strings in DEX are stored in MUTF-8 format, where one character takes 1 byte.</td>
+    <td class="tg-0pky">These ASCII characters occupy one byte each in the DEX file's MUTF-8 encoding.</td>
   </tr>
 </tbody>
 </table>
 
 ![](/assets/images/infecting_android/img_for_paper/DEX_diff_2.png)
 
-Changes at the end of the file:
+Additional changes appear at the end of the file:
 
 <style type="text/css">
 .tg  {border-collapse:collapse;border-spacing:0;}
@@ -616,68 +617,66 @@ Changes at the end of the file:
     <td class="tg-0pky">0x29C</td>
     <td class="tg-0pky">offset to class data</td>
     <td class="tg-0pky">0xF</td>
-    <td class="tg-0pky">The structure class_data_item follows immediately after an array of strings and does not require alignment</td>
+    <td class="tg-0pky">class_data_item immediately follows the string array and requires no alignment.</td>
   </tr>
   <tr>
     <td class="tg-0pky">map.annotation_set_item.entries.annotation_off_item</td>
     <td class="tg-0pky">0x2A8</td>
     <td class="tg-0pky">offset to annotations</td>
     <td class="tg-0pky">0x10</td>
-    <td class="tg-0pky">The alignment is taken into account</td>
+    <td class="tg-0pky">The offset includes alignment padding.</td>
   </tr>
   <tr>
     <td class="tg-0pky">map.map_list.offset</td>
     <td class="tg-0pky">0x2B4</td>
     <td class="tg-0pky">offset to map_list</td>
     <td class="tg-0pky">0x10</td>
-    <td class="tg-0pky">The alignment is taken into account</td>
+    <td class="tg-0pky">The offset includes alignment padding.</td>
   </tr>
 </tbody>
 </table>
 
 ![](/assets/images/infecting_android/img_for_paper/DEX_diff_3.png)
 
-The Proof-of-Concept code developed for the article implements these modifications in the `mydex.Patch()` method.
+The proof-of-concept code implements these changes in `mydex.Patch()`.
 
 ## Results
 
-To apply the necessary modifications, we have developed PoC, which works according to the algorithm:
+The PoC applies the required changes as follows:
 
-1. Unpacking APK files
-2. Parsing AndroidManifest.xml
-3. Finding the name of the Application class
-4. Patching original Application class name with `aaaaaaaa.aaaaaaaaaaaaaaaaaaaa.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.aaaaaaaaaaaaaaaaaaaaaa.InjectedApp`
-5. Patching of the placeholder `z.z.z` with the original name of the Application class
-6. Adding two DEXs to APK (one with InjectedApp application class, another with malicious classes)
-7. Packing all files in new APK
+1. Unpack the APK.
+2. Parse `AndroidManifest.xml`.
+3. Find the original `Application` class name.
+4. Replace it with `aaaaaaaa.aaaaaaaaaaaaaaaaaaaa.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.aaaaaaaaaaaaaaaaaaaaaa.InjectedApp`.
+5. Replace the `z.z.z` placeholder with the original `Application` class name.
+6. Add two DEX files to the APK: one containing `InjectedApp`, and one containing the payload classes.
+7. Package the files into a new APK.
 
-## Limitations of the new approach 
+## Limitations of the new approach
 
-This technique will not work with applications that meet all conditions simultaneously:
+This technique does not work when all of the following conditions are true:
 
-1. minSdkVersion <= 20
-2. Do not use in dependencies library `androidx.multidex:multidex` or `com.android.support:multidex`.
-3. Runs on android versions lower than Android 5.0 (API level 21). 
+1. `minSdkVersion <= 20`.
+2. The application does not depend on `androidx.multidex:multidex` or `com.android.support:multidex`.
+3. The application runs on a version earlier than Android 5.0 (API level 21).
 
-or
+The technique also fails when the manifest sets `android:extractNativeLibs=false`. Installation then returns `INSTALL_FAILED_INVALID_APK: Failed to extract native libraries, res=-2`.
 
-1. Android Manifest has `android:extractNativeLibs=false`. In this case, when apk is installed, the error will be `INSTALL_FAILED_INVALID_APK: Failed to extract native libraries, res=-2`
-
-Thus, it is assumed that the application has one DEX file. The restriction applies because the android versions before Android 5.0 (API level 21) use the Dalvik virtual machine to run the code. By default, Dalvik only accepts a single DEX file in the APK. To get around this limitation, you should use the above libraries. Android versions after Android 5.0 (API level 21), instead of Dalvik, use the ART system, which natively supports multiple DEX files in an application, because when you install an application, it will compile all DEXs into one .oat file. See [official documentation](https://developer.android.com/studio/build/multidex) for details.
+The first limitation applies to applications that originally contain only one DEX file. Android versions earlier than 5.0 use the Dalvik virtual machine, which supports only one DEX per APK by default. The multidex libraries listed above provide compatibility support. Android 5.0 and later use ART, which natively supports multiple DEX files and compiles them during installation. See the [official documentation](https://developer.android.com/studio/build/multidex) for details.
 
 ## Further PoC improvements
 
-1. If an application does not have its own Application class, you should add `InjectedApp` to AndroidManifest.xml
-2. Adding your tags to AndroidManifest.xml
-3. APK signing
-4. Getting rid of AndroidManifest.xml decoding
-5. Mitigate `android:extractNativeLibs=false`
+1. Add `InjectedApp` to `AndroidManifest.xml` when the target has no custom `Application` class.
+2. Support adding new manifest elements.
+3. Add APK signing.
+4. Eliminate the remaining `AndroidManifest.xml` decoding step.
+5. Handle `android:extractNativeLibs=false`.
 
 ## FAQ
 
-Q: Why not use underscores in the full name of InjectedApp, so it is almost guaranteed to be alphabetically above any name in the Application class of the target application?
+Q: Why not use underscores in the fully qualified name of `InjectedApp`, making it almost certain to sort before the target application's `Application` class name?
 
-A: Technically it's possible, but there will be problems with Android 5 and there will be the following error:
+A: Although technically possible, this causes the following error on Android 5:
 
 ```
 D/AndroidRuntime( 3891): Calling main entry com.android.commands.pm.Pm
@@ -697,29 +696,29 @@ W/PackageManager( 1802):        at android.os.HandlerThread.run(HandlerThread.ja
 W/PackageManager( 1802):        at com.android.server.ServiceThread.run(ServiceThread.java:46)
 ```
 
-Q: Why not inject Activity and write it in the manifest instead of the main one, because it also starts first? Yes, with this method, payload will run a little later, but it's not critical.
+Q: Why not inject an `Activity` and register it in place of the original launcher activity? The payload would run slightly later, but the delay would not matter.
 
-A: There are two problems in this approach. The first is that there are applications that use a lot of tags [activity-alias](https://developer.android.com/guide/topics/manifest/activity-alias-element) in the manifest  that refer to the name of the main activity. In this case we will have to patch not one line in the manifest, but several. It also makes it difficult to parse and find the name of the desired Activity. The second is that the main Activity runs in the main UI thread, which imposes some restrictions on the malicious code.
+A: This approach has two problems. First, some applications define many [`activity-alias`](https://developer.android.com/guide/topics/manifest/activity-alias-element) elements that refer to the main activity. Supporting them would require patching several manifest entries and make identifying the correct activity more difficult. Second, the main activity runs on the UI thread, which restricts what the injected code can do without disrupting the application.
 
-Q: But you can't use services in an Application class. What kind of malicious code can there be without services?
+Q: If an `Application` class cannot start background services, what useful code can it run?
 
-A: First of all, this restriction is introduced in the Android version starting with API 25. Secondly, this limitation applies to the android applications in general, not to the Application class specifically. Third, you can use services, but not ordinary services, but foreground. 
+A: This restriction was introduced in later Android versions and applies to applications generally, not specifically to the `Application` class. Foreground services remain available where ordinary background services are restricted.
 
-Q: Your PoC is not working
+Q: Why is the PoC not working?
 
-A: In this case, make sure that:
-   1. The original application works
-   2. All file paths in PoC are correct
-   3. There's nothing unusual in apkinfector.log.
-   4. The name of the original Application class in the patched InjectedApp.dex is really in its place. 
-   5. The target application uses its Application class. Otherwise, PoC inoperability is predictable.
+A: Check that:
 
-If nothing helped, try to play with the `-min-api` parameter when compiling classes.
-If nothing worked, then create an issue on github.
+1. The original application works.
+2. Every file path in the PoC is correct.
+3. `apkinfector.log` contains no unexpected errors.
+4. The patched `InjectedApp.dex` contains the original `Application` class name in the expected location.
+5. The target defines and uses a custom `Application` class. The current PoC does not support targets without one.
 
-Q: Why was the Application constructor selected for the infection and not the OnCreate() method? 
+If these checks do not help, try adjusting the `--min-api` parameter when compiling the classes. If the problem persists, open an issue on GitHub.
 
-A: The point is that there are applications that have an Application class that has the OnCreate() method with the final modifier. If you put your Application with OnCreate(), the android will generate an error:
+Q: Why inject code into the `Application` constructor instead of `onCreate()`?
+
+A: Some applications declare a final `onCreate()` method in their `Application` class. Attempting to override it in the injected class causes Android to report an error:
 
 ```
 06-28 07:27:59.770  2153  4539 I ActivityManager: Start proc 6787:xxxxxxxxx/u0a46 for activity xxxxxxxxx/.Main
@@ -728,7 +727,7 @@ A: The point is that there are applications that have an Application class that 
 (declaration of 'InjectedApp' appears in /data/app/xxxxxxxxx-1/base.apk:classes2.dex)
 ```
 
-Reasons for the error [here](https://android.googlesource.com/platform/art/+/refs/heads/master/runtime/class_linker.cc#6640)
+The relevant check is visible in the [ART source code](https://android.googlesource.com/platform/art/+/refs/heads/master/runtime/class_linker.cc#6640):
 
 ```
 if (super_method->IsFinal()) {
@@ -739,9 +738,9 @@ if (super_method->IsFinal()) {
         }
 ``` 
 
-The Android detects that the super method is final and gives out an error.
+ART detects that the superclass method is final and throws a linkage error.
 
-In Java, if you have not created any constructor, the compiler will create it for you (without parameters). If you have created a constructor with parameters, then the constructor without parameters is not automatically created. Since we call a constructor without parameters, you may think that there is a problem if the target application's app class contains a constructor with parameters. But it is not correct because Android requires a default constructor. Otherwise, you get this error.
+In Java, the compiler provides a no-argument constructor only when the class declares no constructors of its own. Because the injected class calls a no-argument superclass constructor, this might appear to be a compatibility problem. In practice, however, Android itself requires an `Application` class to have a no-argument constructor. A class without one already fails with the following error:
 
 ```
 06-28 08:51:54.647  8343  8343 D AndroidRuntime: Shutting down VM

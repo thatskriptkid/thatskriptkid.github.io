@@ -1,11 +1,11 @@
 ---
 layout: post
-title: Analysis of XCRY ransomware written in Nim
+title: Analysis of the XCRY ransomware written in Nim
 tags: [malware analysis]
 category: [en]
 ---
 
-Not so long ago, a 32-bit ransomware written in Nim called XCRY [became publicly known](https://twitter.com/malwrhunterteam/status/1085962856728797184). Thanks to [MalwareHunterTeam!](https://twitter.com/malwrhunterteam)
+XCRY is a 32-bit ransomware family written in Nim. It was [publicly reported](https://twitter.com/malwrhunterteam/status/1085962856728797184) by [MalwareHunterTeam](https://twitter.com/malwrhunterteam).
 
 [VirusTotal](https://www.virustotal.com/gui/file/e32c8b2da15e294e2ad8e1df5c0b655805d9c820e85a33e6a724b65c07d1a043/detection)
 
@@ -13,35 +13,35 @@ SHA-256: e32c8b2da15e294e2ad8e1df5c0b655805d9c820e85a33e6a724b65c07d1a043
 
 [Download sample](/assets/files/e32c8b2da15e294e2ad8e1df5c0b655805d9c820e85a33e6a724b65c07d1a043.zip)
 
-The sample is not packed and contains a lot of Debug information. The ransomware has been named by the tag added to the encrypted files.
+The sample is not packed and contains extensive debug information. The ransomware is named after the extension it adds to encrypted files.
 
 ![](/assets/images/xcry/image19.png)
 
-There is a [brief description](https://id-ransomware.blogspot.com/2019/01/xcry-ransomware.html) of the sample but I will try to provide more details. As mentioned before, because of the presence in the sample of Debug information left after the compilation, we can see the clear names of the functions. In general, this fact allows us to understand how the main functions of Nim programs looks like and later, if we analyze a sample compiled without Debug information, we will be able to identify the necessary functions. For example, in the image below we have Xcry and a sample also written in Nim and compiled without Debug. We can see the similarities between the functions
+There is already a [brief description](https://id-ransomware.blogspot.com/2019/01/xcry-ransomware.html) of the sample, but I will examine it in more detail. Debug information left in the binary gives us readable function names. This helps us understand the structure of compiled Nim programs and recognize important functions in later samples that lack debug symbols. The image below compares XCRY with another Nim sample compiled without debug information and shows the similarities between their functions.
 
 ![](/assets/images/xcry/image24.png)
 
-By the way, to minimize binary size you can read [this article](https://hookrace.net/blog/nim-binary-size/).
+For information on reducing the size of Nim binaries, see [this article](https://hookrace.net/blog/nim-binary-size/).
 
-The `PreMainInner()` function initializes all libraries
+The `PreMainInner()` function initializes the libraries.
 
 ![](/assets/images/xcry/image30.png)
 
-Among which you can notice the library [nim libsodium](https://github.com/FedericoCeratto/nim-libsodium) - a wrapper over [libsoidum](https://libsodium.gitbook.io/doc/), which is the basis for the ransomware.
+Among them is [nim-libsodium](https://github.com/FedericoCeratto/nim-libsodium), a wrapper around [libsodium](https://libsodium.gitbook.io/doc/) that provides the ransomware's cryptographic primitives.
 
 ![](/assets/images/xcry/image35.png)
 
-The `PreMainInner()` function is very important because it's where we can see the actual imports. 
+`PreMainInner()` is especially useful because it reveals the actual imports.
 
-Strings in Nim have their own custom type - `NimString`. They have a dynamic size, a field specifying the length of the string and end with a zero. There is also a byte `0x40` immediately before the string
+Nim uses a custom string type called `NimString`. These strings are dynamically sized, include a length field, and are null-terminated. A `0x40` byte also appears immediately before the string data.
 
 ![](/assets/images/xcry/image18.png)
 
-Nim strings can be created as objects with the function [newObjRC1](https://github.com/nim-lang/Nim/blob/75dc69417a235c3be1edb3d89ddb49104bdd438d/lib/system/gc.nim#L453)
+Nim strings can be allocated as objects with [newObjRC1](https://github.com/nim-lang/Nim/blob/75dc69417a235c3be1edb3d89ddb49104bdd438d/lib/system/gc.nim#L453)
 
 ![](/assets/images/xcry/image25.png)
 
-or in a [heap memory](https://github.com/nim-lang/Nim/blob/662c5080755eb5a42df2c3acb84c044876571a46/lib/system/mm/boehm.nim#L13)
+or directly on the [heap](https://github.com/nim-lang/Nim/blob/662c5080755eb5a42df2c3acb84c044876571a46/lib/system/mm/boehm.nim#L13).
 
 ```nim
 
@@ -51,73 +51,73 @@ proc boehmAllocAtomic(size: int): pointer {.
 
 ```
 
-Nim programs get the addresses of the functions dynamically. `nimLoadLibrary` is a wrapper over the function `LoadLibrary`.
+Nim programs resolve function addresses dynamically. `nimLoadLibrary` is a wrapper around `LoadLibrary`.
 
-`add ecx, 8` - take the "real" kernel32 string (image above) at offset 8.
+Here, `add ecx, 8` advances to the actual `kernel32` string at offset 8 in the object shown above.
 
 ![](/assets/images/xcry/image4.png)
 
-To directly call WinApi functions, the sample uses [Winim library](https://github.com/khchen/winim), it makes writing code easier. [Here](https://github.com/byt3bl33d3r/OffensiveNim) you can see examples of how to use it. 
+The sample uses the [Winim library](https://github.com/khchen/winim) to call Windows API functions directly. [OffensiveNim](https://github.com/byt3bl33d3r/OffensiveNim) provides examples of its use.
 
 ![](/assets/images/xcry/image6.png)
 
 
-All of this code is generated by the compiler. Because of this, static analysis gives incomplete information. Perhaps this fact helps a little in writing malware on Nim. For example, `CreateProcessW` is not in the imports, but it is used at runtime for malicious purposes, as is `FindFirstFile` for file traversal.
+Much of this code is generated by the compiler, so the static import table provides an incomplete picture. This may make Nim attractive to malware authors. For example, `CreateProcessW` is absent from the imports even though the sample resolves and uses it at runtime, as it does `FindFirstFile` for file traversal.
 
-Re-run checks are done by checking if the `lock_file` file exists. This file is created at the end of all work.
+To avoid running twice, XCRY checks whether `lock_file` exists. It creates this file after completing its work.
 
 ![](/assets/images/xcry/image17.png)
 ![](/assets/images/xcry/image23.png)
 
-Xcry contains a public key which is used by the `libsodium` library. It is stored in memory as a string and then converted to a byte array with the function `hex2bin` in `libsodium`.
+XCRY contains a public key used by `libsodium`. The key is stored in memory as a string and converted to a byte array with libsodium's `hex2bin` function.
 
 ![](/assets/images/xcry/image31.png)
 
-On startup, Xcry copies itself into `APPDATA` under a random name.
+On startup, XCRY copies itself into `APPDATA` under a random name.
 
 ![](/assets/images/xcry/image21.png)
 
-This name is generated by the [randombytes](https://github.com/jedisct1/libsodium/blob/ae4add868124a32d4e54da10f9cd99240aecc0aa/src/libsodium/randombytes/randombytes.c%23L211) function of the `libsodium` library
+The name is generated with libsodium's [randombytes](https://github.com/jedisct1/libsodium/blob/ae4add868124a32d4e54da10f9cd99240aecc0aa/src/libsodium/randombytes/randombytes.c%23L211) function.
 
 ![](/assets/images/xcry/image9.png)
 
-Interestingly, the ransomware doesn't enumerate the connected drives, but has a hardcoded string of potential drive letters. Starting with the letter `Z`, which should correspond to [network drives](https://en.wikipedia.org/wiki/Drive_letter_assignment).
+Interestingly, the ransomware does not enumerate connected drives. Instead, it uses a hard-coded list of possible drive letters beginning with `Z`, which is commonly assigned to [network drives](https://en.wikipedia.org/wiki/Drive_letter_assignment).
 
 ![](/assets/images/xcry/image27.png)
 
-Each drive found is encrypted in a separate thread, which was created by the [Spawn](https://github.com/nim-lang/Nim/blob/56461c280f78c55f538da7f382e1c2c308e04915/doc/spawn.txt) function in Nim.
+Each detected drive is encrypted in a separate thread created with Nim's [spawn](https://github.com/nim-lang/Nim/blob/56461c280f78c55f538da7f382e1c2c308e04915/doc/spawn.txt) function.
 
-The [XSalsa20](https://libsodium.gitbook.io/doc/advanced/stream_ciphers/xsalsa20) algorithm is used to encrypt the files (it differs from Salsa20 in that it has a longer nonce - 192 bits instead of 64). First, a private key is generated with the function [crypto_stream_keygen](https://libsodium.gitbook.io/doc/advanced/stream_ciphers/xsalsa20)
+Files are encrypted with [XSalsa20](https://libsodium.gitbook.io/doc/advanced/stream_ciphers/xsalsa20), which uses a 192-bit nonce instead of Salsa20's 64-bit nonce. First, [crypto_stream_keygen](https://libsodium.gitbook.io/doc/advanced/stream_ciphers/xsalsa20) generates a secret key.
 
 ![](/assets/images/xcry/image1.png)
 
-This key is encrypted with the public key (function [crypto_box_seal](https://libsodium.gitbook.io/doc/public-key_cryptography/sealed_boxes)).
+The key is then encrypted with the embedded public key using [crypto_box_seal](https://libsodium.gitbook.io/doc/public-key_cryptography/sealed_boxes).
 
 ![](/assets/images/xcry/image33.png)
 
-The result is a value of length `0xA1`.
+The resulting value is `0xA1` bytes long.
 
 ![](/assets/images/xcry/image11.png)
 
-This value is then used to generate a hash (ShortHash), with the function [crypto_shorthash](https://libsodium.gitbook.io/doc/hashing/short-input_hashing) - which returns a random 16 bytes
+The sample then passes this value to [crypto_shorthash](https://libsodium.gitbook.io/doc/hashing/short-input_hashing), producing a 16-byte `ShortHash`.
 
 ![](/assets/images/xcry/image10.png)
 
-Then, a string of the form is generated:
+It constructs a record with the following format:
 
 `Short Hash + space + private key + byte 0x0A`.
 
 ![](/assets/images/xcry/image12.png)
 
-The value is saved in the APPDATA folder under the name `encryption_key`.
+This record is saved as `encryption_key` in the `APPDATA` directory.
 
 ![](/assets/images/xcry/image8.png)
 
-This is the file the attackers are asking for from the victim to decrypt the data for ransom. What is interesting, a private key is generated for each 1000 (0x3E8) files  and each such key is written to the `encryption_key` file.
+The attackers ask the victim to provide this file before paying for decryption. Interestingly, XCRY generates a new secret key for every 1,000 (`0x3E8`) files and appends each key record to `encryption_key`.
 
 ![](/assets/images/xcry/image37.png)
 
-Below is the structure of the `encryption_key` file in `Kaitai Struct`
+Below is a Kaitai Struct definition for the `encryption_key` file.
 
 ```yaml
 meta:
@@ -142,28 +142,28 @@ types:
 
 ![](/assets/images/xcry/image15.png)
 
-Next, the file is read in chunks of `0x2710` (10,000) bytes and encrypted
+Each victim file is read and encrypted in chunks of `0x2710` (10,000) bytes.
 
 ![](/assets/images/xcry/image5.png)
 
-The main function for encryption is [crypto_secretbox_detached](https://libsodium.gitbook.io/doc/secret-key_cryptography/secretbox), which uses a previously generated random key.
+The main encryption function is [crypto_secretbox_detached](https://libsodium.gitbook.io/doc/secret-key_cryptography/secretbox), which uses the previously generated random key.
 
 ![](/assets/images/xcry/image36.png)
 
-A line with `ShortHash` is inserted at the beginning of each encrypted file. This is done in order to find the right private key for each particular file to decrypt later. Here is a screenshot of the content of the encrypted file with the ShortHash string
+The corresponding `ShortHash` is inserted at the beginning of each encrypted file so that the decryptor can select the correct key. The screenshot below shows an encrypted file containing the `ShortHash`.
 
 ![](/assets/images/xcry/image32.png)
 
-The same `ShortHash` in the `encryption_key` file
+The same `ShortHash` appears in the `encryption_key` file.
 
 ![](/assets/images/xcry/image16.png)
 
-The original file is simply deleted without being overwritten, which makes it easy to restore the files. For example, here's a way to overwrite files before deleting them in the open source ransomware [GonnaCry](https://github.com/tarcisio-marinho/GonnaCry/blob/a11630c94058dd1c2c91923b201be12f109541ec/src/GonnaCry/utils.py#L9) 
+The original file is deleted without first being overwritten, which may make recovery possible. By comparison, the open-source ransomware [GonnaCry](https://github.com/tarcisio-marinho/GonnaCry/blob/a11630c94058dd1c2c91923b201be12f109541ec/src/GonnaCry/utils.py#L9) overwrites files before deleting them.
 
 ![](/assets/images/xcry/image3.png)
 
-Xcry also doesn't remove shadow copies.
+XCRY also leaves Volume Shadow Copies intact.
 
-That's all! I was just curious to see what the insides of Nim programs look like and how a ransomware could be written in that language. I hope I made both points clear and thank you if you read to the end.  
+That is all. I wanted to see what compiled Nim programs look like internally and how ransomware could be implemented in the language. I hope this analysis made both points clear, and thank you for reading.
 
-If you want to analyze another ransomware written in Nim, you can check out [attack on IObit forum](https://www.bleepingcomputer.com/news/security/iobit-forums-hacked-to-spread-ransomware-to-its-members/) and download the corresponding [sample](/assets/files/b53f222ffcc99939a1141a06e2240525c7154fcf2f39f8c5ca19a079e08a41fd.zip).
+For another example of ransomware written in Nim, read about the [attack on the IObit forum](https://www.bleepingcomputer.com/news/security/iobit-forums-hacked-to-spread-ransomware-to-its-members/) and download the corresponding [sample](/assets/files/b53f222ffcc99939a1141a06e2240525c7154fcf2f39f8c5ca19a079e08a41fd.zip).

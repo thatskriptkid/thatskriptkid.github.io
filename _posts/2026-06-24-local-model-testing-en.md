@@ -10,8 +10,8 @@ excerpt: "A compact benchmark of local models on a Windows/Electron security-rev
   <div class="benchmark-panel">
     <p class="terminal-line">lmstudio --local --prompt acmedesk-security-review</p>
     <p>
-      I tested local models on one practical task: analyze a hypothetical Windows Electron app without internet access and produce a safe bug-hunting plan.
-      The main signal was not raw verbosity, but concrete Windows/Electron reasoning, safe local PoCs, and the ability to say what cannot be proven without the binary.
+      I tested local models on a practical task: analyzing a hypothetical Windows Electron application offline and producing a safe bug-hunting plan.
+      I evaluated concrete Windows and Electron reasoning, safe local PoCs, and the ability to distinguish evidence from claims that cannot be verified without the binary, rather than sheer verbosity.
     </p>
 
     <div class="benchmark-metrics">
@@ -25,12 +25,12 @@ excerpt: "A compact benchmark of local models on a Windows/Electron security-rev
   <aside class="benchmark-callout">
     <span>Best overall</span>
     <strong>Qwen3.6 27B</strong>
-    <p>8/10. The strongest answer: assumptions were marked, updater and protocol risks were handled concretely, and the PowerShell collector was usable.</p>
+    <p>8/10. The strongest answer: it clearly marked assumptions, addressed updater and protocol risks in concrete terms, and produced a usable PowerShell collector.</p>
   </aside>
 </section>
 
 <p class="benchmark-note">
-  Short version: Qwen3.6 27B, Qwen3-Coder 30B, and Gemma 4 26B were the only outputs I would use as a serious starting point. Several smaller or security-tuned models produced familiar security words, but weak mechanisms.
+  In short, Qwen3.6 27B, Qwen3-Coder 30B, and Gemma 4 26B were clearly the best. They are usable, but largely pointless when frontier models are available.
 </p>
 
 <details class="prompt-details">
@@ -78,7 +78,7 @@ excerpt: "A compact benchmark of local models on a Windows/Electron security-rev
     <div class="model-card__body">
       <h3>qwen/qwen3.6-27b</h3>
       <div class="model-card__meta"><span>score <strong>8/10</strong></span><span>speed <strong>6 tok/sec</strong></span></div>
-      <p>The best security reasoning: Electron IPC, DPAPI, ZipSlip, TOCTOU, updater signatures, `%TEMP%`, ProcMon, and a decent collector.</p>
+      <p>The strongest security reasoning, covering Electron IPC, DPAPI, Zip Slip, TOCTOU, updater signatures, `%TEMP%`, ProcMon, and a solid artifact collector.</p>
       <a class="model-card__link" href="/local-model-testing/responses/qwen3-6-27b/" target="_blank" rel="noopener noreferrer">Open full answer</a>
     </div>
   </article>
@@ -90,7 +90,7 @@ excerpt: "A compact benchmark of local models on a Windows/Electron security-rev
     <div class="model-card__body">
       <h3>qwen3-coder-30b-a3b-instruct-mlx</h3>
       <div class="model-card__meta"><span>score <strong>7.5/10</strong></span><span>speed <strong>41 tok/sec</strong></span></div>
-      <p>Fast and useful. Good focus on protocol handling, ZipSlip, updater flow, temp files, and safer PowerShell collection.</p>
+      <p>Fast and useful, with a strong focus on protocol handling, Zip Slip, the updater flow, temporary files, and safe PowerShell collection.</p>
       <a class="model-card__link" href="/local-model-testing/responses/qwen3-coder-30b-a3b/" target="_blank" rel="noopener noreferrer">Open full answer</a>
     </div>
   </article>
@@ -102,7 +102,7 @@ excerpt: "A compact benchmark of local models on a Windows/Electron security-rev
     <div class="model-card__body">
       <h3>google/gemma-4-26b-a4b</h3>
       <div class="model-card__meta"><span>score <strong>7/10</strong></span><span>speed <strong>31 tok/sec</strong></span></div>
-      <p>Compact and practical. It noticed the `update.ps1` TOCTOU angle, DPAPI, signed updates, and binary-access limits.</p>
+      <p>Concise and practical. It identified the `update.ps1` TOCTOU angle, DPAPI, signed updates, and the limits imposed by not having the binary.</p>
       <a class="model-card__link" href="/local-model-testing/responses/gemma-4-26b-a4b/" target="_blank" rel="noopener noreferrer">Open full answer</a>
     </div>
   </article>
@@ -136,7 +136,7 @@ excerpt: "A compact benchmark of local models on a Windows/Electron security-rev
     <div class="model-card__body">
       <h3>mistralai/devstral-small-2-2512</h3>
       <div class="model-card__meta"><span>score <strong>5.5/10</strong></span><span>speed <strong>7.28 tok/sec</strong></span></div>
-      <p>Useful Windows checklist fragments, but too many ungrounded RCE claims without mechanism.</p>
+      <p>Some useful Windows checklist items, but too many unsupported RCE claims with no plausible mechanism.</p>
       <a class="model-card__link" href="/local-model-testing/responses/devstral-small-2-2512/" target="_blank" rel="noopener noreferrer">Open full answer</a>
     </div>
   </article>
@@ -148,7 +148,7 @@ excerpt: "A compact benchmark of local models on a Windows/Electron security-rev
     <div class="model-card__body">
       <h3>zai-org/glm-4.6v-flash</h3>
       <div class="model-card__meta"><span>score <strong>5/10</strong></span><span>speed <strong>11.3 tok/sec</strong></span></div>
-      <p>Better coverage than the weakest models, but weaker judgement and some unsafe PoC suggestions.</p>
+      <p>Broader coverage than the weakest models, but poorer judgment and several unsafe PoC suggestions.</p>
       <a class="model-card__link" href="/local-model-testing/responses/glm-4-6v-flash/" target="_blank" rel="noopener noreferrer">Open full answer</a>
     </div>
   </article>
@@ -172,7 +172,7 @@ excerpt: "A compact benchmark of local models on a Windows/Electron security-rev
     <div class="model-card__body">
       <h3>whiterabbitneo-v3-7b-mlx</h3>
       <div class="model-card__meta"><span>score <strong>4/10</strong></span><span>speed <strong>12.7 tok/sec</strong></span></div>
-      <p>Readable keyword generation, but it missed strong prompt signals like updater scripts, signing, DPAPI, and Electron-specific RCE conditions.</p>
+      <p>Readable, but largely a collection of keywords. It missed strong signals in the prompt, including updater scripts, signing, DPAPI, and Electron-specific RCE preconditions.</p>
       <a class="model-card__link" href="/local-model-testing/responses/whiterabbitneo-v3-7b/" target="_blank" rel="noopener noreferrer">Open full answer</a>
     </div>
   </article>
@@ -184,7 +184,7 @@ excerpt: "A compact benchmark of local models on a Windows/Electron security-rev
     <div class="model-card__body">
       <h3>deepseek-r1-0528-qwen3-8b-mlx</h3>
       <div class="model-card__meta"><span>score <strong>4/10</strong></span><span>speed <strong>20.16 tok/sec</strong></span></div>
-      <p>Found broad surfaces, but failed the requested format and missed safe minimal PoCs and a good protocol checklist.</p>
+      <p>Identified broad attack surfaces, but ignored the requested format and failed to provide safe minimal PoCs or a useful protocol checklist.</p>
       <a class="model-card__link" href="/local-model-testing/responses/deepseek-r1-qwen3-8b/" target="_blank" rel="noopener noreferrer">Open full answer</a>
     </div>
   </article>
@@ -196,7 +196,7 @@ excerpt: "A compact benchmark of local models on a Windows/Electron security-rev
     <div class="model-card__body">
       <h3>ravenx-sec-8b-security-rath-128k-mlx</h3>
       <div class="model-card__meta"><span>score <strong>3.5/10</strong></span><span>speed <strong>6 tok/sec</strong></span></div>
-      <p>Disappointing for a security fine-tune: repetitive, overconfident, and light on Electron/Windows mechanics.</p>
+      <p>Disappointing for a security fine-tune: repetitive, overconfident, and weak on Electron and Windows internals.</p>
       <a class="model-card__link" href="/local-model-testing/responses/ravenx-sec-8b/" target="_blank" rel="noopener noreferrer">Open full answer</a>
     </div>
   </article>
@@ -208,7 +208,7 @@ excerpt: "A compact benchmark of local models on a Windows/Electron security-rev
     <div class="model-card__body">
       <h3>openai-gpt-oss-20b-instruct</h3>
       <div class="model-card__meta"><span>score <strong>3/10</strong></span><span>speed <strong>31 tok/sec</strong></span></div>
-      <p>Structured on the surface, but too many generic labels and strange fixes. I would not trust it as a research plan.</p>
+      <p>Superficially structured, but full of generic labels and questionable fixes. I would not trust it as a research plan.</p>
       <a class="model-card__link" href="/local-model-testing/responses/gpt-oss-20b/" target="_blank" rel="noopener noreferrer">Open full answer</a>
     </div>
   </article>
@@ -220,7 +220,7 @@ excerpt: "A compact benchmark of local models on a Windows/Electron security-rev
     <div class="model-card__body">
       <h3>codestral-22b-v0.1</h3>
       <div class="model-card__meta"><span>score <strong>2.5/10</strong></span><span>speed <strong>7.58 tok/sec</strong></span></div>
-      <p>The answer was mostly a generic corporate checklist, not a security assessment.</p>
+      <p>The answer was mostly a generic enterprise checklist rather than a security assessment.</p>
       <a class="model-card__link" href="/local-model-testing/responses/codestral-22b-v0-1/" target="_blank" rel="noopener noreferrer">Open full answer</a>
     </div>
   </article>
@@ -240,4 +240,4 @@ excerpt: "A compact benchmark of local models on a Windows/Electron security-rev
 
 ## Takeaway
 
-For local security work, the best models were the ones that stayed close to the artifacts: `acmedesk://`, SQLite, saved token storage, `latest.yml`, `update.ps1`, and backup ZIP import. The weak models sounded security-fluent, but skipped the engineering path from signal to verification.
+For local security work, the strongest models stayed close to the artifacts: `acmedesk://`, SQLite, saved token storage, `latest.yml`, `update.ps1`, and backup ZIP imports. The weaker models sounded fluent in security terminology but skipped the engineering steps needed to turn a signal into a verifiable finding.
