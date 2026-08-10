@@ -1,0 +1,72 @@
+---
+layout: default
+---
+
+{% assign collection = site.data.sample_collections.collections | where: "slug", page.collection_slug | first %}
+
+<article class="collection-detail collection-detail--{{ collection.tone }}">
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="{{ '/samples/' | relative_url }}">Sample collections</a>
+    <span aria-hidden="true">/</span>
+    <span>{{ collection.title }}</span>
+  </nav>
+
+  <header class="collection-detail__hero">
+    <div>
+      <p class="terminal-line">collection://{{ collection.slug }}</p>
+      <p class="samples-kicker">{{ collection.kind }} · set {{ collection.index }}</p>
+      <h1>{{ collection.title }}</h1>
+      <p>{{ collection.summary }}</p>
+    </div>
+    <div class="collection-detail__index" aria-hidden="true">{{ collection.index }}</div>
+  </header>
+
+  <div class="collection-detail__grid">
+    <section class="collection-detail__panel" aria-labelledby="collection-profile-title">
+      <p class="samples-kicker">collection profile</p>
+      <h2 id="collection-profile-title">Verified research set</h2>
+      <dl class="collection-profile">
+        <div><dt>Samples</dt><dd>50 Windows PE</dd></div>
+        <div><dt>Raw size</dt><dd>{{ collection.raw_size }}</dd></div>
+        <div><dt>Archive</dt><dd>{{ collection.archive_size }} · encrypted 7z</dd></div>
+        <div><dt>Architecture</dt><dd>{{ collection.architecture }}</dd></div>
+        <div><dt>Selection</dt><dd>{{ collection.evidence }}</dd></div>
+        <div><dt>Duplicates</dt><dd>None across the corpus</dd></div>
+        <div><dt>Naming</dt><dd>SHA-256</dd></div>
+      </dl>
+    </section>
+
+    <aside class="download-panel" aria-labelledby="download-title">
+      <div class="download-panel__status">
+        <span>Cloudflare R2</span>
+        {% if collection.available %}
+          <strong class="availability availability--online">available</strong>
+        {% else %}
+          <strong class="availability">upload pending</strong>
+        {% endif %}
+      </div>
+      <h2 id="download-title">Protected archive</h2>
+      <p>One curated collection, delivered through the private download gateway with global and per-client limits.</p>
+      {% if collection.available %}
+        <a class="button-link download-panel__button" href="{{ site.data.sample_collections.gateway_url }}{{ collection.download_path }}" rel="nofollow noopener">
+          Download .7z
+        </a>
+      {% else %}
+        <span class="button-link button-link--disabled download-panel__button" aria-disabled="true">Archive not uploaded</span>
+      {% endif %}
+      <small>Archive password: <code>infected</code></small>
+      <small>SHA-256: <code class="archive-hash">{{ collection.archive_sha256 }}</code></small>
+      <small>Never execute samples outside an isolated lab.</small>
+    </aside>
+  </div>
+
+  <aside class="malware-warning malware-warning--compact">
+    <div class="malware-warning__mark" aria-hidden="true">!</div>
+    <div>
+      <p class="malware-warning__eyebrow">Safety boundary</p>
+      <p>This archive contains potentially harmful software. Downloading it means you understand the risk and have authorization to analyze it.</p>
+    </div>
+  </aside>
+
+  <a class="collection-detail__back" href="{{ '/samples/' | relative_url }}">← Return to all collections</a>
+</article>

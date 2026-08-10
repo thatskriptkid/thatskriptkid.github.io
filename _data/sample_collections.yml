@@ -1,0 +1,156 @@
+gateway_url: "https://security-sample-download-gate.security-sample-download-gate.workers.dev"
+
+collections:
+  - slug: language-rust
+    index: "01"
+    tone: green
+    kind: native language
+    title: Rust Windows Malware
+    summary: Native Windows PE samples with high-confidence Rust compiler and runtime artifacts.
+    evidence: Rust compiler metadata and runtime signatures
+    raw_size: 1.20 GiB
+    archive_size: 181.9 MiB
+    archive_sha256: 1230f57cc739f3869bbad7872451c6d82511e7fe565ae3fa952a93d5060d89d1
+    architecture: 49 x64 · 1 x86
+    download_path: /collections/language-rust.7z
+    available: true
+
+  - slug: language-golang
+    index: "02"
+    tone: cyan
+    kind: native language
+    title: Go Windows Malware
+    summary: Go-compiled Windows executables confirmed through readable build metadata and runtime structures.
+    evidence: Valid Go build information and runtime artifacts
+    raw_size: 344.7 MiB
+    archive_size: 78.2 MiB
+    archive_sha256: 119ecbb027541e0a0a4b026b4b09c445a4f1b3e7b5b308ce0db27601d5d74d5b
+    architecture: 44 x64 · 6 x86
+    download_path: /collections/language-golang.7z
+    available: true
+
+  - slug: managed-dotnet
+    index: "03"
+    tone: magenta
+    kind: managed code
+    title: Managed .NET Samples
+    summary: Managed Windows malware selected through structural CLR metadata in the PE optional header.
+    evidence: Valid CLR data directory
+    raw_size: 205.9 MiB
+    archive_size: 68.4 MiB
+    archive_sha256: 8da31ecffc32b6abaedb6c1e0c7b4a657fd47b3b85ecda37ba6d866478004404
+    architecture: 5 x64 · 45 x86
+    download_path: /collections/managed-dotnet.7z
+    available: true
+
+  - slug: packed-protected
+    index: "04"
+    tone: amber
+    kind: packing
+    title: Packed & Protected
+    summary: Samples carrying recognizable packer or commercial protector section signatures.
+    evidence: Known packer and protector sections
+    raw_size: 75.7 MiB
+    archive_size: 9.3 MiB
+    archive_sha256: 30f8bbd07dbcc83bc84e244f0c82829ad4c901aa3e5dc94b0713bcf32bddc72b
+    architecture: 50 x86
+    download_path: /collections/packed-protected.7z
+    available: true
+
+  - slug: strongly-obfuscated
+    index: "05"
+    tone: red
+    kind: obfuscation
+    title: Strongly Obfuscated
+    summary: PE files selected from multiple independent entropy, import, string, section and entry-point signals.
+    evidence: At least three independent obfuscation classes
+    raw_size: 29.7 MiB
+    archive_size: 4.9 MiB
+    archive_sha256: 15c06d9017eae6411de4f669d3b6801c034337015967f3831211bf4c47c7a082
+    architecture: 50 x86
+    download_path: /collections/strongly-obfuscated.7z
+    available: true
+
+  - slug: obfuscated-functions
+    index: "06"
+    tone: magenta
+    kind: virtualization
+    title: Obfuscated Functions
+    summary: A balanced set protected by VMProtect, Themida, WinLicense, Secure VMP, VProtect or Enigma.
+    evidence: Explicit code-virtualizer section signatures
+    raw_size: 873.7 MiB
+    archive_size: 591.4 MiB
+    archive_sha256: 492d92dbdccfd54a114fe7e5b4d465beb8ed8bc15e78886591d717461fdb58a3
+    architecture: 22 x64 · 28 x86
+    download_path: /collections/obfuscated-functions.7z
+    available: true
+
+  - slug: loaders-droppers-injectors
+    index: "07"
+    tone: cyan
+    kind: execution chain
+    title: Loaders, Droppers & Injectors
+    summary: Samples with direct remote-memory, thread, APC, process-hollowing or context-manipulation capabilities.
+    evidence: Five or more independent injection signals
+    raw_size: 410.7 MiB
+    archive_size: 87.2 MiB
+    archive_sha256: 874b78d757e479a4e8679636fd8a0d8e20ad1921407c4cd703a3439ec0f69616
+    architecture: 46 x64 · 4 x86
+    download_path: /collections/loaders-droppers-injectors.7z
+    available: true
+
+  - slug: stealers-credential-theft
+    index: "08"
+    tone: amber
+    kind: collection
+    title: Credential Theft & Stealers
+    summary: Credential-focused PE files targeting DPAPI, browser databases, LSASS or keyboard input.
+    evidence: Four or more independent credential signals
+    raw_size: 453.7 MiB
+    archive_size: 173.5 MiB
+    archive_sha256: 04867f2ce24ad84a1abc7b31fea045abcbc10cfab4d4a5209295d80ebccaf7a1
+    architecture: 33 x64 · 17 x86
+    download_path: /collections/stealers-credential-theft.7z
+    available: true
+
+  - slug: rat-backdoors-c2
+    index: "09"
+    tone: green
+    kind: command & control
+    title: RATs, Backdoors & C2
+    summary: Remote-access samples combining network communication with command execution and control artifacts.
+    evidence: Seven independent network and control groups
+    raw_size: 517.9 MiB
+    archive_size: 187.6 MiB
+    archive_sha256: 2da9d224a8e147b684c2900da3a5b14f9660d8d2402bce16673932d9e6e50530
+    architecture: 34 x64 · 16 x86
+    download_path: /collections/rat-backdoors-c2.7z
+    available: true
+
+  - slug: ransomware-destructive
+    index: "10"
+    tone: red
+    kind: impact
+    title: Ransomware & Destructive
+    summary: File-impacting samples combining enumeration, modification and encryption with recovery inhibition.
+    evidence: Five or more independent destructive signals
+    raw_size: 519.1 MiB
+    archive_size: 183.0 MiB
+    archive_sha256: 316980a121b53ecbf25c165ed20d5cda9b07f66449645212b956975ea540fd27
+    architecture: 31 x64 · 19 x86
+    download_path: /collections/ransomware-destructive.7z
+    available: true
+
+  - slug: drivers-kernel
+    index: "11"
+    tone: cyan
+    kind: kernel
+    title: Windows Kernel Drivers
+    summary: Native-subsystem PE drivers with structural kernel characteristics and kernel import evidence.
+    evidence: Native subsystem and kernel imports
+    raw_size: 15.6 MiB
+    archive_size: 546.6 KiB
+    archive_sha256: 1129bcddfb2f3d090332453c1e6edbb7e6372bea84f3d4cede0be15c642f101b
+    architecture: 1 x64 · 49 x86
+    download_path: /collections/drivers-kernel.7z
+    available: true

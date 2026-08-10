@@ -1,0 +1,88 @@
+---
+layout: default
+title: Malware Sample Collections
+description: Curated Windows PE malware collections for controlled reverse-engineering research.
+permalink: /samples/
+---
+
+<section class="samples-hero" aria-labelledby="samples-title">
+  <div class="samples-hero__copy">
+    <p class="terminal-line">root@orderofsixangles:~$ ./open_corpus --scope windows-pe</p>
+    <p class="samples-kicker">controlled research corpus</p>
+    <h1 id="samples-title">Malware Sample<br><span>Collections</span></h1>
+    <p class="samples-hero__summary">
+      Purpose-built Windows PE sets for reverse engineering, detector validation and
+      malware-analysis education. Every file is hash-verified and assigned to exactly one collection.
+    </p>
+  </div>
+
+  <aside class="corpus-console" aria-label="Corpus status">
+    <div class="corpus-console__bar">
+      <span>corpus.status</span>
+      <span class="status-dot">R2 online</span>
+    </div>
+    <dl class="corpus-stats">
+      <div><dt>collections</dt><dd>11</dd></div>
+      <div><dt>samples</dt><dd>550</dd></div>
+      <div><dt>unique sha-256</dt><dd>550</dd></div>
+      <div><dt>raw corpus</dt><dd>4.56 GiB</dd></div>
+    </dl>
+    <p class="corpus-console__note">Windows PE only · no cross-collection duplicates</p>
+  </aside>
+</section>
+
+<aside class="malware-warning" aria-labelledby="malware-warning-title">
+  <div class="malware-warning__mark" aria-hidden="true">!</div>
+  <div>
+    <p class="malware-warning__eyebrow">Live malware</p>
+    <h2 id="malware-warning-title">Handle only inside an isolated analysis environment.</h2>
+    <p>Do not execute on a workstation or production network. Archives are intended for authorized security research.</p>
+  </div>
+</aside>
+
+<section class="collection-section" aria-labelledby="collection-index-title">
+  <div class="section-heading section-heading--split">
+    <div>
+      <p class="samples-kicker">index / 2026.08</p>
+      <h2 id="collection-index-title">Choose a signal</h2>
+    </div>
+    <p>50 samples per set · SHA-256 named · R2 delivery</p>
+  </div>
+
+  <div class="collection-grid">
+    {% for collection in site.data.sample_collections.collections %}
+      <article class="collection-card collection-card--{{ collection.tone }}" id="{{ collection.slug }}">
+        <div class="collection-card__topline">
+          <span class="collection-card__index">{{ collection.index }}</span>
+          <span class="collection-card__kind">{{ collection.kind }}</span>
+        </div>
+        <div class="collection-card__body">
+          <h3><a href="{{ '/samples/' | append: collection.slug | append: '/' | relative_url }}">{{ collection.title }}</a></h3>
+          <p>{{ collection.summary }}</p>
+        </div>
+        <dl class="collection-card__meta">
+          <div><dt>set</dt><dd>50 PE</dd></div>
+          <div><dt>raw</dt><dd>{{ collection.raw_size }}</dd></div>
+          <div><dt>arch</dt><dd>{{ collection.architecture }}</dd></div>
+        </dl>
+        <div class="collection-card__footer">
+          <a class="collection-card__link" href="{{ '/samples/' | append: collection.slug | append: '/' | relative_url }}">
+            Inspect collection <span aria-hidden="true">→</span>
+          </a>
+          {% if collection.available %}
+            <span class="availability availability--online">R2 online</span>
+          {% else %}
+            <span class="availability">staged</span>
+          {% endif %}
+        </div>
+      </article>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="method-strip" aria-label="Collection guarantees">
+  <div><span>01</span><strong>Static triage</strong><small>Structure and capability evidence</small></div>
+  <div><span>02</span><strong>Integrity</strong><small>Verified SHA-256 manifests</small></div>
+  <div><span>03</span><strong>Isolation</strong><small>Password-protected archives</small></div>
+  <div><span>04</span><strong>Controlled delivery</strong><small>Private R2 behind a quota gate</small></div>
+</section>
