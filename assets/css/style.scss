@@ -909,22 +909,6 @@ summary {
   text-transform: uppercase;
 }
 
-.status-dot::before {
-  display: inline-block;
-  width: 7px;
-  height: 7px;
-  margin-right: 7px;
-  border-radius: 50%;
-  background: var(--green);
-  box-shadow: 0 0 12px var(--green);
-  content: "";
-}
-
-.status-dot--pending::before {
-  background: var(--amber);
-  box-shadow: 0 0 12px rgba(255, 200, 87, 0.65);
-}
-
 .corpus-stats {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

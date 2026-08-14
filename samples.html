@@ -19,7 +19,6 @@ permalink: /samples/
   <aside class="corpus-console" aria-label="Corpus status">
     <div class="corpus-console__bar">
       <span>corpus.status</span>
-      <span class="status-dot">R2 online</span>
     </div>
     <dl class="corpus-stats">
       <div><dt>collections</dt><dd>11</dd></div>
@@ -69,11 +68,6 @@ permalink: /samples/
           <a class="collection-card__link" href="{{ '/samples/' | append: collection.slug | append: '/' | relative_url }}">
             Inspect collection <span aria-hidden="true">→</span>
           </a>
-          {% if collection.available %}
-            <span class="availability availability--online">R2 online</span>
-          {% else %}
-            <span class="availability">staged</span>
-          {% endif %}
         </div>
       </article>
     {% endfor %}

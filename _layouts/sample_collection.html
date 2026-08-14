@@ -28,7 +28,7 @@ layout: default
       <dl class="collection-profile">
         <div><dt>Samples</dt><dd>50 Windows PE</dd></div>
         <div><dt>Raw size</dt><dd>{{ collection.raw_size }}</dd></div>
-        <div><dt>Archive</dt><dd>{{ collection.archive_size }} · encrypted 7z</dd></div>
+        <div><dt>Archive</dt><dd>{{ collection.archive_size }} · AES-256 ZIP</dd></div>
         <div><dt>Architecture</dt><dd>{{ collection.architecture }}</dd></div>
         <div><dt>Selection</dt><dd>{{ collection.evidence }}</dd></div>
         <div><dt>Duplicates</dt><dd>None across the corpus</dd></div>
@@ -49,7 +49,7 @@ layout: default
       <p>One curated collection, delivered through the private download gateway with global and per-client limits.</p>
       {% if collection.available %}
         <a class="button-link download-panel__button" href="{{ site.data.sample_collections.gateway_url }}{{ collection.download_path }}" rel="nofollow noopener">
-          Download .7z
+          Download .zip
         </a>
       {% else %}
         <span class="button-link button-link--disabled download-panel__button" aria-disabled="true">Archive not uploaded</span>
