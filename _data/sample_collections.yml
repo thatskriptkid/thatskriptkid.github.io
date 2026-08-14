@@ -10,7 +10,7 @@ collections:
     evidence: Rust compiler metadata and runtime signatures
     raw_size: 1.20 GiB
     archive_size: 344.4 MiB
-    archive_sha256: 23ae03b9c4bdb908043f92240dfeb5f918eaa0909f26bae66699e36313a49360
+    archive_sha256: 93ecba05371485b03ad65f66affdbef834e5f223c41972f0f97695ace327a157
     architecture: 49 x64 · 1 x86
     download_path: /collections/language-rust.zip
     available: true
@@ -24,7 +24,7 @@ collections:
     evidence: Valid Go build information and runtime artifacts
     raw_size: 344.7 MiB
     archive_size: 158.1 MiB
-    archive_sha256: 0098ac206960127d3fa7821dd9b833d408c7a9f27dda166acb2194d7de628022
+    archive_sha256: b6ef8904a21eefdbb74a5a7a2d3a182fd2ac72833f8cd90c7c95de68ff3953dc
     architecture: 44 x64 · 6 x86
     download_path: /collections/language-golang.zip
     available: true
@@ -38,7 +38,7 @@ collections:
     evidence: Valid CLR data directory
     raw_size: 205.9 MiB
     archive_size: 104.1 MiB
-    archive_sha256: 0c14b37f0de415e060fada6aa4c8284d8590ce0fa841f3242c3434e279b3296e
+    archive_sha256: fe82ddb32049cf0e4a1d0034432f163bd50f26a1da5dc8c8fbae7dfffb6b3155
     architecture: 5 x64 · 45 x86
     download_path: /collections/managed-dotnet.zip
     available: true
@@ -52,7 +52,7 @@ collections:
     evidence: Known packer and protector sections
     raw_size: 75.7 MiB
     archive_size: 34.4 MiB
-    archive_sha256: 7b5ee67b76a32833fd95c71f773ea3c81adc84991f2842002a2a0c5184b7562d
+    archive_sha256: 4111b1594201f7bf5bda384be8cf11898e0fea57ebae46048b5fddcee2e9a5b7
     architecture: 50 x86
     download_path: /collections/packed-protected.zip
     available: true
@@ -66,7 +66,7 @@ collections:
     evidence: At least three independent obfuscation classes
     raw_size: 29.7 MiB
     archive_size: 26.3 MiB
-    archive_sha256: 942daa03306cbd3f3f3db6fce24f89e2c561fc3449995e82ca35ed74ed99d46f
+    archive_sha256: 7afbbe17a9ec490dd74fcd1cb2d0439860e0153ee1fb83030ec95c6906a8e0db
     architecture: 50 x86
     download_path: /collections/strongly-obfuscated.zip
     available: true
@@ -80,7 +80,7 @@ collections:
     evidence: Explicit code-virtualizer section signatures
     raw_size: 873.7 MiB
     archive_size: 672.5 MiB
-    archive_sha256: 08e58b6b8e745d50ddd260c4b2a8b8b158d9a099abcf26a2af57d783b5954bc0
+    archive_sha256: 40e011e29a1c81fadc41b88e6305eda61140c7dbc7793db04cc382ebd362ab2c
     architecture: 22 x64 · 28 x86
     download_path: /collections/obfuscated-functions.zip
     available: true
@@ -94,7 +94,7 @@ collections:
     evidence: Five or more independent injection signals
     raw_size: 410.7 MiB
     archive_size: 184.2 MiB
-    archive_sha256: 96725cc3a0fef827a969fcbeab2dfc28ae8877923b26e9f1b0992b3e4b145e93
+    archive_sha256: 1a780ed350f4f908e588c9ed9e308ab4fb7bdf41e9b5be0658bcc44b60bde56b
     architecture: 46 x64 · 4 x86
     download_path: /collections/loaders-droppers-injectors.zip
     available: true
@@ -108,7 +108,7 @@ collections:
     evidence: Four or more independent credential signals
     raw_size: 453.7 MiB
     archive_size: 249.0 MiB
-    archive_sha256: 63238ca5620e1ee34ba2759f98167303a0961f288b709a492425cb70132f3dbf
+    archive_sha256: e6ab7ba1b841f39e9cce5c7b67ea87f906caaab1e585c86df2641e122bd6cb5d
     architecture: 33 x64 · 17 x86
     download_path: /collections/stealers-credential-theft.zip
     available: true
@@ -122,7 +122,7 @@ collections:
     evidence: Seven independent network and control groups
     raw_size: 517.9 MiB
     archive_size: 275.2 MiB
-    archive_sha256: 6676dab13167c70e0339f2fa3a1c2ce4b0f7e469fa45957c9a6470cce3fdfa5e
+    archive_sha256: c928331a1a09bd84058728bfec84cd430a00a009a15f15c0d3be7682f82fd1ca
     architecture: 34 x64 · 16 x86
     download_path: /collections/rat-backdoors-c2.zip
     available: true
@@ -136,7 +136,7 @@ collections:
     evidence: Five or more independent destructive signals
     raw_size: 519.1 MiB
     archive_size: 277.1 MiB
-    archive_sha256: 5c3b7901883b7f0d881dd8ddfdabc524192de7da04e53d059e00e702121d173f
+    archive_sha256: a99fcd0f5fd1f102c2b605659a21cb2d7b13089516bcb7f6b8d812c0573322de
     architecture: 31 x64 · 19 x86
     download_path: /collections/ransomware-destructive.zip
     available: true
@@ -150,7 +150,7 @@ collections:
     evidence: Native subsystem and kernel imports
     raw_size: 15.6 MiB
     archive_size: 6.8 MiB
-    archive_sha256: e6f49d0497f7f654dd061b5782e8d1d670f495468a98eb64ed002a63f6c4a4ec
+    archive_sha256: f732fb18a77669fb9b6562bcbbc1ae349170ac3d5099340c3e44243e469668c3
     architecture: 1 x64 · 49 x86
     download_path: /collections/drivers-kernel.zip
     available: true
