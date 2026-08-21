@@ -335,6 +335,58 @@ button:focus-visible {
   font-size: 1.65rem;
 }
 
+.notes-hub {
+  display: grid;
+  gap: 22px;
+}
+
+.feed-switch {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 6px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(8, 14, 18, 0.72);
+  width: fit-content;
+  max-width: 100%;
+}
+
+.feed-switch__btn {
+  display: inline-flex;
+  min-height: 38px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  padding: 8px 14px;
+  color: var(--muted);
+  background: rgba(77, 255, 168, 0.045);
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.feed-switch__btn:hover,
+.feed-switch__btn:focus {
+  color: var(--green);
+  border-color: var(--line);
+}
+
+.feed-switch__btn.is-active,
+.feed-switch__btn[aria-selected="true"] {
+  color: var(--green);
+  border-color: var(--line-hot);
+  background: rgba(77, 255, 168, 0.14);
+  box-shadow: inset 0 0 18px rgba(77, 255, 168, 0.08);
+}
+
+.feed-panel[hidden] {
+  display: none !important;
+}
+
 .post-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

@@ -1,7 +1,5 @@
 <nav class="site-nav" aria-label="Primary navigation">
-  <a class="site-nav__link{% if page.url == '/' %} is-active{% endif %}" href="{{ '/' | relative_url }}">Home</a>
-  <a class="site-nav__link{% if page.url == '/ru/' %} is-active{% endif %}" href="{{ '/ru/' | relative_url }}">RU</a>
-  <a class="site-nav__link{% if page.url == '/translations/' %} is-active{% endif %}" href="{{ '/translations/' | relative_url }}">Translations</a>
+  <a class="site-nav__link{% if page.url == '/' or page.url == '/ru/' or page.url == '/translations/' %} is-active{% endif %}" href="{{ '/' | relative_url }}">Home</a>
   <a class="site-nav__link{% if page.url contains '/samples/' %} is-active{% endif %}" href="{{ '/samples/' | relative_url }}">Samples</a>
   <a class="site-nav__link{% if page.url contains '/hard-sample/' %} is-active{% endif %}" href="{{ '/hard-sample/' | relative_url }}">Local LLM Testing</a>
   <a class="site-nav__link{% if page.url == '/art/' %} is-active{% endif %}" href="{{ '/art/' | relative_url }}">Art</a>

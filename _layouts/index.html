@@ -2,4 +2,67 @@
 layout: default
 ---
 
-{% include post-list.html category='en' title='Latest English Notes' empty='No English posts found.' %}
+<section class="notes-hub" data-feed-switch aria-label="Notes feeds">
+  <div class="feed-switch" role="tablist" aria-label="Feed language">
+    <button type="button" class="feed-switch__btn is-active" role="tab" id="tab-en" data-feed="en" aria-controls="panel-en" aria-selected="true">EN</button>
+    <button type="button" class="feed-switch__btn" role="tab" id="tab-ru" data-feed="ru" aria-controls="panel-ru" aria-selected="false">RU</button>
+    <button type="button" class="feed-switch__btn" role="tab" id="tab-translations" data-feed="translations" aria-controls="panel-translations" aria-selected="false">Translations</button>
+  </div>
+
+  <div class="feed-panels">
+    <div class="feed-panel" role="tabpanel" id="panel-en" data-feed-panel="en" aria-labelledby="tab-en">
+      {% include post-list.html category='en' title='Latest English Notes' empty='No English posts found.' %}
+    </div>
+    <div class="feed-panel" role="tabpanel" id="panel-ru" data-feed-panel="ru" aria-labelledby="tab-ru" hidden>
+      {% include post-list.html category='ru' title='Russian Notes' empty='No Russian posts found.' %}
+    </div>
+    <div class="feed-panel" role="tabpanel" id="panel-translations" data-feed-panel="translations" aria-labelledby="tab-translations" hidden>
+      {% include post-list.html category='translations' title='Translated Research' empty='No translations found.' %}
+    </div>
+  </div>
+</section>
+
+<script>
+(function () {
+  var root = document.querySelector('[data-feed-switch]');
+  if (!root) return;
+
+  var buttons = Array.prototype.slice.call(root.querySelectorAll('[data-feed]'));
+  var panels = Array.prototype.slice.call(document.querySelectorAll('[data-feed-panel]'));
+  var allowed = { en: true, ru: true, translations: true };
+
+  function activate(id) {
+    if (!allowed[id]) id = 'en';
+    buttons.forEach(function (btn) {
+      var on = btn.getAttribute('data-feed') === id;
+      btn.classList.toggle('is-active', on);
+      btn.setAttribute('aria-selected', on ? 'true' : 'false');
+      btn.tabIndex = on ? 0 : -1;
+    });
+    panels.forEach(function (panel) {
+      panel.hidden = panel.getAttribute('data-feed-panel') !== id;
+    });
+  }
+
+  function fromHash() {
+    var hash = (window.location.hash || '#en').replace(/^#/, '');
+    return allowed[hash] ? hash : 'en';
+  }
+
+  buttons.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var id = btn.getAttribute('data-feed');
+      if (window.location.hash !== '#' + id) {
+        history.replaceState(null, '', '#' + id);
+      }
+      activate(id);
+    });
+  });
+
+  window.addEventListener('hashchange', function () {
+    activate(fromHash());
+  });
+
+  activate(fromHash());
+})();
+</script>

@@ -1,6 +1,17 @@
 ---
-layout: default
+layout: null
 permalink: /translations/
 ---
-
-{% include post-list.html category='translations' title='Translated Research' empty='No translations found.' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="refresh" content="0;url={{ '/#translations' | relative_url }}">
+  <link rel="canonical" href="{{ '/#translations' | absolute_url }}">
+  <title>Translations</title>
+  <script>location.replace({{ '/#translations' | relative_url | jsonify }});</script>
+</head>
+<body>
+  <p><a href="{{ '/#translations' | relative_url }}">Translations moved to Home → Translations</a></p>
+</body>
+</html>

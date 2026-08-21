@@ -1,6 +1,17 @@
 ---
-layout: default
+layout: null
 permalink: /ru/
 ---
-
-{% include post-list.html category='ru' title='Russian Notes' empty='No Russian posts found.' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="refresh" content="0;url={{ '/#ru' | relative_url }}">
+  <link rel="canonical" href="{{ '/#ru' | absolute_url }}">
+  <title>RU Archive</title>
+  <script>location.replace({{ '/#ru' | relative_url | jsonify }});</script>
+</head>
+<body>
+  <p><a href="{{ '/#ru' | relative_url }}">Russian notes moved to Home → RU</a></p>
+</body>
+</html>

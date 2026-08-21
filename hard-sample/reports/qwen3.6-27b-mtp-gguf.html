@@ -76,6 +76,9 @@
       border-radius: 16px;
       padding: 28px 30px;
       background: linear-gradient(180deg, rgba(18, 34, 52, .82), rgba(10, 20, 32, .78));
+      overflow-x: auto;
+      overflow-wrap: anywhere;
+      word-break: break-word;
     }
     .report h1, .report h2, .report h3, .report h4 {
       color: var(--ink);
@@ -93,6 +96,8 @@
       font-family: var(--mono);
       font-size: .9em;
       color: var(--cyan);
+      overflow-wrap: anywhere;
+      word-break: break-word;
     }
     .report pre {
       margin: 0 0 1.1em;
@@ -101,6 +106,9 @@
       border-radius: 12px;
       background: rgba(7, 16, 24, .72);
       overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
       font-family: var(--mono);
       font-size: 13.5px;
       line-height: 1.5;
@@ -112,12 +120,17 @@
       border-collapse: collapse;
       margin: 0 0 1.2em;
       font-size: 15px;
+      display: block;
+      max-width: 100%;
+      overflow-x: auto;
     }
     .report th, .report td {
       border: 1px solid var(--line);
       padding: 8px 12px;
       text-align: left;
       vertical-align: top;
+      overflow-wrap: anywhere;
+      word-break: break-word;
     }
     .report th {
       color: var(--muted);
@@ -147,8 +160,6 @@
       </a>
       <nav class="osa-chrome__nav" aria-label="Primary navigation">
         <a class="osa-chrome__link" href="/">Home</a>
-        <a class="osa-chrome__link" href="/ru/">RU</a>
-        <a class="osa-chrome__link" href="/translations/">Translations</a>
         <a class="osa-chrome__link" href="/samples/">Samples</a>
         <a class="osa-chrome__link is-active" href="/hard-sample/">Local LLM Testing</a>
         <a class="osa-chrome__link" href="/art/">Art</a>
