@@ -7,7 +7,6 @@ permalink: /samples/
 
 <section class="samples-hero" aria-labelledby="samples-title">
   <div class="samples-hero__copy">
-    <p class="terminal-line">root@orderofsixangles:~$ ./open_corpus --scope windows-pe</p>
     <p class="samples-kicker">controlled research corpus</p>
     <h1 id="samples-title">Malware Sample<br><span>Collections</span></h1>
     <p class="samples-hero__summary">
@@ -29,15 +28,6 @@ permalink: /samples/
     <p class="corpus-console__note">Windows PE only · no cross-collection duplicates</p>
   </aside>
 </section>
-
-<aside class="malware-warning" aria-labelledby="malware-warning-title">
-  <div class="malware-warning__mark" aria-hidden="true">!</div>
-  <div>
-    <p class="malware-warning__eyebrow">Live malware</p>
-    <h2 id="malware-warning-title">Handle only inside an isolated analysis environment.</h2>
-    <p>Do not execute on a workstation or production network. Archives are intended for authorized security research.</p>
-  </div>
-</aside>
 
 <section class="collection-section" aria-labelledby="collection-index-title">
   <div class="section-heading section-heading--split">
@@ -66,7 +56,7 @@ permalink: /samples/
         </dl>
         <div class="collection-card__footer">
           <a class="collection-card__link" href="{{ '/samples/' | append: collection.slug | append: '/' | relative_url }}">
-            Inspect collection <span aria-hidden="true">→</span>
+            Inspect
           </a>
         </div>
       </article>
@@ -74,9 +64,3 @@ permalink: /samples/
   </div>
 </section>
 
-<section class="method-strip" aria-label="Collection guarantees">
-  <div><span>01</span><strong>Static triage</strong><small>Structure and capability evidence</small></div>
-  <div><span>02</span><strong>Integrity</strong><small>Verified SHA-256 manifests</small></div>
-  <div><span>03</span><strong>Isolation</strong><small>Password-protected archives</small></div>
-  <div><span>04</span><strong>Controlled delivery</strong><small>Private R2 behind a quota gate</small></div>
-</section>

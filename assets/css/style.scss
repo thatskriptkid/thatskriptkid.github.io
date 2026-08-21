@@ -1138,9 +1138,25 @@ summary {
 }
 
 .collection-card__link {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid color-mix(in srgb, var(--collection-accent) 55%, transparent);
+  border-radius: 6px;
+  padding: 10px 20px;
   color: var(--collection-accent);
-  font-size: 0.82rem;
+  background: color-mix(in srgb, var(--collection-accent) 12%, transparent);
+  font-size: 0.92rem;
   font-weight: 700;
+  line-height: 1.1;
+}
+
+.collection-card__link:hover,
+.collection-card__link:focus {
+  color: #00170f;
+  background: var(--collection-accent);
+  border-color: var(--collection-accent);
 }
 
 .availability {

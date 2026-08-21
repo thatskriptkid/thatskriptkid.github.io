@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Характеристики · hard sample</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #071018;
+      --ink: #f3f6fb;
+      --muted: #9aabc0;
+      --line: rgba(160, 196, 232, .16);
+      --cyan: #5ee0c7;
+      --num: #7ec8ff;
+      --panel: rgba(12, 24, 38, .88);
+      --sans: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+      --mono: "Source Code Pro", ui-monospace, Menlo, Consolas, monospace;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; }
+    body {
+      font-family: var(--sans);
+      font-size: 17px;
+      line-height: 1.5;
+      color: var(--ink);
+      background:
+        radial-gradient(900px 420px at 8% -10%, rgba(94, 224, 199, .14), transparent 55%),
+        radial-gradient(720px 380px at 100% 0%, rgba(126, 200, 255, .12), transparent 50%),
+        repeating-linear-gradient(0deg, transparent 0 31px, rgba(126, 200, 255, .045) 31px 32px),
+        repeating-linear-gradient(90deg, transparent 0 31px, rgba(126, 200, 255, .045) 31px 32px),
+        linear-gradient(180deg, #0a1624, var(--bg));
+    }
+    .stage {
+      width: min(980px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 48px 0 64px;
+    }
+    .back {
+      display: inline-block;
+      margin: 0 0 18px;
+      color: var(--cyan);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 600;
+    }
+    .back:hover { text-decoration: underline; }
+    .kicker {
+      color: var(--cyan);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin: 0 0 10px;
+    }
+    h1 {
+      font-size: clamp(34px, 4.2vw, 48px);
+      font-weight: 700;
+      letter-spacing: -.02em;
+      line-height: 1.1;
+      margin: 0 0 12px;
+    }
+    .lede {
+      margin: 0 0 32px;
+      color: var(--muted);
+      font-size: 18px;
+      max-width: 58ch;
+      line-height: 1.55;
+    }
+    h2 {
+      margin: 36px 0 14px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--num);
+    }
+    .table-wrap {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      overflow: hidden;
+      background: linear-gradient(180deg, rgba(18, 34, 52, .82), rgba(10, 20, 32, .78));
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 16px;
+    }
+    th, td {
+      padding: 14px 18px;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid var(--line);
+    }
+    tr:last-child th,
+    tr:last-child td { border-bottom: 0; }
+    th {
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 13px;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      background: rgba(255,255,255,.03);
+    }
+    td.model {
+      font-weight: 700;
+      color: var(--ink);
+    }
+    td.mono, code {
+      font-family: var(--mono);
+      font-size: .92em;
+      color: var(--cyan);
+    }
+    td.size { white-space: nowrap; color: var(--ink); }
+    td.fmt { color: var(--muted); }
+    td.comp {
+      width: 28%;
+      font-weight: 600;
+      color: var(--num);
+      white-space: nowrap;
+    }
+    .note {
+      margin: 14px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+      max-width: 70ch;
+    }
+    h3 {
+      margin: 22px 0 10px;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .label {
+      margin: 0 0 8px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+    pre {
+      margin: 0 0 16px;
+      padding: 16px 18px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(7, 16, 24, .72);
+      overflow-x: auto;
+      font-family: var(--mono);
+      font-size: 13.5px;
+      line-height: 1.55;
+      color: #d5e6f5;
+      white-space: pre;
+    }
+    pre .c { color: #6f8499; }
+    @media (max-width: 720px) {
+      th, td { padding: 12px 14px; font-size: 15px; }
+      td.comp { white-space: normal; }
+    }
+  </style>
+  <link rel="stylesheet" href="/assets/css/hard-sample-chrome.css">
+</head>
+<body>
+  <header class="osa-chrome" aria-label="Order Of Six Angles">
+    <div class="osa-chrome__inner">
+      <a class="osa-chrome__brand" href="/" aria-label="Order Of Six Angles">
+        <img class="osa-chrome__mark" src="/assets/images/orderofsixangles_art/ada.png" alt="Order Of Six Angles logo">
+        <span class="osa-chrome__copy">
+          <span class="osa-chrome__eyebrow">security research</span>
+          <span class="osa-chrome__title">Order Of Six Angles</span>
+        </span>
+      </a>
+      <nav class="osa-chrome__nav" aria-label="Primary navigation">
+        <a class="osa-chrome__link" href="/">Home</a>
+        <a class="osa-chrome__link" href="/ru/">RU</a>
+        <a class="osa-chrome__link" href="/translations/">Translations</a>
+        <a class="osa-chrome__link" href="/samples/">Samples</a>
+        <a class="osa-chrome__link is-active" href="/hard-sample/">Local LLM Testing</a>
+        <a class="osa-chrome__link" href="/art/">Art</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="stage">
+    <a class="back" href="index.html">← Все модели</a>
+    <h1>Характеристики</h1>
+    <p class="lede">Локальные модели и железо сервера, на котором гонялся один и тот же PE-образец через RE-harness V5 / OpenCode.</p>
+
+    <h2>Тестируемые модели</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Модель</th>
+            <th>Размер</th>
+            <th>Формат</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="model">Anthropic: Claude Sonnet 5</td>
+            <td class="size">—</td>
+            <td class="fmt">API (OpenRouter)</td>
+          </tr>
+          <tr>
+            <td class="model">GLM-4.7-Flash-NVFP4</td>
+            <td class="size">19.8 GiB</td>
+            <td class="fmt">NVFP4 (vLLM)</td>
+          </tr>
+          <tr>
+            <td class="model">Ornith-1.5-35B-A3B-NVFP4</td>
+            <td class="size">21.8 GiB</td>
+            <td class="fmt">NVFP4 (vLLM)</td>
+          </tr>
+          <tr>
+            <td class="model">Qwen3.6-35B-A3B-NVFP4</td>
+            <td class="size">21.9 GiB</td>
+            <td class="fmt">NVFP4 (vLLM)</td>
+          </tr>
+          <tr>
+            <td class="model">Qwen3.6-35B-A3B-Claude-Opus-Distilled-NVFP4</td>
+            <td class="size">21.9 GiB</td>
+            <td class="fmt">NVFP4 (vLLM)</td>
+          </tr>
+          <tr>
+            <td class="model">Qwen3.8-27B-NVFP4</td>
+            <td class="size">21.8 GiB</td>
+            <td class="fmt">NVFP4 (vLLM)</td>
+          </tr>
+          <tr>
+            <td class="model">Qwen3.8-27B-Uncensored-Cyber</td>
+            <td class="size">19.2 GiB</td>
+            <td class="fmt">GGUF Q4_K_M (llama.cpp)</td>
+          </tr>
+          <tr>
+            <td class="model">Muse-Glimmer-30B-NVFP4</td>
+            <td class="size">21.8 GiB</td>
+            <td class="fmt">NVFP4 (vLLM)</td>
+          </tr>
+          <tr>
+            <td class="model">NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4</td>
+            <td class="size">20.1 GiB</td>
+            <td class="fmt">NVFP4 (vLLM)</td>
+          </tr>
+          <tr>
+            <td class="model">Qwen3.6-27B-MTP-GGUF</td>
+            <td class="size">16.7 GiB</td>
+            <td class="fmt">GGUF Q4_K_XL (llama.cpp)</td>
+          </tr>
+          <tr>
+            <td class="model">Ternary-Bonsai-27B-Q2_0</td>
+            <td class="size">6.7 GiB</td>
+            <td class="fmt">GGUF Q2_0 (llama.cpp)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Железо сервера</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Компонент</th>
+            <th>Спецификация</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="comp">CPU</td>
+            <td>AMD Ryzen 7 5700X3D, 8 ядер / 16 потоков, boost до ~4.15 GHz</td>
+          </tr>
+          <tr>
+            <td class="comp">RAM</td>
+            <td>32 GB (2×16 GB) DDR4-3200, TEAMGROUP UD4-3200, dual channel</td>
+          </tr>
+          <tr>
+            <td class="comp">Motherboard</td>
+            <td>MSI MAG B550 TOMAHAWK (MS-7C91) Rev 2.0</td>
+          </tr>
+          <tr>
+            <td class="comp">NVMe</td>
+            <td>WDC PC SN530 1 TB (PCIe)</td>
+          </tr>
+          <tr>
+            <td class="comp">SSD</td>
+            <td>Samsung 870 QVO 1 TB (SATA)</td>
+          </tr>
+          <tr>
+            <td class="comp">GPU</td>
+            <td>2× NVIDIA GeForce RTX 5060 Ti 16 GB (GB206, SM120)</td>
+          </tr>
+          <tr>
+            <td class="comp">OS</td>
+            <td>Proxmox VE 9.2.0 (kernel 7.0.6-2-pve)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">Инференс идёт в гостевой VM с PCI passthrough обеих RTX 5060 Ti (tensor parallel = 2).</p>
+
+    <h2>Запуск движков</h2>
+
+    <h3>Общие для vLLM</h3>
+    <p class="label">Env</p>
+    <pre>CUDA_VISIBLE_DEVICES=0,1
+NCCL_P2P_DISABLE=1
+NCCL_IB_DISABLE=1
+VLLM_WORKER_MULTIPROC_METHOD=spawn
+MAX_JOBS=1
+<span class="c"># + CUDA 13 из venv (CUDA_HOME / PATH / LD_LIBRARY_PATH)</span></pre>
+    <p class="label">Аргументы</p>
+    <pre>vllm serve &lt;MODEL&gt; \
+  --host 0.0.0.0 \
+  --port 8080 \
+  --served-model-name local-coder &lt;MODEL_NAME&gt; \
+  --tensor-parallel-size 2 \
+  --max-num-seqs 1 \
+  --kv-cache-dtype fp8_e4m3 \
+  --enable-prefix-caching \
+  --disable-custom-all-reduce</pre>
+    <p class="note">Часто ещё: <code>--language-model-only</code>, <code>--enable-auto-tool-choice</code>, плюс model-specific parsers / MTP / <code>max-model-len</code> / KV bytes.</p>
+
+    <h3>Общие для llama.cpp</h3>
+    <p class="label">Env</p>
+    <pre>CUDA_VISIBLE_DEVICES=0,1
+GGML_CUDA_ENABLE_UNIFIED_MEMORY=0</pre>
+    <p class="label">Аргументы</p>
+    <pre>llama-server \
+  --model &lt;GGUF&gt; \
+  --host 0.0.0.0 \
+  --port 8080 \
+  --alias local-coder,&lt;NAME&gt; \
+  --parallel 1 \
+  --n-gpu-layers 999 \
+  --device CUDA0,CUDA1 \
+  --split-mode layer \
+  --tensor-split 1,1 \
+  --fit off \
+  --flash-attn on \
+  --cache-type-k q8_0 \
+  --cache-type-v q8_0 \
+  --threads 8 \
+  --threads-batch 8 \
+  --jinja</pre>
+
+  </div>
+</body>
+</html>

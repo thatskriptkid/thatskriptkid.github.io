@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Отчет · Qwen3.6-27B-MTP-GGUF</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #071018;
+      --ink: #f3f6fb;
+      --muted: #9aabc0;
+      --line: rgba(160, 196, 232, .16);
+      --cyan: #5ee0c7;
+      --num: #7ec8ff;
+      --sans: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+      --mono: "Source Code Pro", ui-monospace, Menlo, Consolas, monospace;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; }
+    body {
+      font-family: var(--sans);
+      font-size: 17px;
+      line-height: 1.55;
+      color: var(--ink);
+      background:
+        radial-gradient(900px 420px at 8% -10%, rgba(94, 224, 199, .14), transparent 55%),
+        radial-gradient(720px 380px at 100% 0%, rgba(126, 200, 255, .12), transparent 50%),
+        repeating-linear-gradient(0deg, transparent 0 31px, rgba(126, 200, 255, .045) 31px 32px),
+        repeating-linear-gradient(90deg, transparent 0 31px, rgba(126, 200, 255, .045) 31px 32px),
+        linear-gradient(180deg, #0a1624, var(--bg));
+    }
+    .stage {
+      width: min(900px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 36px 0 64px;
+    }
+    .back {
+      display: inline-block;
+      margin: 0 0 18px;
+      color: var(--cyan);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 600;
+    }
+    .back:hover { text-decoration: underline; }
+    .kicker {
+      color: var(--cyan);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin: 0 0 10px;
+    }
+    h1 {
+      font-size: clamp(28px, 3.6vw, 40px);
+      font-weight: 700;
+      letter-spacing: -.02em;
+      line-height: 1.15;
+      margin: 0 0 10px;
+    }
+    .meta {
+      margin: 0 0 28px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+    .meta code {
+      font-family: var(--mono);
+      font-size: .92em;
+      color: var(--cyan);
+    }
+    .report {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 28px 30px;
+      background: linear-gradient(180deg, rgba(18, 34, 52, .82), rgba(10, 20, 32, .78));
+    }
+    .report h1, .report h2, .report h3, .report h4 {
+      color: var(--ink);
+      letter-spacing: -.01em;
+      margin: 1.4em 0 .55em;
+      line-height: 1.25;
+    }
+    .report h1 { font-size: 1.55em; margin-top: 0; }
+    .report h2 { font-size: 1.28em; color: var(--num); }
+    .report h3 { font-size: 1.12em; }
+    .report p { margin: 0 0 1em; }
+    .report ul, .report ol { margin: 0 0 1em; padding-left: 1.35em; }
+    .report li { margin: 0.25em 0; }
+    .report code {
+      font-family: var(--mono);
+      font-size: .9em;
+      color: var(--cyan);
+    }
+    .report pre {
+      margin: 0 0 1.1em;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: rgba(7, 16, 24, .72);
+      overflow-x: auto;
+      font-family: var(--mono);
+      font-size: 13.5px;
+      line-height: 1.5;
+      color: #d5e6f5;
+    }
+    .report pre code { color: inherit; }
+    .report table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0 0 1.2em;
+      font-size: 15px;
+    }
+    .report th, .report td {
+      border: 1px solid var(--line);
+      padding: 8px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+    .report th {
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      background: rgba(255,255,255,.03);
+    }
+    .report strong { color: #fff; font-weight: 600; }
+    .foot {
+      margin-top: 22px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+  </style>
+  <link rel="stylesheet" href="/assets/css/hard-sample-chrome.css">
+</head>
+<body>
+  <header class="osa-chrome" aria-label="Order Of Six Angles">
+    <div class="osa-chrome__inner">
+      <a class="osa-chrome__brand" href="/" aria-label="Order Of Six Angles">
+        <img class="osa-chrome__mark" src="/assets/images/orderofsixangles_art/ada.png" alt="Order Of Six Angles logo">
+        <span class="osa-chrome__copy">
+          <span class="osa-chrome__eyebrow">security research</span>
+          <span class="osa-chrome__title">Order Of Six Angles</span>
+        </span>
+      </a>
+      <nav class="osa-chrome__nav" aria-label="Primary navigation">
+        <a class="osa-chrome__link" href="/">Home</a>
+        <a class="osa-chrome__link" href="/ru/">RU</a>
+        <a class="osa-chrome__link" href="/translations/">Translations</a>
+        <a class="osa-chrome__link" href="/samples/">Samples</a>
+        <a class="osa-chrome__link is-active" href="/hard-sample/">Local LLM Testing</a>
+        <a class="osa-chrome__link" href="/art/">Art</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="stage">
+    <a class="back" href="../index.html">← Все модели</a>
+    <p class="kicker">Финальный ответ модели</p>
+    <h1>Qwen3.6-27B-MTP-GGUF</h1>
+    <div class="report">
+<p>Теперь у меня достаточно данных для составления полного отчета. Позвольте мне собрать итоговую информацию.</p>
+<p>---</p>
+<h2>Полный статический анализ PE-файла</h2>
+<h3>Общая информация о файле</h3>
+<ul>
+<li>- <strong>Тип</strong>: 64-битный PE (Portable Executable for AMD64)</li>
+<li>- <strong>Язык/компилятор</strong>: Rust (MinGW-w64), версия rustc 2d8144b7880597b6e6d3dfd63a9a9efae3f533d3</li>
+<li>- <strong>Базовый адрес</strong>: 0x140000000</li>
+<li>- <strong>Точка входа</strong>: <code>start</code> @ 0x140045A50 (CRT startup → MinGW)</li>
+<li>- <strong>Функции</strong>: 1278</li>
+<li>- <strong>Строки</strong>: 806</li>
+<li>- <strong>Сегменты</strong>: 8 (.text, .rdata, .idata, .buildid, .data, .pdata, .tls)</li>
+</ul>
+<h3>TLS Callbacks (выполняются до точки входа)</h3>
+<ul>
+<li>- <strong>TlsCallback_0</strong> @ 0x140024610 - Rust CRT инициализация TLS</li>
+<li>- <strong>TlsCallback_1</strong> @ 0x140045ae0 - 118 байт</li>
+<li>- <strong>TlsCallback_2</strong> @ 0x140045b70 - 22 байта</li>
+</ul>
+<p>---</p>
+<h3>ПОВЕДЕНИЕ ФАЙЛА</h3>
+<h4>1. ПЕРСИСТЕНТНОСТЬ (Реестр)</h4>
+<ul>
+<li>- <strong>Путь</strong>: <code>Software\Microsoft\Windows\CurrentVersion\Run</code></li>
+<li>- <strong>API</strong>: <code>RegCreateKeyExA</code>, <code>RegSetValueExA</code>, <code>RegOpenKeyExA</code>, <code>RegQueryValueExA</code></li>
+<li>- <strong>API для удаления</strong>: <code>RegDeleteKeyA</code>, <code>RegDeleteValueA</code></li>
+<li>- Функция <code>sub_140003CA0</code> (0x140003ca0) управляет записью в автозагрузку</li>
+</ul>
+<h4>2. МОДУЛЬ КРАЖИ ДАННЫХ БРАУЗЕРОВ (Инфостилер)</h4>
+<p>Функция <code>sub_14000F9D1</code> (0x14000f9d1) крадёт данные из:</p>
+<p><strong>Google Chrome:</strong></p>
+<ul>
+<li>- Проверка процесса: <code>chrome.exe</code></li>
+<li>- Путь к кукам: <code>...\Google\Chrome\User Data\Default\Network\Cookies</code></li>
+<li>- Путь к мастер-ключу: <code>...\Google\Chrome\User Data\Local State</code></li>
+<li>- Расшифровка через <code>CryptUnprotectData</code> (DPAPI)</li>
+<li>- Строки: &quot;[Chrome] Not running.&quot;, &quot;[Chrome] Decrypting cookies...&quot;, &quot;Cannot decrypt master key.&quot;</li>
+</ul>
+<p><strong>Microsoft Edge:</strong></p>
+<ul>
+<li>- Проверка процесса: <code>msedge.exe</code></li>
+<li>- Путь к кукам: <code>...\Microsoft\Edge\User Data\Default\Network\Cookies</code></li>
+<li>- Путь к мастер-ключу: <code>...\Microsoft\Edge\User Data\Local State</code></li>
+<li>- Строки: &quot;[Edge] Not running.&quot;, &quot;[Edge] Decrypting cookies...&quot;</li>
+</ul>
+<p><strong>Mozilla Firefox:</strong></p>
+<ul>
+<li>- Проверка процесса: <code>firefox.exe</code></li>
+<li>- Путь к базе куков: <code>...\cookies.sqlite</code></li>
+<li>- Чтение в открытом виде (без шифрования)</li>
+<li>- Парсинг SQLite-таблиц (72-байтовые записи)</li>
+<li>- Строки: &quot;[Firefox] Not running.&quot;, &quot;[Firefox] Reading cookies (plaintext)...&quot;</li>
+</ul>
+<h4>3. КРАЖА ДАННЫХ MESSENGER&#x27;ОВ</h4>
+<p><strong>Discord:</strong></p>
+<ul>
+<li>- Путь: <code>...\Discord\Local Storage\leveldb</code></li>
+<li>- Строки: &quot;=== Discord ===&quot;</li>
+</ul>
+<p><strong>Telegram:</strong></p>
+<ul>
+<li>- Проверка процесса: <code>telegram.exe</code></li>
+<li>- Путь к данным: <code>tdata</code></li>
+<li>- Строки: &quot;Telegram is not running.&quot;, &quot;Telegram tdata not found.&quot;</li>
+</ul>
+<h4>4. КЛАВИАТУРНЫЙ ШПИОН (Keylogger)</h4>
+<p>Функция <code>StartAddress</code> (0x14000d893):</p>
+<ul>
+<li>- <strong>Hook типа</strong>: <code>WH_KEYBOARD_LL</code> (13) - low-level keyboard hook</li>
+<li>- <strong>API</strong>: <code>SetWindowsHookExA</code>, <code>GetMessageA</code>, <code>TranslateMessage</code>, <code>DispatchMessageA</code>, <code>UnhookWindowsHookEx</code></li>
+<li>- Запускается в отдельном потоке с циклом сообщений</li>
+</ul>
+<h4>5. СКРИНШОТЫ</h4>
+<ul>
+<li>- Модуль: <code>src/modules/screenshot.rs</code></li>
+<li>- <strong>API графического захвата</strong>: <code>GDI32</code> (BitBlt, CreateCompatibleBitmap, CreateCompatibleDC, GetDIBits)</li>
+<li>- <strong>API захвата видео</strong>: <code>AVICAP32</code> (capCreateCaptureWindowA)</li>
+</ul>
+<h4>6. СЕТЕВОЕ ПОВЕДЕНИЕ (C2 Beacon)</h4>
+<p><strong>Основная функция бикона</strong>: <code>sub_140001000</code> (0x140001000)</p>
+<ul>
+<li>- <strong>HTTP клиент</strong>: WinHTTP API</li>
+<li>- <strong>User-Agent</strong>: <code>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36</code></li>
+<li>- <strong>Флаги запроса</strong>: <code>WINHTTP_FLAG_BYPASS_PROXY_CACHE</code> (0x100)</li>
+</ul>
+<p><strong>API WinHTTP:</strong></p>
+<ul>
+<li>- <code>WinHttpOpen</code> - инициализация</li>
+<li>- <code>WinHttpConnect</code> - подключение к серверу</li>
+<li>- <code>WinHttpOpenRequest</code> - создание запроса (GET)</li>
+<li>- <code>WinHttpSendRequest</code> - отправка</li>
+<li>- <code>WinHttpReceiveResponse</code> - получение ответа</li>
+<li>- <code>WinHttpReadData</code> - чтение данных</li>
+<li>- <code>WinHttpCloseHandle</code> - закрытие</li>
+</ul>
+<p><strong>Beacon-поведение:</strong></p>
+<ul>
+<li>- Экспоненциальная задержка: 5000ms × 2^n (макс. 60000ms)</li>
+<li>- Цикл получения команд с сервера</li>
+<li>- Обработка бинарного протокола команд</li>
+<li>- Случайная задержка между биконами: <code>GetTickCount64() % (2 * jitter + 1) + base - jitter</code></li>
+</ul>
+<h4>7. УПРАВЛЕНИЕ СЛУЖБАМИ WINDOWS</h4>
+<p>Модуль <code>src/modules/services.rs</code>:</p>
+<ul>
+<li>- <strong>API</strong>: <code>OpenSCManagerA</code>, <code>OpenServiceA</code>, <code>StartServiceA</code>, <code>ControlService</code>, <code>EnumServicesStatusExA</code>, <code>CloseServiceHandle</code></li>
+<li>- Возможность управления системными службами</li>
+</ul>
+<h4>8. СБОР ИНФОРМАЦИИ О СИСТЕМЕ</h4>
+<ul>
+<li>- <strong>Имя пользователя</strong>: <code>GetUserNameA</code></li>
+<li>- <strong>Сетевые подключения</strong>: <code>GetExtendedTcpTable</code> (IPHLPAPI) - таблица TCP-соединений</li>
+<li>- Формат вывода: &quot;PROTO LOCAL ADDRESS REMOTE ADDRESS STATE PID&quot;</li>
+</ul>
+<h4>9. КРИПТОГРАФИЯ</h4>
+<ul>
+<li>- <strong>bcrypt.dll</strong> (6 импортов) - криптографические операции</li>
+<li>- <strong>CryptUnprotectData</strong> (CRYPT32) - расшифровка DPAPI (Chrome/Edge мастер-ключи)</li>
+<li>- Функция <code>sub_140002E2A</code> (0x140002e2a) - обёртка над CryptUnprotectData</li>
+</ul>
+<h4>10. СОЗДАНИЕ ПРОЦЕССОВ</h4>
+<ul>
+<li>- <strong>API</strong>: <code>CreateProcessA</code> (5 вызовов в основной функции)</li>
+<li>- <strong>API</strong>: <code>OpenProcess</code> (2 вызова)</li>
+<li>- Возможность запуска внешних процессов и доступа к чужим процессам</li>
+</ul>
+<p>---</p>
+<h3>ИМПОРТИРУЕМЫЕ МОДУЛИ</h3>
+<table>
+<tr><th>Модуль</th><th>Кол-во импортов</th><th>Назначение</th></tr>
+<tr><td>KERNEL32</td><td>99</td><td>Базовые API Windows</td></tr>
+<tr><td>USER32</td><td>26</td><td>GUI, хуки</td></tr>
+<tr><td>ADVAPI32</td><td>16</td><td>Реестр, службы, безопасность</td></tr>
+<tr><td>WS2_32</td><td>13</td><td>WinSock (сети)</td></tr>
+<tr><td>WINHTTP</td><td>8</td><td>HTTP-клиент</td></tr>
+<tr><td>WINMM</td><td>8</td><td>Мультимедиа</td></tr>
+<tr><td>bcrypt</td><td>6</td><td>Криптография</td></tr>
+<tr><td>GDI32</td><td>7</td><td>Графика (скриншоты)</td></tr>
+<tr><td>gdiplus</td><td>4</td><td>Графика+</td></tr>
+<tr><td>ole32</td><td>4</td><td>COM</td></tr>
+<tr><td>CRYPT32</td><td>1</td><td>DPAPI</td></tr>
+<tr><td>IPHLPAPI</td><td>1</td><td>Сетевая информация</td></tr>
+<tr><td>AVICAP32</td><td>1</td><td>Захват видео</td></tr>
+</table>
+<p>---</p>
+<h3>IOC (Индикаторы компрометации)</h3>
+<ul>
+<li>- <strong>Пути файлов браузеров</strong>: <code>%LOCALAPPDATA%\Google\Chrome\User Data\</code>, <code>%LOCALAPPDATA%\Microsoft\Edge\User Data\</code></li>
+<li>- <strong>Путь Discord</strong>: <code>%APPDATA%\Discord\Local Storage\leveldb</code></li>
+<li>- <strong>Ключ реестра</strong>: <code>HKCU\Software\Microsoft\Windows\CurrentVersion\Run</code></li>
+<li>- <strong>User-Agent HTTP</strong>: <code>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36</code></li>
+<li>- <strong>Язык разработки</strong>: Rust (MinGW-w64)</li>
+</ul>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Оценка · Ornith-1.5-35B-A3B-NVFP4</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #071018;
+      --ink: #f3f6fb;
+      --muted: #9aabc0;
+      --line: rgba(160, 196, 232, .16);
+      --cyan: #5ee0c7;
+      --full: #3dd68c;
+      --part: #ffb020;
+      --miss: #ff5d6c;
+      --num: #7ec8ff;
+      --panel: rgba(12, 24, 38, .88);
+      --sans: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+      --mono: "Source Code Pro", ui-monospace, Menlo, Consolas, monospace;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; }
+    body {
+      font-family: var(--sans);
+      font-size: 17px;
+      line-height: 1.5;
+      color: var(--ink);
+      background:
+        radial-gradient(900px 420px at 8% -10%, rgba(94, 224, 199, .14), transparent 55%),
+        radial-gradient(720px 380px at 100% 0%, rgba(126, 200, 255, .12), transparent 50%),
+        repeating-linear-gradient(0deg, transparent 0 31px, rgba(126, 200, 255, .045) 31px 32px),
+        repeating-linear-gradient(90deg, transparent 0 31px, rgba(126, 200, 255, .045) 31px 32px),
+        linear-gradient(180deg, #0a1624, var(--bg));
+    }
+    .stage {
+      width: min(1220px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 36px 0 56px;
+    }
+    .kicker {
+      color: var(--cyan);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin: 0 0 10px;
+    }
+    h1 {
+      font-size: clamp(34px, 4.2vw, 48px);
+      font-weight: 700;
+      letter-spacing: -.02em;
+      line-height: 1.1;
+      margin: 0 0 12px;
+    }
+    .lede {
+      margin: 0 0 20px;
+      color: var(--muted);
+      font-size: 18px;
+      max-width: 70ch;
+      line-height: 1.55;
+    }
+    .lede b { color: var(--ink); font-weight: 600; }
+    code {
+      font-family: var(--mono);
+      font-size: .92em;
+      color: var(--cyan);
+    }
+    .meta {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      margin: 0 0 18px;
+    }
+    .meta span {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 6px 12px;
+      color: var(--muted);
+      font-size: 14px;
+      background: rgba(255,255,255,.03);
+    }
+    .banner {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr 1fr;
+      gap: 12px;
+      margin: 0 0 22px;
+    }
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 16px 18px;
+      background: var(--panel);
+    }
+    .card .big {
+      font-size: 36px;
+      font-weight: 700;
+      margin: 0 0 6px;
+      letter-spacing: -.02em;
+      line-height: 1;
+    }
+    .card p { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.45; }
+    .card.ok { border-color: rgba(61,214,140,.4); }
+    .card.ok .big { color: var(--full); }
+    .card.warn { border-color: rgba(255,176,32,.4); }
+    .card.warn .big { color: var(--part); }
+    .card.bad { border-color: rgba(255,93,108,.4); }
+    .card.bad .big { color: var(--miss); }
+    .scorebar {
+      display: flex; align-items: center; gap: 16px;
+      margin: 0 0 18px;
+      padding: 14px 16px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: rgba(7, 16, 24, .7);
+    }
+    .bar { flex: 1; height: 10px; border-radius: 99px; background: rgba(255,255,255,.08); overflow: hidden; }
+    .bar > span {
+      display: block; height: 100%;
+      width: 78.12%;
+      background: linear-gradient(90deg, var(--cyan), var(--full));
+    }
+    .score {
+      font-size: 28px;
+      font-weight: 700;
+      min-width: 9ch;
+      text-align: right;
+    }
+    .score small { color: var(--muted); font-size: 15px; font-weight: 600; }
+    .sec {
+      margin: 28px 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--num);
+    }
+    .list { display: grid; gap: 8px; }
+    .row {
+      display: grid;
+      grid-template-columns: 56px 1fr 40px;
+      gap: 14px;
+      align-items: start;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: linear-gradient(180deg, rgba(18, 34, 52, .72), rgba(10, 20, 32, .68));
+    }
+    .row.full { border-color: rgba(61, 214, 140, .42); background: linear-gradient(180deg, rgba(18, 52, 38, .78), rgba(10, 24, 22, .72)); }
+    .row.partial { border-color: rgba(255, 176, 32, .38); background: linear-gradient(180deg, rgba(52, 40, 16, .78), rgba(24, 18, 10, .72)); }
+    .row.miss { border-color: rgba(255, 93, 108, .38); background: linear-gradient(180deg, rgba(52, 16, 24, .76), rgba(24, 10, 14, .72)); }
+    .n {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--num);
+      padding-top: 2px;
+    }
+    .title { font-size: 18px; font-weight: 700; margin: 0 0 4px; line-height: 1.25; }
+    .hint, .why { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.45; }
+    .why { margin-top: 6px; color: #c2cfde; }
+    .why::before { content: "оценка: "; color: var(--muted); font-weight: 600; }
+    .mark {
+      width: 36px; height: 36px; border-radius: 50%;
+      display: grid; place-items: center;
+      border: 2px solid rgba(255,255,255,.18);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+    .row.full .mark { border-color: var(--full); color: var(--full); background: rgba(61,214,140,.12); }
+    .row.partial .mark { border-color: var(--part); color: var(--part); background: rgba(255,176,32,.12); }
+    .row.miss .mark { border-color: var(--miss); color: var(--miss); background: rgba(255,93,108,.12); }
+    .foot {
+      display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+      margin-top: 22px; color: var(--muted); font-size: 14px;
+    }
+    .back {
+      display: inline-block;
+      margin: 0 0 18px;
+      color: var(--cyan);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 600;
+    }
+    .back:hover { text-decoration: underline; }
+    .legend { display: flex; gap: 16px; flex-wrap: wrap; }
+    .fullc { color: var(--full); }
+    .partc { color: var(--part); }
+    .missc { color: var(--miss); }
+    @media (max-width: 900px) {
+      .banner { grid-template-columns: 1fr; }
+      .row { grid-template-columns: 44px 1fr 34px; }
+    }
+  </style>
+  <link rel="stylesheet" href="/assets/css/hard-sample-chrome.css">
+</head>
+<body>
+  <header class="osa-chrome" aria-label="Order Of Six Angles">
+    <div class="osa-chrome__inner">
+      <a class="osa-chrome__brand" href="/" aria-label="Order Of Six Angles">
+        <img class="osa-chrome__mark" src="/assets/images/orderofsixangles_art/ada.png" alt="Order Of Six Angles logo">
+        <span class="osa-chrome__copy">
+          <span class="osa-chrome__eyebrow">security research</span>
+          <span class="osa-chrome__title">Order Of Six Angles</span>
+        </span>
+      </a>
+      <nav class="osa-chrome__nav" aria-label="Primary navigation">
+        <a class="osa-chrome__link" href="/">Home</a>
+        <a class="osa-chrome__link" href="/ru/">RU</a>
+        <a class="osa-chrome__link" href="/translations/">Translations</a>
+        <a class="osa-chrome__link" href="/samples/">Samples</a>
+        <a class="osa-chrome__link is-active" href="/hard-sample/">Local LLM Testing</a>
+        <a class="osa-chrome__link" href="/art/">Art</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="stage">
+    <a class="back" href="index.html">← Все модели</a>
+    <p class="kicker">Оценка модели по техническому чеклисту</p>
+    <h1>Что нашла Ornith-1.5-35B-A3B-NVFP4</h1>
+    <p class="lede">
+      полный = есть с доказательством, частично = ядро есть / детали потеряны,
+      пропуск = в отчёте нет, хотя ground truth в бинаре есть.
+    </p>
+
+    <div class="meta">
+      <span>модель <code>Ornith-1.5-35B-A3B-NVFP4</code> · vllm/local-coder</span>
+      <span>32 критерия · full=1 · partial=0.5</span>
+    </div>
+
+    <div class="banner">
+      <div class="card warn">
+        <div class="big">25 / 32</div>
+        <p>20 полных · 10 частичных · 2 пропусков</p>
+      </div>
+      <div class="card ok">
+        <div class="big">OK</div>
+        <p>Харнесс: <code>degraded_lift_oversized</code> на <code>0x140003CA0</code>, 4×<code>full</code>. Один schema-error <code>limit&gt;4000</code> — не блокер. Роль диспетчера верная.</p>
+      </div>
+      <div class="card bad">
+        <div class="big">PATH</div>
+        <p>Сильнее Qwen3.6: C2 <code>127.0.0.1:8443</code>, keylog, webcam, TTS, RATConfig. Слабости: путь <code>i/rat/</code> вместо <code>/api/rat/</code>, Sleep(33) вместо backoff, нет wallets/schtasks.</p>
+      </div>
+    </div>
+
+    <div class="scorebar">
+      <div class="bar"><span></span></div>
+      <div class="score">25<small> / 32</small></div>
+    </div>
+
+    <div class="sec">Идентичность и модули</div>
+    <div class="list">
+      <div class="row full"><div class="n">01</div><div><p class="title">Карта модулей агента</p><p class="hint"><code>stealer</code>, <code>persist</code>, <code>keylog</code>, <code>webcam</code>, <code>screenshot</code>, <code>clipper</code>, <code>ransomware</code>, <code>socks5</code>, <code>postex</code>, <code>beacon</code>.</p><p class="why">оценка: Полная карта src/modules: stealer, persist, keylog, webcam, screenshot, clipper, ransomware, postex, socks5, fun и др.</p></div><div class="mark">✓</div></div>
+      <div class="row full"><div class="n">02</div><div><p class="title">TLS-коллбэки = CRT, не payload</p><p class="hint">TlsCallback_* — rust std TLS, не вредоносная логика до entry.</p><p class="why">оценка: TlsCallback_* явно как CRT/std runtime до pe_entry, не payload.</p></div><div class="mark">✓</div></div>
+    </div>
+    <div class="sec">Сеть и C2</div>
+    <div class="list">
+      <div class="row full"><div class="n">03</div><div><p class="title">Транспорт WinHTTP</p><p class="hint"><code>WinHttpOpen/Connect/OpenRequest/SendRequest/ReceiveResponse/ReadData</code>.</p><p class="why">оценка: Полная WinHTTP-цепочка + CloseHandle/SetTimeouts.</p></div><div class="mark">✓</div></div>
+      <div class="row partial"><div class="n">04</div><div><p class="title">Beacon-цикл с backoff и jitter</p><p class="hint"><code>Entering beacon loop</code>, 5000→60000 мс, <code>GetTickCount64</code> jitter.</p><p class="why">оценка: Есть Entering beacon loop / Registered; вместо backoff 5s→60s указан Sleep(33) — timing ошибочен.</p></div><div class="mark">!</div></div>
+      <div class="row partial"><div class="n">05</div><div><p class="title">Регистрация <code>/api/rat/register?id=</code></p><p class="hint">Строки <code>Registering with C2</code>, <code>Registered OK. sleep=</code>.</p><p class="why">оценка: Есть register?id=, но путь искажён до <code>i/rat/register</code> вместо <code>/api/rat/register</code>.</p></div><div class="mark">!</div></div>
+      <div class="row full"><div class="n">06</div><div><p class="title">C2 host/port с доказательством</p><p class="hint">Хост/порт из кода или строк (localhost допустим для тестовой сборки). Внешний домен/IP без доказательства = выдумка.</p><p class="why">оценка: Доказал <code>127.0.0.1:8443</code> из .rdata + WinHttpConnect — тестовая сборка, не выдумка.</p></div><div class="mark">✓</div></div>
+      <div class="row full"><div class="n">07</div><div><p class="title">User-Agent под Chrome</p><p class="hint"><code>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36</code>.</p><p class="why">оценка: UA Chrome процитирован целиком в WinHttpOpen.</p></div><div class="mark">✓</div></div>
+      <div class="row partial"><div class="n">08</div><div><p class="title">Модуль SOCKS5</p><p class="hint"><code>src/modules/socks5.rs</code> + сырой WS2_32.</p><p class="why">оценка: socks5 в карте модулей; WS2_32/детали socks5.rs не разобраны.</p></div><div class="mark">!</div></div>
+      <div class="row full"><div class="n">09</div><div><p class="title">POST-выгрузка украденных данных</p><p class="hint"><code>sub_140012584</code>, POST, <code>WinHttpReceiveResponse FAILED</code>.</p><p class="why">оценка: sub_140012584 как HTTP-клиент с телом / SendRequest+ReceiveResponse.</p></div><div class="mark">✓</div></div>
+    </div>
+    <div class="sec">Стилер учётных данных</div>
+    <div class="list">
+      <div class="row full"><div class="n">10</div><div><p class="title">Chrome cookies + Login Data + DPAPI</p><p class="hint"><code>Google\Chrome\User Data</code>, <code>[Chrome] Decrypting cookies...</code>, <code>CryptUnprotectData</code>.</p><p class="why">оценка: Chrome Cookies path + Decrypting cookies + CryptUnprotectData.</p></div><div class="mark">✓</div></div>
+      <div class="row full"><div class="n">11</div><div><p class="title">Edge cookies</p><p class="hint"><code>Microsoft\Edge\User Data</code>, <code>[Edge] Decrypting cookies...</code>.</p><p class="why">оценка: Edge User Data / Cookies.</p></div><div class="mark">✓</div></div>
+      <div class="row full"><div class="n">12</div><div><p class="title">Firefox cookies / logins</p><p class="hint"><code>Mozilla\Firefox\Profiles</code>, <code>cookies.sqlite</code>, <code>logins.json</code>.</p><p class="why">оценка: cookies.sqlite + plaintext cookies; logins.json не назван.</p></div><div class="mark">✓</div></div>
+      <div class="row full"><div class="n">13</div><div><p class="title">Discord token</p><p class="hint"><code>\discord\Local Storage\leveldb</code>, <code>Token (DPAPI):</code>.</p><p class="why">оценка: Discord LevelDB + cord_token_ / токены.</p></div><div class="mark">✓</div></div>
+      <div class="row full"><div class="n">14</div><div><p class="title">Telegram tdata</p><p class="hint"><code>\Telegram Desktop\tdata</code> и <code>\Telegram\tdata</code>.</p><p class="why">оценка: Явно tdata + «Telegram tdata not found.»</p></div><div class="mark">✓</div></div>
+      <div class="row miss"><div class="n">15</div><div><p class="title">Криптокошельки</p><p class="hint"><code>Bitcoin\wallets\wallet.dat</code>, <code>Electrum\wallets</code>.</p><p class="why">оценка: Bitcoin/Electrum wallet.dat в отчёте нет.</p></div><div class="mark">⨯</div></div>
+      <div class="row partial"><div class="n">16</div><div><p class="title">Расшифровка master key через DPAPI</p><p class="hint"><code>CryptUnprotectData</code> для Chrome/Edge master key.</p><p class="why">оценка: CryptUnprotectData/DATA_BLOB есть; цепочка master key → AES не расписана.</p></div><div class="mark">!</div></div>
+      <div class="row partial"><div class="n">17</div><div><p class="title">BCrypt в цепочке расшифровки браузера</p><p class="hint"><code>BCryptOpenAlgorithmProvider</code> / <code>BCryptDecrypt</code> рядом с cookies.</p><p class="why">оценка: Только BCryptGenerateSymmetricKey; BCryptDecrypt/OpenAlgorithmProvider у cookies нет.</p></div><div class="mark">!</div></div>
+    </div>
+    <div class="sec">Персист, процесс, наблюдение</div>
+    <div class="list">
+      <div class="row full"><div class="n">18</div><div><p class="title">Автозапуск HKCU Run</p><p class="hint"><code>Software\Microsoft\Windows\CurrentVersion\Run</code>, <code>RegCreateKeyExA</code>/<code>RegSetValueExA</code>.</p><p class="why">оценка: HKCU CurrentVersion\Run + RegCreateKeyExA/RegSetValueExA.</p></div><div class="mark">✓</div></div>
+      <div class="row miss"><div class="n">19</div><div><p class="title">Scheduled Task через schtasks</p><p class="hint"><code>schtasks /create /tn "</code> и <code>/delete</code> через <code>cmd.exe /c</code>.</p><p class="why">оценка: schtasks /create|/delete не упомянуты.</p></div><div class="mark">⨯</div></div>
+      <div class="row full"><div class="n">20</div><div><p class="title">Свой ключ <code>Software\RATConfig</code></p><p class="hint">Конфиг агента в реестре.</p><p class="why">оценка: Software\RATConfig назван.</p></div><div class="mark">✓</div></div>
+      <div class="row partial"><div class="n">21</div><div><p class="title">Remote inject quartet</p><p class="hint"><code>OpenProcess</code> + <code>VirtualAllocEx</code> + <code>WriteProcessMemory</code> + <code>CreateRemoteThread</code> (<code>postex.rs</code>).</p><p class="why">оценка: OpenProcess + WriteProcessMemory есть; VirtualAllocEx + CreateRemoteThread нет.</p></div><div class="mark">!</div></div>
+      <div class="row partial"><div class="n">22</div><div><p class="title">Выполнение команд: <code>cmd.exe /c</code> + <code>CreateProcessA</code></p><p class="hint">Spawn shell / child process для задач C2.</p><p class="why">оценка: CreateProcessA×5 + ShellExecute SW_HIDE; cmd.exe /c не назван.</p></div><div class="mark">!</div></div>
+      <div class="row full"><div class="n">23</div><div><p class="title">Кейлоггер</p><p class="hint"><code>keylog.rs</code>, <code>SetWindowsHookExA</code>, <code>GetAsyncKeyState</code>, <code>ToUnicodeEx</code>.</p><p class="why">оценка: keylog + SetWindowsHookExA + GetAsyncKeyState.</p></div><div class="mark">✓</div></div>
+      <div class="row full"><div class="n">24</div><div><p class="title">Скриншот (GDI / screenshot.rs)</p><p class="hint"><code>BitBlt</code>/<code>GetDIBits</code>, <code>src/modules/screenshot.rs</code>.</p><p class="why">оценка: BitBlt/GetDIBits/Gdip + screenshot module.</p></div><div class="mark">✓</div></div>
+      <div class="row full"><div class="n">25</div><div><p class="title">Webcam через AVICAP32</p><p class="hint"><code>webcam.rs</code>, <code>capCreateCaptureWindowA</code>, не «скриншот».</p><p class="why">оценка: capCreateCaptureWindowA + webcam отдельно от скриншота.</p></div><div class="mark">✓</div></div>
+      <div class="row partial"><div class="n">26</div><div><p class="title">Крипто-клиппер</p><p class="hint"><code>clipper.rs</code>, префиксы <code>bc1</code>/<code>ltc1</code>.</p><p class="why">оценка: clipper + clipboard API + «крипто-адреса»; префиксы bc1/ltc1 нет.</p></div><div class="mark">!</div></div>
+      <div class="row partial"><div class="n">27</div><div><p class="title">Ransomware-модуль + удаление теней</p><p class="hint"><code>ransomware.rs</code>, <code>vssadmin delete shadows /all /quiet</code>.</p><p class="why">оценка: ransomware в карте модулей; vssadmin delete shadows нет.</p></div><div class="mark">!</div></div>
+      <div class="row partial"><div class="n">28</div><div><p class="title">Управление службами (SCM)</p><p class="hint"><code>OpenSCManagerA</code>/<code>ControlService</code>/<code>EnumServicesStatusExA</code> — без фантазии про конкретный AV.</p><p class="why">оценка: SCM API верны; формулировка «подавление защиты» без цели — мягкая гипотеза.</p></div><div class="mark">!</div></div>
+      <div class="row full"><div class="n">29</div><div><p class="title">Fun: TTS через PowerShell SpeechSynthesizer</p><p class="hint"><code>powershell -Command "Add-Type ... SpeechSynthesizer; $s.Speak(</code>.</p><p class="why">оценка: powershell SpeechSynthesizer.Speak процитирован.</p></div><div class="mark">✓</div></div>
+    </div>
+    <div class="sec">Большая функция · диспетчер</div>
+    <div class="list">
+      <div class="row full"><div class="n">30</div><div><p class="title">Бекенд: lift + capability_map без hang</p><p class="hint"><code>0x140003CA0</code> → <code>degraded_lift_oversized</code>, region 11 @ 264194, counts CreateProcess/Reg*.</p><p class="why">оценка: degraded_lift_oversized на 0x140003CA0 получен; 35 КБ / commands.rs использованы.</p></div><div class="mark">✓</div></div>
+      <div class="row full"><div class="n">31</div><div><p class="title">Использовала ranked callees / counts</p><p class="hint">CreateProcessA×5, RegOpenKeyExA×9 и т.д. в финале.</p><p class="why">оценка: CreateProcessA×5 и набор Reg* из lift/capability доехали в финал.</p></div><div class="mark">✓</div></div>
+      <div class="row full"><div class="n">32</div><div><p class="title">Роль <code>sub_140003CA0</code> = command dispatcher</p><p class="hint">Не «main stealer». Стилер — <code>sub_14000F9D1</code>; 3CA0 зовётся из beacon с command id.</p><p class="why">оценка: sub_140003CA0 = главный цикл RAT-команд / engine/commands.rs, не «main stealer».</p></div><div class="mark">✓</div></div>
+    </div>
+
+    <p class="foot">
+      <div class="legend">
+        <span class="fullc">✓ полностью</span>
+        <span class="partc">! частично</span>
+        <span class="missc">⨯ пропущено</span>
+      </div>
+    </p>
+  </div>
+</body>
+</html>

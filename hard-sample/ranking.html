@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Рейтинг · hard sample</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #071018;
+      --ink: #f3f6fb;
+      --muted: #9aabc0;
+      --line: rgba(160, 196, 232, .16);
+      --cyan: #5ee0c7;
+      --full: #3dd68c;
+      --part: #ffb020;
+      --num: #7ec8ff;
+      --panel: rgba(12, 24, 38, .88);
+      --sans: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+      --mono: "Source Code Pro", ui-monospace, Menlo, Consolas, monospace;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; }
+    body {
+      font-family: var(--sans);
+      font-size: 17px;
+      line-height: 1.5;
+      color: var(--ink);
+      background:
+        radial-gradient(900px 420px at 8% -10%, rgba(94, 224, 199, .14), transparent 55%),
+        radial-gradient(720px 380px at 100% 0%, rgba(126, 200, 255, .12), transparent 50%),
+        repeating-linear-gradient(0deg, transparent 0 31px, rgba(126, 200, 255, .045) 31px 32px),
+        repeating-linear-gradient(90deg, transparent 0 31px, rgba(126, 200, 255, .045) 31px 32px),
+        linear-gradient(180deg, #0a1624, var(--bg));
+    }
+    .stage {
+      width: min(980px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 48px 0 64px;
+      min-height: auto;
+      display: block;
+    }
+    .kicker {
+      color: var(--cyan);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin: 0 0 10px;
+    }
+    h1 {
+      font-size: clamp(34px, 4.2vw, 48px);
+      font-weight: 700;
+      letter-spacing: -.02em;
+      line-height: 1.1;
+      margin: 0 0 12px;
+    }
+    .lede {
+      margin: 0 0 28px;
+      color: var(--muted);
+      font-size: 18px;
+      max-width: 52ch;
+      line-height: 1.55;
+    }
+    .list { display: grid; gap: 12px; }
+    a.model {
+      display: block;
+      padding: 18px 20px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: linear-gradient(180deg, rgba(18, 34, 52, .82), rgba(10, 20, 32, .78));
+      text-decoration: none;
+      color: inherit;
+      transition: border-color .2s ease, transform .2s ease;
+    }
+    a.model:hover {
+      border-color: rgba(94, 224, 199, .45);
+      transform: translateY(-1px);
+    }
+    .name {
+      font-size: 22px;
+      font-weight: 700;
+      margin: 0 0 4px;
+      line-height: 1.2;
+    }
+    .meta {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+    .meta code {
+      font-family: var(--mono);
+      font-size: .92em;
+      color: var(--cyan);
+    }
+    a.ref {
+      display: block;
+      margin: 0 0 12px;
+      padding: 14px 18px;
+      border: 1px dashed rgba(94, 224, 199, .35);
+      border-radius: 14px;
+      color: var(--cyan);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 16px;
+      background: rgba(94, 224, 199, .05);
+    }
+    a.ref:hover { border-color: rgba(94, 224, 199, .6); }
+    a.ref span { display: block; margin-top: 4px; color: var(--muted); font-weight: 400; font-size: 14px; }
+    .links { margin: 0 0 22px; }
+    .foot {
+      margin-top: 28px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .foot code { font-family: var(--mono); color: var(--cyan); font-size: .92em; }
+
+    a.model {
+      display: grid;
+      grid-template-columns: 48px 1fr auto;
+      gap: 16px;
+      align-items: center;
+    }
+    .rank {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--num);
+      text-align: center;
+    }
+    .score {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--part);
+      white-space: nowrap;
+    }
+    .score small {
+      color: var(--muted);
+      font-size: 15px;
+      font-weight: 600;
+    }
+    .back {
+      display: inline-block;
+      margin: 0 0 18px;
+      color: var(--cyan);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 600;
+    }
+    .back:hover { text-decoration: underline; }
+
+  </style>
+  <link rel="stylesheet" href="/assets/css/hard-sample-chrome.css">
+</head>
+<body>
+  <header class="osa-chrome" aria-label="Order Of Six Angles">
+    <div class="osa-chrome__inner">
+      <a class="osa-chrome__brand" href="/" aria-label="Order Of Six Angles">
+        <img class="osa-chrome__mark" src="/assets/images/orderofsixangles_art/ada.png" alt="Order Of Six Angles logo">
+        <span class="osa-chrome__copy">
+          <span class="osa-chrome__eyebrow">security research</span>
+          <span class="osa-chrome__title">Order Of Six Angles</span>
+        </span>
+      </a>
+      <nav class="osa-chrome__nav" aria-label="Primary navigation">
+        <a class="osa-chrome__link" href="/">Home</a>
+        <a class="osa-chrome__link" href="/ru/">RU</a>
+        <a class="osa-chrome__link" href="/translations/">Translations</a>
+        <a class="osa-chrome__link" href="/samples/">Samples</a>
+        <a class="osa-chrome__link is-active" href="/hard-sample/">Local LLM Testing</a>
+        <a class="osa-chrome__link" href="/art/">Art</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="stage">
+    <a class="back" href="index.html">← Все модели</a>
+    <h1>Рейтинг моделей</h1>
+    <p class="lede">Один чеклист на 32 критерия. Полный = 1, частично = 0.5, пропуск = 0.</p>
+
+    <div class="list">
+      <a class="model" href="claude-sonnet-5.html">
+        <div class="rank">1</div>
+        <div>
+          <p class="name">Anthropic: Claude Sonnet 5</p>
+          <p class="meta">27 полных · 5 частичных · 0 пропусков</p>
+        </div>
+        <div class="score">29.5<small> / 32</small></div>
+      </a>
+      <a class="model" href="qwen3.8-27b-nvfp4.html">
+        <div class="rank">2</div>
+        <div>
+          <p class="name">Qwen3.8-27B-NVFP4</p>
+          <p class="meta">27 полных · 4 частичных · 1 пропусков</p>
+        </div>
+        <div class="score">29<small> / 32</small></div>
+      </a>
+      <a class="model" href="ornith-1.5-35b-a3b-nvfp4.html">
+        <div class="rank">3</div>
+        <div>
+          <p class="name">Ornith-1.5-35B-A3B-NVFP4</p>
+          <p class="meta">20 полных · 10 частичных · 2 пропусков</p>
+        </div>
+        <div class="score">25<small> / 32</small></div>
+      </a>
+      <a class="model" href="qwen3.6-27b-mtp-gguf.html">
+        <div class="rank">4</div>
+        <div>
+          <p class="name">Qwen3.6-27B-MTP-GGUF</p>
+          <p class="meta">16 полных · 4 частичных · 12 пропусков</p>
+        </div>
+        <div class="score">18<small> / 32</small></div>
+      </a>
+      <a class="model" href="qwen3.6-35b-a3b-nvfp4.html">
+        <div class="rank">5</div>
+        <div>
+          <p class="name">Qwen3.6-35B-A3B-NVFP4</p>
+          <p class="meta">13 полных · 5 частичных · 14 пропусков</p>
+        </div>
+        <div class="score">15.5<small> / 32</small></div>
+      </a>
+      <a class="model" href="muse-glimmer-30b-nvfp4.html">
+        <div class="rank">6</div>
+        <div>
+          <p class="name">Muse-Glimmer-30B-NVFP4</p>
+          <p class="meta">13 полных · 3 частичных · 16 пропусков</p>
+        </div>
+        <div class="score">14.5<small> / 32</small></div>
+      </a>
+      <a class="model" href="qwen3.6-35b-a3b-claude-opus-distilled-nvfp4.html">
+        <div class="rank">7</div>
+        <div>
+          <p class="name">Qwen3.6-35B-A3B-Claude-Opus-Distilled-NVFP4</p>
+          <p class="meta">9 полных · 7 частичных · 16 пропусков</p>
+        </div>
+        <div class="score">12.5<small> / 32</small></div>
+      </a>
+      <a class="model" href="ternary-bonsai-27b-q2_0.html">
+        <div class="rank">8</div>
+        <div>
+          <p class="name">Ternary-Bonsai-27B-Q2_0</p>
+          <p class="meta">10 полных · 4 частичных · 18 пропусков</p>
+        </div>
+        <div class="score">12<small> / 32</small></div>
+      </a>
+      <a class="model" href="glm-4.7-flash-nvfp4.html">
+        <div class="rank">9</div>
+        <div>
+          <p class="name">GLM-4.7-Flash-NVFP4</p>
+          <p class="meta">8 полных · 4 частичных · 20 пропусков</p>
+        </div>
+        <div class="score">10<small> / 32</small></div>
+      </a>
+      <a class="model" href="qwen3.8-27b-uncensored-cyber.html">
+        <div class="rank">10</div>
+        <div>
+          <p class="name">Qwen3.8-27B-Uncensored-Cyber</p>
+          <p class="meta">8 полных · 3 частичных · 21 пропусков</p>
+        </div>
+        <div class="score">9.5<small> / 32</small></div>
+      </a>
+      <a class="model" href="nvidia-nemotron-3.5-lightning-30b-a3b-nvfp4.html">
+        <div class="rank">11</div>
+        <div>
+          <p class="name">NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4</p>
+          <p class="meta">6 полных · 4 частичных · 22 пропусков</p>
+        </div>
+        <div class="score">8<small> / 32</small></div>
+      </a>
+    </div>
+  </div>
+</body>
+</html>

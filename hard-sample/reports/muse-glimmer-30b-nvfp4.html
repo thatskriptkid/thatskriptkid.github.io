@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Отчет · Muse-Glimmer-30B-NVFP4</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #071018;
+      --ink: #f3f6fb;
+      --muted: #9aabc0;
+      --line: rgba(160, 196, 232, .16);
+      --cyan: #5ee0c7;
+      --num: #7ec8ff;
+      --sans: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+      --mono: "Source Code Pro", ui-monospace, Menlo, Consolas, monospace;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; }
+    body {
+      font-family: var(--sans);
+      font-size: 17px;
+      line-height: 1.55;
+      color: var(--ink);
+      background:
+        radial-gradient(900px 420px at 8% -10%, rgba(94, 224, 199, .14), transparent 55%),
+        radial-gradient(720px 380px at 100% 0%, rgba(126, 200, 255, .12), transparent 50%),
+        repeating-linear-gradient(0deg, transparent 0 31px, rgba(126, 200, 255, .045) 31px 32px),
+        repeating-linear-gradient(90deg, transparent 0 31px, rgba(126, 200, 255, .045) 31px 32px),
+        linear-gradient(180deg, #0a1624, var(--bg));
+    }
+    .stage {
+      width: min(900px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 36px 0 64px;
+    }
+    .back {
+      display: inline-block;
+      margin: 0 0 18px;
+      color: var(--cyan);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 600;
+    }
+    .back:hover { text-decoration: underline; }
+    .kicker {
+      color: var(--cyan);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin: 0 0 10px;
+    }
+    h1 {
+      font-size: clamp(28px, 3.6vw, 40px);
+      font-weight: 700;
+      letter-spacing: -.02em;
+      line-height: 1.15;
+      margin: 0 0 10px;
+    }
+    .meta {
+      margin: 0 0 28px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+    .meta code {
+      font-family: var(--mono);
+      font-size: .92em;
+      color: var(--cyan);
+    }
+    .report {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 28px 30px;
+      background: linear-gradient(180deg, rgba(18, 34, 52, .82), rgba(10, 20, 32, .78));
+    }
+    .report h1, .report h2, .report h3, .report h4 {
+      color: var(--ink);
+      letter-spacing: -.01em;
+      margin: 1.4em 0 .55em;
+      line-height: 1.25;
+    }
+    .report h1 { font-size: 1.55em; margin-top: 0; }
+    .report h2 { font-size: 1.28em; color: var(--num); }
+    .report h3 { font-size: 1.12em; }
+    .report p { margin: 0 0 1em; }
+    .report ul, .report ol { margin: 0 0 1em; padding-left: 1.35em; }
+    .report li { margin: 0.25em 0; }
+    .report code {
+      font-family: var(--mono);
+      font-size: .9em;
+      color: var(--cyan);
+    }
+    .report pre {
+      margin: 0 0 1.1em;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: rgba(7, 16, 24, .72);
+      overflow-x: auto;
+      font-family: var(--mono);
+      font-size: 13.5px;
+      line-height: 1.5;
+      color: #d5e6f5;
+    }
+    .report pre code { color: inherit; }
+    .report table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0 0 1.2em;
+      font-size: 15px;
+    }
+    .report th, .report td {
+      border: 1px solid var(--line);
+      padding: 8px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+    .report th {
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      background: rgba(255,255,255,.03);
+    }
+    .report strong { color: #fff; font-weight: 600; }
+    .foot {
+      margin-top: 22px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+  </style>
+  <link rel="stylesheet" href="/assets/css/hard-sample-chrome.css">
+</head>
+<body>
+  <header class="osa-chrome" aria-label="Order Of Six Angles">
+    <div class="osa-chrome__inner">
+      <a class="osa-chrome__brand" href="/" aria-label="Order Of Six Angles">
+        <img class="osa-chrome__mark" src="/assets/images/orderofsixangles_art/ada.png" alt="Order Of Six Angles logo">
+        <span class="osa-chrome__copy">
+          <span class="osa-chrome__eyebrow">security research</span>
+          <span class="osa-chrome__title">Order Of Six Angles</span>
+        </span>
+      </a>
+      <nav class="osa-chrome__nav" aria-label="Primary navigation">
+        <a class="osa-chrome__link" href="/">Home</a>
+        <a class="osa-chrome__link" href="/ru/">RU</a>
+        <a class="osa-chrome__link" href="/translations/">Translations</a>
+        <a class="osa-chrome__link" href="/samples/">Samples</a>
+        <a class="osa-chrome__link is-active" href="/hard-sample/">Local LLM Testing</a>
+        <a class="osa-chrome__link" href="/art/">Art</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="stage">
+    <a class="back" href="../index.html">← Все модели</a>
+    <p class="kicker">Финальный ответ модели</p>
+    <h1>Muse-Glimmer-30B-NVFP4</h1>
+    <div class="report">
+<p><strong>Статический анализ V5 IDA</strong></p>
+<p><em>Файл</em></p>
+<ul>
+<li>* PE AMD64, <code>image_base = 0x140000000</code></li>
+<li>* <code>entry_point = 0x140045A50</code> имя <code>start</code></li>
+<li>* <code>.text 0x140001000-0x14006c000</code>, <code>.rdata</code>, <code>.idata</code>, <code>.data</code>, <code>.tls</code> – 8 сегментов</li>
+<li>* функций 1278, строк 806</li>
+</ul>
+<p><em>Точка входа и TLS</em><br>
+PE entry <code>start @ 0x140045A50</code> – MinGW CRT startup, вызывает <code>__mingw_CRTStartup</code>.<br>
+TLS callbacks запускаются до PE entry:</p>
+<ul>
+<li>* <code>TlsCallback_0 0x140024610</code> – <code>_RNvNtNtNtNtCs1NhsA7xdTVp_3std3sys12thread_local5guard7windows12tls_callback</code></li>
+<li>* <code>TlsCallback_1 0x140045AE0</code></li>
+<li>* <code>TlsCallback_2 0x140045B70</code></li>
+</ul>
+<p><code>execution_note</code>: TLS callbacks run before PE entry; they look like CRT/runtime - do not decompile unless asked</p>
+<p><em>Импорты</em><br>
+<code>KERNEL32</code> 99, <code>USER32</code> 26, <code>ADVAPI32</code> 16, <code>api-ms-win-crt-runtime-l1-1-0</code> 14, <code>WS2_32</code> 13, <code>WINMM</code> 8, <code>WINHTTP</code> 8, <code>GDI32</code> 7, <code>bcrypt</code> 6, <code>api-ms-win-crt-stdio-l1-1-0</code> 6, <code>ole32</code> 4, <code>gdiplus</code> 4.<br>
+Примеры:</p>
+<ul>
+<li>* <code>ADVAPI32.RegCreateKeyExA</code>, <code>RegSetValueExA</code>, <code>RegDeleteKeyA</code>, <code>RegDeleteValueA</code>, <code>RegOpenKeyExA</code>, <code>RegQueryValueExA</code>, <code>RegCloseKey</code>, <code>StartServiceA</code>, <code>OpenSCManagerA</code>, <code>OpenServiceA</code>, <code>CloseServiceHandle</code>, <code>ControlService</code></li>
+<li>* <code>WINHTTP.WinHttpOpen</code>, <code>WinHttpConnect</code>, <code>WinHttpOpenRequest</code>, <code>WinHttpSendRequest</code>, <code>WinHttpReceiveResponse</code>, <code>WinHttpReadData</code>, <code>WinHttpCloseHandle</code></li>
+<li>* <code>bcrypt.BCryptOpenAlgorithmProvider</code>, <code>BCryptGenerateSymmetricKey</code>, <code>BCryptDecrypt</code>, <code>BCryptDestroyKey</code>, <code>BCryptCloseAlgorithmProvider</code>, <code>BCryptSetProperty</code></li>
+<li>* <code>CRYPT32.CryptUnprotectData</code></li>
+</ul>
+<p><em>Строки – поведенческие маркеры</em></p>
+<ul>
+<li>* <code>Software\Microsoft\Windows\CurrentVersion\Run</code> @ 0x14007FD88</li>
+<li>* <code>[Firefox] Not running.</code> / <code>[Firefox] Reading cookies (plaintext)...</code> @ 0x14008029A</li>
+<li>* <code>[Chrome] Not running.</code> / <code>[Chrome] Decrypting cookies...</code> @ 0x140080120</li>
+<li>* <code>[Edge] Not running.</code> / <code>[Edge] Decrypting cookies...</code> @ 0x140080202</li>
+<li>* <code>Microsoft\Edge\User Data\Default\Network\Cookies</code> @ 0x14008025F</li>
+<li>* <code>Google\Chrome\User Data\Default\Network\Cookies</code> @ 0x140080197</li>
+<li>* <code>\\cookies.sqlite</code> @ 0x140080315</li>
+<li>* <code>Discord is not running.</code> / <code>Cannot get AppData.</code> / <code>=== Discord ===</code> @ 0x14007FFEE</li>
+<li>* <code>Telegram is not running.</code> @ 0x140080331</li>
+<li>* <code>Initializing HTTP transport...</code> @ 0x14007DB29</li>
+<li>* <code>HTTP transport initialized.</code> @ 0x14007DB47</li>
+<li>* <code>HTTP transport initialized OK.</code> @ 0x140080D7F</li>
+<li>* <code>Registered. Entering main loop.</code> @ 0x140080DFB</li>
+<li>* <code>HttpSendRequest FAILED (GetLastError=</code> @ 0x140080CE4</li>
+<li>* <code>WinHttpReceiveResponse FAILED</code> @ 0x140080C9B</li>
+<li>* <code>src/main.rs</code> @ 0x14007DC38</li>
+</ul>
+<p><em>Код</em></p>
+<p><code>sub_140001000 @ 0x140001000</code> – основной цикл бикона.<br>
+Псевдокод содержит:</p>
+<pre><code>sub_140002498(aInitializingHt, 30); // &quot;Initializing HTTP transport...&quot;
+sub_1400122FE();
+sub_140002498(aHttpTransportI, 27);
+sub_140002498(aEnteringBeacon, 23);
+...
+sub_140002498(aRegisteredEnte, 31); // &quot;Registered. Entering main loop.&quot;</code></pre>
+<p>Внутри цикла:</p>
+<ul>
+<li>* <code>WinHttpOpenRequest(hConnect, pwszVerb, pwszObjectName, nullptr, nullptr, nullptr, 0x100u)</code></li>
+</ul>
+<p>  <code>WINHTTP_FLAG_BYPASS_PROXY_CACHE = 0x100</code> – подтверждено в <code>resolved_constants</code></p>
+<ul>
+<li>* <code>WinHttpSendRequest</code>, <code>WinHttpReceiveResponse</code>, <code>WinHttpReadData</code></li>
+<li>* после получения данных вызывается <code>sub_140003CA0(v35, v15+v32, v33, v94)</code> – обработка команд</li>
+</ul>
+<p><code>sub_140003CA0 @ 0x140003CA0</code> – 35 822 байта, вызывается из <code>sub_140001000</code>.<br>
+Capability map:</p>
+<ul>
+<li>* <code>CreateProcessA</code> 5 раз, <code>OpenProcess</code> 2 раза</li>
+<li>* <code>RegCreateKeyExA</code>, <code>RegDeleteKeyA</code> 2, <code>RegDeleteValueA</code> 4, <code>RegOpenKeyExA</code> 9, <code>RegQueryValueExA</code> 4, <code>RegSetValueExA</code> 4</li>
+<li>* ссылки на строку <code>Software\Microsoft\Windows\CurrentVersion\Run</code> @ 0x140004F51 и 0x14000C4F8</li>
+</ul>
+<p>Поведение – персистентность в <code>Run</code>, создание/удаление сервисов, запуск процессов.</p>
+<p><code>sub_14000F9D1 @ 0x14000F9D1</code> – извлечение cookies/данных браузеров.<br>
+Вызывается из <code>sub_140003CA0</code>.<br>
+Псевдокод:</p>
+<ul>
+<li>* проверка наличия <code>chrome.exe</code>, <code>msedge.exe</code>, <code>firefox.exe</code> через <code>sub_14001078C</code></li>
+<li>* сообщения:</li>
+</ul>
+<p>  * <code>[Chrome] Not running.</code> / <code>[Chrome] Decrypting cookies...</code> @ 0x140080120<br>
+  * <code>Cannot decrypt master key.</code> @ 0x1400801DD</p>
+<ul>
+<li>* пути:</li>
+</ul>
+<p>  * <code>Microsoft\Edge\User Data\Default\Network\Cookies</code><br>
+  * <code>Google\Chrome\User Data\Default\Network\Cookies</code><br>
+  * <code>\\cookies.sqlite</code></p>
+<ul>
+<li>* работа с файловой системой: <code>FindFirstFileA</code>, <code>FindNextFileA</code>, <code>CreateFileA</code>, <code>ReadFile</code></li>
+<li>* криптография: использование <code>BCryptOpenAlgorithmProvider</code>, <code>BCryptGenerateSymmetricKey</code>, <code>BCryptDecrypt</code>, <code>CryptUnprotectData</code> для расшифровки мастер-ключа Chrome/Edge и чтения SQLite cookies Firefox.</li>
+</ul>
+<p>Сетевой модуль:</p>
+<ul>
+<li>* инициализация WinHTTP транспортом, печать <code>Initializing HTTP transport...</code>, <code>HTTP transport initialized OK.</code></li>
+<li>* периодический <code>Sleep</code> с экспоненциальным backoff 5000 &lt;&lt; v7, ограничение 60000 мс</li>
+<li>* beacon loop с <code>WinHttpOpenRequest</code>/<code>WinHttpSendRequest</code>/<code>WinHttpReceiveResponse</code></li>
+<li>* обработка ответов в <code>sub_140003CA0</code></li>
+</ul>
+<p>Реестр / персистентность:</p>
+<ul>
+<li>* <code>Software\Microsoft\Windows\CurrentVersion\Run</code> используется для автозапуска</li>
+<li>* <code>RegCreateKeyExA</code>, <code>RegSetValueExA</code>, <code>RegOpenKeyExA</code>, <code>RegQueryValueExA</code> – чтение/запись ключей</li>
+<li>* <code>HKCR</code>, <code>HKEY_CLASSES_ROOT</code>, <code>HKCU</code>, <code>HKEY_CURRENT_USER</code>, <code>HKLM</code> упоминаются в конкатенированной строке <code>HKCRHKEY_CLASSES_ROOTHKCUHKEY_CURRENT_USERHKLM</code> @ 0x1400806A8</li>
+</ul>
+<p>Крипто:</p>
+<ul>
+<li>* <code>bcrypt</code> импорты для AES/DPAPI расшифровки</li>
+<li>* <code>CryptUnprotectData</code> из CRYPT32</li>
+</ul>
+<p>Таким образом, образец – 64-битный Rust/MinGW бинарник с TLS-хуками CRT, HTTP-beacon на WinHTTP, персистентностью через реестр Run, созданием процессов, и крадущим cookies/мелкие данные из Firefox, Chrome, Edge, Discord, Telegram с использованием BCrypt/CryptUnprotectData для расшифровки.</p>
+    </div>
+  </div>
+</body>
+</html>

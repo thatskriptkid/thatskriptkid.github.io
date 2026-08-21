@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Отчет · Ornith-1.5-35B-A3B-NVFP4</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #071018;
+      --ink: #f3f6fb;
+      --muted: #9aabc0;
+      --line: rgba(160, 196, 232, .16);
+      --cyan: #5ee0c7;
+      --num: #7ec8ff;
+      --sans: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+      --mono: "Source Code Pro", ui-monospace, Menlo, Consolas, monospace;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; }
+    body {
+      font-family: var(--sans);
+      font-size: 17px;
+      line-height: 1.55;
+      color: var(--ink);
+      background:
+        radial-gradient(900px 420px at 8% -10%, rgba(94, 224, 199, .14), transparent 55%),
+        radial-gradient(720px 380px at 100% 0%, rgba(126, 200, 255, .12), transparent 50%),
+        repeating-linear-gradient(0deg, transparent 0 31px, rgba(126, 200, 255, .045) 31px 32px),
+        repeating-linear-gradient(90deg, transparent 0 31px, rgba(126, 200, 255, .045) 31px 32px),
+        linear-gradient(180deg, #0a1624, var(--bg));
+    }
+    .stage {
+      width: min(900px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 36px 0 64px;
+    }
+    .back {
+      display: inline-block;
+      margin: 0 0 18px;
+      color: var(--cyan);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 600;
+    }
+    .back:hover { text-decoration: underline; }
+    .kicker {
+      color: var(--cyan);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin: 0 0 10px;
+    }
+    h1 {
+      font-size: clamp(28px, 3.6vw, 40px);
+      font-weight: 700;
+      letter-spacing: -.02em;
+      line-height: 1.15;
+      margin: 0 0 10px;
+    }
+    .meta {
+      margin: 0 0 28px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+    .meta code {
+      font-family: var(--mono);
+      font-size: .92em;
+      color: var(--cyan);
+    }
+    .report {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 28px 30px;
+      background: linear-gradient(180deg, rgba(18, 34, 52, .82), rgba(10, 20, 32, .78));
+    }
+    .report h1, .report h2, .report h3, .report h4 {
+      color: var(--ink);
+      letter-spacing: -.01em;
+      margin: 1.4em 0 .55em;
+      line-height: 1.25;
+    }
+    .report h1 { font-size: 1.55em; margin-top: 0; }
+    .report h2 { font-size: 1.28em; color: var(--num); }
+    .report h3 { font-size: 1.12em; }
+    .report p { margin: 0 0 1em; }
+    .report ul, .report ol { margin: 0 0 1em; padding-left: 1.35em; }
+    .report li { margin: 0.25em 0; }
+    .report code {
+      font-family: var(--mono);
+      font-size: .9em;
+      color: var(--cyan);
+    }
+    .report pre {
+      margin: 0 0 1.1em;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: rgba(7, 16, 24, .72);
+      overflow-x: auto;
+      font-family: var(--mono);
+      font-size: 13.5px;
+      line-height: 1.5;
+      color: #d5e6f5;
+    }
+    .report pre code { color: inherit; }
+    .report table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0 0 1.2em;
+      font-size: 15px;
+    }
+    .report th, .report td {
+      border: 1px solid var(--line);
+      padding: 8px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+    .report th {
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      background: rgba(255,255,255,.03);
+    }
+    .report strong { color: #fff; font-weight: 600; }
+    .foot {
+      margin-top: 22px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+  </style>
+  <link rel="stylesheet" href="/assets/css/hard-sample-chrome.css">
+</head>
+<body>
+  <header class="osa-chrome" aria-label="Order Of Six Angles">
+    <div class="osa-chrome__inner">
+      <a class="osa-chrome__brand" href="/" aria-label="Order Of Six Angles">
+        <img class="osa-chrome__mark" src="/assets/images/orderofsixangles_art/ada.png" alt="Order Of Six Angles logo">
+        <span class="osa-chrome__copy">
+          <span class="osa-chrome__eyebrow">security research</span>
+          <span class="osa-chrome__title">Order Of Six Angles</span>
+        </span>
+      </a>
+      <nav class="osa-chrome__nav" aria-label="Primary navigation">
+        <a class="osa-chrome__link" href="/">Home</a>
+        <a class="osa-chrome__link" href="/ru/">RU</a>
+        <a class="osa-chrome__link" href="/translations/">Translations</a>
+        <a class="osa-chrome__link" href="/samples/">Samples</a>
+        <a class="osa-chrome__link is-active" href="/hard-sample/">Local LLM Testing</a>
+        <a class="osa-chrome__link" href="/art/">Art</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="stage">
+    <a class="back" href="../index.html">← Все модели</a>
+    <p class="kicker">Финальный ответ модели</p>
+    <h1>Ornith-1.5-35B-A3B-NVFP4</h1>
+    <div class="report">
+<p>Анализ завершён. Все поведенческие утверждения подтверждены inspected-кодом (псевдокод функций sub_1400122FE, sub_140012584, sub_14000D2F6, sub_140002E2A, sub_140003CA0) и импортной таблицей.</p>
+<p>---</p>
+<h1>Статический анализ PE — Rust RAT / инфомер</h1>
+<h2>Общая информация</h2>
+<ul>
+<li>- <strong>Файл:</strong> Portable executable для AMD64, 64-bit, image base <code>0x140000000</code>.</li>
+<li>- <strong>Язык сборки:</strong> Rust (манглированные имена <code>_RNvNt...</code>, встроенный PDB-путь <strong><code>rat-ae0625d82abff395.pdb</code></strong>).</li>
+<li>- <strong>Точка входа (<code>pe_entry</code>):</strong> <code>start</code> @ <code>0x140045A50</code>. <strong><code>tls_callbacks</code>:</strong> три функции — <code>TlsCallback_0</code> (<code>0x140024610</code>, CRT-guard), <code>TlsCallback_1</code> (<code>0x140045AE0</code>), <code>TlsCallback_2</code> (<code>0x140045B70</code>) — выполняются <strong>до</strong> входа в PE; по содержимому это runtime-обвязка std, декомпилироваться не требовалась.</li>
+<li>- <strong>Размер:</strong> 1278 функций, 806 строк, секции <code>.text/.rdata/.idata/.data/.tls</code>.</li>
+</ul>
+<h2>Сетевое поведение / C2 (подтверждено кодом)</h2>
+<ul>
+<li>- Используется <strong>WINHTTP</strong> (не WinINet): <code>WinHttpOpen/Connect/OpenRequest/SendRequest/ReceiveResponse/ReadData/CloseHandle/SetTimeouts</code>.</li>
+<li>- <strong>sub_1400122FE</strong> — инициализация транспорта: <code>WinHttpOpen</code> с агентом-юзер-агентом <strong><code>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36</code></strong> (маскировка под браузер), <code>WinHttpConnect</code> к хосту из таблицы данных на порту <strong>8443</strong> (<code>0x20FB</code>), таймауты resolve/connect/send/receive = <strong>10/10/30/30 с</strong>. При успехе — строка «HTTP transport initialized OK.».</li>
+<li>- Статический хост-фолбэк — <strong><code>127.0.0.1</code></strong> (находится в <code>.rdata</code> по <code>0x14007DAF0</code>/<code>0x14007DB00</code> как указатель на строку).</li>
+<li>- Эндпоинты (префикс <strong><code>i/rat/</code></strong>): регистрация <strong><code>i/rat/register?id=&lt;ID&gt;</code></strong>, опрос команд <strong><code>\t/commands</code></strong>.</li>
+<li>- <strong>sub_140012584</strong> — универсальный HTTP-клиент: <code>WinHttpOpenRequest</code> (verb+path, флаг <code>WINHTTP_FLAG_BYPASS_PROXY_CACHE</code>), <code>WinHttpSendRequest</code> с телом, <code>WinHttpReceiveResponse</code>, чтение ответа через <code>WinHttpReadData</code>.</li>
+<li>- <strong>sub_14000D2F6</strong> — поток-петля: цикл <code>while (флаг) { …sub_140012584…; Sleep(33); }</code> (beacon/polling с задержкой 33 мс). Строки «Registered. Entering main loop.» / «Entering beacon loop…».</li>
+</ul>
+<h2>Кража данных (stealer.rs)</h2>
+<ul>
+<li>- <strong>Браузерные куки:</strong> Chrome <code>...\Google\Chrome\User Data\Default\Network\Cookies</code> («Decrypting cookies…»); Edge <code>...\Microsoft\Edge\User Data\Default\Network\Cookies</code>; Firefox <code>\cookies.sqlite</code>, <code>…fox_cookie_</code> («Reading cookies (plaintext)…»).</li>
+<li>- <strong>Discord:</strong> парсинг <strong>LevelDB</strong> (<code>Discord LevelDB not found</code>), токены в файлах с префиксом <strong><code>cord_token_</code></strong> («No tokens found.» / «N token(s).»), «Browser Sessions ===».</li>
+<li>- <strong>Telegram:</strong> проверка <code>telegram.exe</code>, сбор <code>tdata</code> («Telegram tdata not found.»).</li>
+<li>- <strong>Дешифровка DPAPI:</strong> <strong>sub_140002E2A</strong> — обёртка над <code>CryptUnprotectData</code> над <code>DATA_BLOB</code> (возвращает расшифрованные байты). Метка <code>en (DPAPI): </code>. Импорты <strong>bcrypt</strong> (<code>BCryptGenerateSymmetricKey</code>) — наличие крипто-материала.</li>
+</ul>
+<h2>Персистентность и саморазмножение</h2>
+<ul>
+<li>- Автостарт: ключ <strong><code>HKCU\Software\Microsoft\Windows\CurrentVersion\Run</code></strong> (<code>RegCreateKeyExA</code>/<code>RegSetValueExA</code>).</li>
+<li>- Конфиг-ключ: <strong><code>Software\RATConfig</code></strong> (+ доступ к <code>HKCR/HKCU/HKLM</code>).</li>
+<li>- Копирование себя: <code>GetModuleFileNameA</code> + <code>CopyFileA</code>.</li>
+</ul>
+<h2>RAT-команды (главный цикл sub_140003CA0, 35 КБ, engine/commands.rs)</h2>
+<ul>
+<li>- <strong>Запуск кода:</strong> <code>CreateProcessA</code> (5 вызовов), <code>ShellExecuteA</code> со <strong><code>SW_HIDE</code></strong> (скрытое выполнение), <code>CreateProcessA</code>-потоки.</li>
+<li>- <strong>Процессы:</strong> <code>OpenProcess</code>, <code>WriteProcessMemory</code>, <code>TerminateProcess</code>, листинг через <code>Process32First/Next</code> (Toolhelp).</li>
+<li>- <strong>Реестр:</strong> полный набор <code>Reg*</code> (создание/опрос/запись/удаление ключей и значений).</li>
+<li>- <strong>Скриншот/вебкам:</strong> <code>capCreateCaptureWindowA</code> (AVICAP32), <code>GetForegroundWindow</code>, <code>GDI32</code> (<code>BitBlt</code>, <code>GetDIBits</code>, <code>CreateCompatibleBitmap/DC</code>, <code>SelectObject</code>), <code>GdipSaveImageToStream</code> (gdiplus) — захват и сохранение изображения.</li>
+<li>- <strong>Буфер обмена / clipper:</strong> <code>OpenClipboard</code>, <code>GetClipboardData</code>, <code>SetClipboardData</code>, <code>EmptyClipboard</code>, <code>CloseClipboard</code> — чтение и подмена (перехват крипто-адресов/паролей).</li>
+<li>- <strong>Keylogger:</strong> <code>SetWindowsHookExA</code>, <code>CallNextHookEx</code>, <code>UnhookWindowsHookEx</code>, <code>GetAsyncKeyState</code>.</li>
+<li>- <strong>Сервисы (подавление защиты):</strong> <code>OpenSCManagerA</code>, <code>OpenServiceA</code>, <code>EnumServicesStatusExA</code>, <code>ControlService</code>, <code>StartServiceA</code>.</li>
+<li>- <strong>Разведка хоста:</strong> <code>GetComputerNameA</code>, <code>GetUserNameA</code>, <code>GetEnvironmentVariableW</code>, <code>GetExtendedTcpTable</code> (IPHLPAPI).</li>
+<li>- <strong>TTS-команда («fun»):</strong> <code>powershell -Command &quot;Add-Type -AssemblyName System.Speech; …SpeechSynthesizer…Speak(&#x27;…&#x27;)&quot;</code>.</li>
+</ul>
+<h2>Модульная структура (из строок-путь源)</h2>
+<p><code>src/modules/</code>: <code>stealer, persist, network, commands(engine), keylog, screenshot, webcam, clipboard, clipper, ransomware, services, registry, postex, socks5, fun</code> — типичный многопрофильный RAT-шаблон.</p>
+<h2>Индикаторы (IOCs)</h2>
+<ul>
+<li>- PDB: <code>rat-ae0625d82abff395.pdb</code></li>
+<li>- C2: префикс <code>i/rat/</code>, <code>i/rat/register?id=</code>, <code>/commands</code>; хост <code>127.0.0.1</code>, порт <strong>8443</strong>; UA <code>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36</code></li>
+<li>- Реестр: <code>HKCU\Software\Microsoft\Windows\CurrentVersion\Run</code>, <code>HKCU\Software\RATConfig</code></li>
+<li>- Цели: куки Chrome/Edge/Firefox, токены Discord, <code>tdata</code> Telegram</li>
+<li>- Ключевые API: <code>WinHttp*</code>, <code>CryptUnprotectData</code>, <code>BCryptGenerateSymmetricKey</code>, <code>SetWindowsHookExA</code>, <code>GetAsyncKeyState</code>, <code>CreateProcessA</code>, <code>CopyFileA</code>, <code>capCreateCaptureWindowA</code></li>
+</ul>
+<p><strong>Вывод:</strong> это полностью функциональный Windows-RAT на Rust с двойным назначением — кражаcredentialов/токенов из браузеров и мессенджеров (с дешифровкой DPAPI) и удалённое управление через HTTP-петлю на C2 (порт 8443), с персистентностью, keyloggerом, захватом экрана/вебcams, перенаправлением буфера обмена, исполнением команд и модулями ransomware/clipper.</p>
+    </div>
+  </div>
+</body>
+</html>

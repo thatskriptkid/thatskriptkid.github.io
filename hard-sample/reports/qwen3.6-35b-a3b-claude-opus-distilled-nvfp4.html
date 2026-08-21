@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Отчет · Qwen3.6-35B-A3B-Claude-Opus-Distilled-NVFP4</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #071018;
+      --ink: #f3f6fb;
+      --muted: #9aabc0;
+      --line: rgba(160, 196, 232, .16);
+      --cyan: #5ee0c7;
+      --num: #7ec8ff;
+      --sans: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+      --mono: "Source Code Pro", ui-monospace, Menlo, Consolas, monospace;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; }
+    body {
+      font-family: var(--sans);
+      font-size: 17px;
+      line-height: 1.55;
+      color: var(--ink);
+      background:
+        radial-gradient(900px 420px at 8% -10%, rgba(94, 224, 199, .14), transparent 55%),
+        radial-gradient(720px 380px at 100% 0%, rgba(126, 200, 255, .12), transparent 50%),
+        repeating-linear-gradient(0deg, transparent 0 31px, rgba(126, 200, 255, .045) 31px 32px),
+        repeating-linear-gradient(90deg, transparent 0 31px, rgba(126, 200, 255, .045) 31px 32px),
+        linear-gradient(180deg, #0a1624, var(--bg));
+    }
+    .stage {
+      width: min(900px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 36px 0 64px;
+    }
+    .back {
+      display: inline-block;
+      margin: 0 0 18px;
+      color: var(--cyan);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 600;
+    }
+    .back:hover { text-decoration: underline; }
+    .kicker {
+      color: var(--cyan);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin: 0 0 10px;
+    }
+    h1 {
+      font-size: clamp(28px, 3.6vw, 40px);
+      font-weight: 700;
+      letter-spacing: -.02em;
+      line-height: 1.15;
+      margin: 0 0 10px;
+    }
+    .meta {
+      margin: 0 0 28px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+    .meta code {
+      font-family: var(--mono);
+      font-size: .92em;
+      color: var(--cyan);
+    }
+    .report {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 28px 30px;
+      background: linear-gradient(180deg, rgba(18, 34, 52, .82), rgba(10, 20, 32, .78));
+    }
+    .report h1, .report h2, .report h3, .report h4 {
+      color: var(--ink);
+      letter-spacing: -.01em;
+      margin: 1.4em 0 .55em;
+      line-height: 1.25;
+    }
+    .report h1 { font-size: 1.55em; margin-top: 0; }
+    .report h2 { font-size: 1.28em; color: var(--num); }
+    .report h3 { font-size: 1.12em; }
+    .report p { margin: 0 0 1em; }
+    .report ul, .report ol { margin: 0 0 1em; padding-left: 1.35em; }
+    .report li { margin: 0.25em 0; }
+    .report code {
+      font-family: var(--mono);
+      font-size: .9em;
+      color: var(--cyan);
+    }
+    .report pre {
+      margin: 0 0 1.1em;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: rgba(7, 16, 24, .72);
+      overflow-x: auto;
+      font-family: var(--mono);
+      font-size: 13.5px;
+      line-height: 1.5;
+      color: #d5e6f5;
+    }
+    .report pre code { color: inherit; }
+    .report table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0 0 1.2em;
+      font-size: 15px;
+    }
+    .report th, .report td {
+      border: 1px solid var(--line);
+      padding: 8px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+    .report th {
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      background: rgba(255,255,255,.03);
+    }
+    .report strong { color: #fff; font-weight: 600; }
+    .foot {
+      margin-top: 22px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+  </style>
+  <link rel="stylesheet" href="/assets/css/hard-sample-chrome.css">
+</head>
+<body>
+  <header class="osa-chrome" aria-label="Order Of Six Angles">
+    <div class="osa-chrome__inner">
+      <a class="osa-chrome__brand" href="/" aria-label="Order Of Six Angles">
+        <img class="osa-chrome__mark" src="/assets/images/orderofsixangles_art/ada.png" alt="Order Of Six Angles logo">
+        <span class="osa-chrome__copy">
+          <span class="osa-chrome__eyebrow">security research</span>
+          <span class="osa-chrome__title">Order Of Six Angles</span>
+        </span>
+      </a>
+      <nav class="osa-chrome__nav" aria-label="Primary navigation">
+        <a class="osa-chrome__link" href="/">Home</a>
+        <a class="osa-chrome__link" href="/ru/">RU</a>
+        <a class="osa-chrome__link" href="/translations/">Translations</a>
+        <a class="osa-chrome__link" href="/samples/">Samples</a>
+        <a class="osa-chrome__link is-active" href="/hard-sample/">Local LLM Testing</a>
+        <a class="osa-chrome__link" href="/art/">Art</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="stage">
+    <a class="back" href="../index.html">← Все модели</a>
+    <p class="kicker">Финальный ответ модели</p>
+    <h1>Qwen3.6-35B-A3B-Claude-Opus-Distilled-NVFP4</h1>
+    <div class="report">
+<h1>Полный статический анализ PE-файла (Rust-STEALER)</h1>
+<h2>1. Общая информация</h2>
+<p><strong>Формат:</strong> Portable executable для AMD64 (64-бит)  <br>
+<strong>Точка входа:</strong> <code>start</code> @ <code>0x140045A50</code>  <br>
+<strong>База образа:</strong> <code>0x140000000</code>  <br>
+<strong>Секции:</strong> <code>.text</code>, <code>.rdata</code>, <code>.idata</code>, <code>.buildid</code>, <code>.data</code>, <code>.pdata</code>, <code>.tls</code>  <br>
+<strong>Количество функций:</strong> 1278  <br>
+<strong>Количество строк:</strong> 806  <br>
+<strong>TLS-коллбэки:</strong> 3 (TlsCallback_0, TlsCallback_1, TlsCallback_2)</p>
+<p><strong>TLS-коллбэки выполняются до входа в точку входа PE.</strong> TlsCallback_0 — это CRT-функция (<code>_RNvNtNtNtNtCs1NhsA7xdTVp_3std3sys12thread_local5guard7windows12tls_callback</code>), TlsCallback_1 и TlsCallback_2 — пользовательские коллбэки (118 и 22 байта соответственно).</p>
+<h2>2. Язык и среда сборки</h2>
+<p>Файл собран на <strong>Rust</strong> с использованием <strong>MinGW-w64</strong> для Windows. Это подтверждается:</p>
+<ul>
+<li>- Строки Rust-рантайма: <code>&quot;fatal runtime error: I/O error: operation failed to complete synchronously, aborting\nadvancing io slices beyond their length&quot;</code>, <code>&quot;note: run with RUST_BACKTRACE=1...&quot;</code>, <code>&quot;note: Some details are omitted, run with RUST_BACKTRACE=full...&quot;</code>, <code>&quot;Mingw-w64 runtime failure:&quot;</code></li>
+<li>- CRT-функции: <code>__mingw_CRTStartup</code>, <code>initterm</code>, <code>cexit</code>, <code>_mm_loadu_si128</code></li>
+<li>- Строка <code>src/modules/services.rs</code> в строковых данных указывает на модульную структуру Rust-проекта</li>
+<li>- Идентификаторы Rust: <code>_RNv...</code> (name-mangled символы Rust)</li>
+</ul>
+<h2>3. Импортируемые библиотеки</h2>
+<table>
+<tr><th>Библиотека</th><th>Количество импортов</th><th>Назначение</th></tr>
+<tr><td>KERNEL32</td><td>99</td><td>Файловая система, процессы, память, потоки</td></tr>
+<tr><td>USER32</td><td>26</td><td>UI, буфер обмена</td></tr>
+<tr><td>ADVAPI32</td><td>16</td><td>Реестр, службы Windows</td></tr>
+<tr><td>api-ms-win-crt-runtime-l1-1-0</td><td>14</td><td>CRT-функции</td></tr>
+<tr><td>WS2_32</td><td>13</td><td>Сокеты, сеть</td></tr>
+<tr><td>WINHTTP</td><td>8</td><td>HTTP-запросы (C2)</td></tr>
+<tr><td>GDI32</td><td>7</td><td>Графика, скриншоты</td></tr>
+<tr><td>bcrypt</td><td>6</td><td>Криптография</td></tr>
+<tr><td>CRYPT32</td><td>1</td><td><code>CryptUnprotectData</code> (DPAPI)</td></tr>
+</table>
+<h2>4. Поведенческий анализ</h2>
+<h3>4.1. Кража учётных данных браузеров</h3>
+<p>Функция <code>sub_14000F9D1</code> (3515 байт) реализует кражу cookies для нескольких браузеров:</p>
+<p><strong>Google Chrome:</strong></p>
+<ul>
+<li>- Путь к файлу cookies: <code>C:\Users\&lt;USER&gt;\AppData\Local\Google\Chrome\User Data\Default\Network\Cookies</code></li>
+<li>- Путь к ключу шифрования: <code>C:\Users\&lt;USER&gt;\AppData\Local\Google\Chrome\User Data\Local State</code></li>
+<li>- Процесс-проверка: <code>chrome.exe</code></li>
+<li>- Строка: <code>&quot;[Chrome] Decrypting cookies...&quot;</code></li>
+<li>- Использует <code>CryptUnprotectData</code> для расшифровки master key из Local State</li>
+</ul>
+<p><strong>Microsoft Edge:</strong></p>
+<ul>
+<li>- Путь к cookies: <code>C:\Users\&lt;USER&gt;\AppData\Local\Microsoft\Edge\User Data\Default\Network\Cookies</code></li>
+<li>- Путь к Local State: <code>C:\Users\&lt;USER&gt;\AppData\Local\Microsoft\Edge\User Data\Local State</code></li>
+<li>- Процесс: <code>msedge.exe</code></li>
+<li>- Строка: <code>&quot;[Edge] Decrypting cookies...&quot;</code></li>
+</ul>
+<p><strong>Mozilla Firefox:</strong></p>
+<ul>
+<li>- Путь к профилям: <code>C:\Users\&lt;USER&gt;\AppData\Roaming\Mozilla\Firefox\Profiles</code></li>
+<li>- База данных: <code>cookies.sqlite</code></li>
+<li>- Процесс: <code>firefox.exe</code></li>
+<li>- Строка: <code>&quot;[Firefox] Reading cookies (plaintext)...&quot;</code> — Firefox хранит cookies в открытом виде в SQLite, поэтому расшифровка не требуется</li>
+</ul>
+<p><strong>Telegram Desktop:</strong></p>
+<ul>
+<li>- Путь: <code>C:\Users\&lt;USER&gt;\AppData\Roaming\Telegram Desktop\tdata</code></li>
+<li>- Процесс: <code>telegram.exe</code></li>
+<li>- Строка: <code>&quot;Telegram tdata not found.\n=== Telegram ===\n&quot;</code></li>
+</ul>
+<p><strong>Discord:</strong></p>
+<ul>
+<li>- Путь: <code>C:\Users\&lt;USER&gt;\AppData\Local\Discord\app-&lt;version&gt;\app.exe</code></li>
+<li>- Process: <code>discord.exe</code></li>
+<li>- Строка: <code>&quot;Discord is not running.\nCannot get AppData.\n=== Discord ===\n&quot;</code></li>
+<li>- Использует LevelDB для хранения данных</li>
+</ul>
+<h3>4.2. Командно-контрольный сервер (C2)</h3>
+<p>Основная функция <code>sub_140001000</code> (2223 байта) реализует <strong>beacon-цикл</strong> с HTTP-взаимодействием:</p>
+<ul>
+<li>- Инициализация HTTP-транспорта: <code>&quot;Initializing HTTP transport...&quot;</code></li>
+<li>- Ввод в beacon-цикл: <code>&quot;Entering beacon loop...&quot;</code></li>
+<li>- После регистрации: <code>&quot;Registered. Entering main loop.&quot;</code></li>
+</ul>
+<p><strong>Механизм C2:</strong></p>
+<ol>
+<li>1. Инициализация HTTP через WinHTTP API (<code>WinHttpOpenRequest</code>, <code>WinHttpSendRequest</code>, <code>WinHttpReceiveResponse</code>, <code>WinHttpReadData</code>, <code>WinHttpCloseHandle</code>)</li>
+<li>2. Флаги запроса: <code>WINHTTP_FLAG_BYPASS_PROXY_CACHE</code></li>
+<li>3. <strong>Экспоненциальная задержка (backoff):</strong></li>
+</ol>
+<p>   - Начальная задержка: 5 секунд<br>
+   - Умножение на 2 при каждом неудачном запросе<br>
+   - Максимум: 60 секунд</p>
+<ol>
+<li>4. После успешного ответа:</li>
+</ol>
+<p>   - Чтение данных с сервера (до 65536 байт)<br>
+   - Парсинг ответов в формате с тегом <code>0x70</code> (длина 4 байта + данные)<br>
+   - Задержка <code>1000 <em> dword_140096004 </em> dword_140096000</code> мс</p>
+<ol>
+<li>5. При 5+ неудачных попытках:</li>
+</ol>
+<p>   - Повторная попытка с задержкой 5 секунд, максимум 4 раза<br>
+   - Затем возврат к базовой задержке</p>
+<h3>4.3. Персистентность</h3>
+<ul>
+<li>- <strong>Реестр:</strong> <code>HKCU\Software\Microsoft\Windows\CurrentVersion\Run</code></li>
+<li>- API: <code>RegCreateKeyExA</code>, <code>RegSetValueExA</code>, <code>RegOpenKeyExA</code>, <code>RegQueryValueExA</code>, <code>RegDeleteKeyA</code>, <code>RegDeleteValueA</code></li>
+<li>- Функция <code>sub_140003CA0</code> (35822 байта) — основная функция стила, содержит логику персистентности</li>
+</ul>
+<h3>4.4. Сбор информации о системе</h3>
+<ul>
+<li>- <strong>Имя компьютера:</strong> <code>GetComputerNameA</code></li>
+<li>- <strong>Текущий каталог:</strong> <code>GetCurrentDirectoryA</code>, <code>GetCurrentDirectoryW</code></li>
+<li>- <strong>Путь к бинарнику:</strong> <code>GetModuleFileNameA</code></li>
+<li>- <strong>Службы Windows:</strong> <code>OpenSCManagerA</code>, <code>EnumServicesStatusExA</code>, <code>OpenServiceA</code>, <code>ControlService</code>, <code>CloseServiceHandle</code>, <code>StartServiceA</code>, <code>CloseServiceHandle</code> (модуль <code>src/modules/services.rs</code>)</li>
+<li>- <strong>TCP-таблица:</strong> <code>GetExtendedTcpTable</code> (IPHLPAPI)</li>
+</ul>
+<h3>4.5. Обработка процессов</h3>
+<ul>
+<li>- <strong>Создание процессов:</strong> <code>CreateProcessA</code> (5 вызовов)</li>
+<li>- <strong>Открытие процессов:</strong> <code>OpenProcess</code> (2 вызова)</li>
+<li>- <strong>Запуск скрыто:</strong> <code>ShellExecuteA</code> с флагом <code>SW_HIDE</code></li>
+<li>- <strong>Создание потоков:</strong> <code>CreateThread</code>, <code>CreateRemoteThread</code></li>
+<li>- <strong>Обработка исключений:</strong> <code>AddVectoredExceptionHandler</code> (обработка stack overflow, 20480 байт стека)</li>
+</ul>
+<h3>4.6. Криптография</h3>
+<ul>
+<li>- <strong>DPAPI расшифровка:</strong> <code>CryptUnprotectData</code> (CRYPT32) — для расшифровки cookies Chrome/Edge</li>
+<li>- <strong>bcrypt:</strong> 6 импортов — возможно, для генерации ключей или хеширования</li>
+</ul>
+<h2>5. Структура программы</h2>
+<p><strong>Точка входа:</strong> <code>start</code> → <code>__mingw_CRTStartup</code> → <code>sub_1400136B0</code> (Rust std init) → <code>sub_140002040</code> → <code>sub_140002644</code> → <code>sub_140001000</code></p>
+<p><strong>Ключевые функции:</strong></p>
+<ul>
+<li>- <code>sub_140001000</code> (2223 байта) — главный цикл C2/бекона</li>
+<li>- <code>sub_140003CA0</code> (35822 байта) — основная функция стила (браузеры, персистентность, сбор данных)</li>
+<li>- <code>sub_14000F9D1</code> (3515 байт) — кража cookies браузеров (Chrome, Edge, Firefox)</li>
+<li>- <code>sub_140003CA0</code> (35822 байта) — основной стилер (Discord, Telegram, системная информация)</li>
+</ul>
+<h2>6. Ключевые IOC</h2>
+<p><strong>Строковые IOC:</strong></p>
+<ul>
+<li>- <code>&quot;[Chrome] Decrypting cookies...&quot;</code></li>
+<li>- <code>&quot;[Edge] Decrypting cookies...&quot;</code></li>
+<li>- <code>&quot;[Firefox] Reading cookies (plaintext)...&quot;</code></li>
+<li>- <code>&quot;Telegram tdata not found.&quot;</code></li>
+<li>- <code>&quot;Discord is not running.\nCannot get AppData.&quot;</code></li>
+<li>- <code>&quot;Cannot decrypt master key.&quot;</code></li>
+<li>- <code>&quot;Initializing HTTP transport...&quot;</code></li>
+<li>- <code>&quot;Entering beacon loop...&quot;</code></li>
+<li>- <code>&quot;Registered. Entering main loop.&quot;</code></li>
+<li>- <code>&quot;src/modules/services.rs&quot;</code></li>
+</ul>
+<p><strong>Путь к файлам:</strong></p>
+<ul>
+<li>- <code>...\Google\Chrome\User Data\Default\Network\Cookies</code></li>
+<li>- <code>...\Google\Chrome\User Data\Local State</code></li>
+<li>- <code>...\Microsoft\Edge\User Data\Default\Network\Cookies</code></li>
+<li>- <code>...\Microsoft\Edge\User Data\Local State</code></li>
+<li>- <code>...\Mozilla\Firefox\Profiles\*\cookies.sqlite</code></li>
+<li>- <code>...\Telegram Desktop\tdata</code></li>
+</ul>
+<p><strong>Реестр:</strong> <code>HKCU\Software\Microsoft\Windows\CurrentVersion\Run</code></p>
+<p><strong>Имена процессов:</strong> <code>chrome.exe</code>, <code>msedge.exe</code>, <code>firefox.exe</code>, <code>telegram.exe</code>, <code>discord.exe</code></p>
+<h2>7. Вывод</h2>
+<p>Это Rust-стайлер, предназначенный для кражи cookies и учётных данных из браузеров (Chrome, Edge, Firefox), а также данных из Telegram Desktop и Discord. Программа использует HTTP-транспорт (WinHTTP) для связи с C2-сервером, экспоненциальный backoff при неудачах, персистентность через реестр, сбор системной информации и может запускать скрытые процессы. Криптографические операции ограничены расшифровкой cookies через DPAPI.</p>
+    </div>
+  </div>
+</body>
+</html>

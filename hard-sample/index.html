@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Чеклисты · hard sample</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #071018;
+      --ink: #f3f6fb;
+      --muted: #9aabc0;
+      --line: rgba(160, 196, 232, .16);
+      --cyan: #5ee0c7;
+      --full: #3dd68c;
+      --part: #ffb020;
+      --num: #7ec8ff;
+      --panel: rgba(12, 24, 38, .88);
+      --sans: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+      --mono: "Source Code Pro", ui-monospace, Menlo, Consolas, monospace;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; }
+    body {
+      font-family: var(--sans);
+      font-size: 17px;
+      line-height: 1.5;
+      color: var(--ink);
+      background:
+        radial-gradient(900px 420px at 8% -10%, rgba(94, 224, 199, .14), transparent 55%),
+        radial-gradient(720px 380px at 100% 0%, rgba(126, 200, 255, .12), transparent 50%),
+        repeating-linear-gradient(0deg, transparent 0 31px, rgba(126, 200, 255, .045) 31px 32px),
+        repeating-linear-gradient(90deg, transparent 0 31px, rgba(126, 200, 255, .045) 31px 32px),
+        linear-gradient(180deg, #0a1624, var(--bg));
+    }
+    .stage {
+      width: min(980px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 48px 0 64px;
+      min-height: auto;
+      display: block;
+    }
+    .kicker {
+      color: var(--cyan);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin: 0 0 10px;
+    }
+    h1 {
+      font-size: clamp(34px, 4.2vw, 48px);
+      font-weight: 700;
+      letter-spacing: -.02em;
+      line-height: 1.1;
+      margin: 0 0 12px;
+    }
+    .lede {
+      margin: 0 0 28px;
+      color: var(--muted);
+      font-size: 18px;
+      max-width: 52ch;
+      line-height: 1.55;
+    }
+    .list { display: grid; gap: 12px; }
+    .item {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 10px;
+      align-items: stretch;
+    }
+    a.report-btn {
+      display: grid;
+      place-items: center;
+      min-width: 88px;
+      padding: 0 14px;
+      border: 1px solid rgba(94, 224, 199, .4);
+      border-radius: 16px;
+      background: rgba(94, 224, 199, .08);
+      color: var(--cyan);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      transition: border-color .2s ease, background .2s ease, transform .2s ease;
+    }
+    a.report-btn:hover {
+      border-color: rgba(94, 224, 199, .75);
+      background: rgba(94, 224, 199, .16);
+      transform: translateY(-1px);
+    }
+    a.model {
+      display: block;
+      padding: 18px 20px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: linear-gradient(180deg, rgba(18, 34, 52, .82), rgba(10, 20, 32, .78));
+      text-decoration: none;
+      color: inherit;
+      transition: border-color .2s ease, transform .2s ease;
+    }
+    a.model:hover {
+      border-color: rgba(94, 224, 199, .45);
+      transform: translateY(-1px);
+    }
+    .name {
+      font-size: 22px;
+      font-weight: 700;
+      margin: 0 0 4px;
+      line-height: 1.2;
+    }
+    .meta {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+    .meta code {
+      font-family: var(--mono);
+      font-size: .92em;
+      color: var(--cyan);
+    }
+    a.ref {
+      display: block;
+      margin: 0 0 12px;
+      padding: 14px 18px;
+      border: 1px dashed rgba(94, 224, 199, .35);
+      border-radius: 14px;
+      color: var(--cyan);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 16px;
+      background: rgba(94, 224, 199, .05);
+    }
+    a.ref:hover { border-color: rgba(94, 224, 199, .6); }
+    a.ref span { display: block; margin-top: 4px; color: var(--muted); font-weight: 400; font-size: 14px; }
+    .links { margin: 0 0 22px; }
+    .foot {
+      margin-top: 28px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .foot code { font-family: var(--mono); color: var(--cyan); font-size: .92em; }
+    @media (max-width: 640px) {
+      .item { grid-template-columns: 1fr; }
+      a.report-btn { min-height: 44px; }
+    }
+  </style>
+  <link rel="stylesheet" href="/assets/css/hard-sample-chrome.css">
+</head>
+<body>
+  <header class="osa-chrome" aria-label="Order Of Six Angles">
+    <div class="osa-chrome__inner">
+      <a class="osa-chrome__brand" href="/" aria-label="Order Of Six Angles">
+        <img class="osa-chrome__mark" src="/assets/images/orderofsixangles_art/ada.png" alt="Order Of Six Angles logo">
+        <span class="osa-chrome__copy">
+          <span class="osa-chrome__eyebrow">security research</span>
+          <span class="osa-chrome__title">Order Of Six Angles</span>
+        </span>
+      </a>
+      <nav class="osa-chrome__nav" aria-label="Primary navigation">
+        <a class="osa-chrome__link" href="/">Home</a>
+        <a class="osa-chrome__link" href="/ru/">RU</a>
+        <a class="osa-chrome__link" href="/translations/">Translations</a>
+        <a class="osa-chrome__link" href="/samples/">Samples</a>
+        <a class="osa-chrome__link is-active" href="/hard-sample/">Local LLM Testing</a>
+        <a class="osa-chrome__link" href="/art/">Art</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="stage">
+    <h1>Чеклисты по моделям</h1>
+    <p class="lede">«Отчет» — финальный ответ модели из сессии. Карточка модели — оценка по техническому чеклисту. Баллы — на странице рейтинга.</p>
+
+    <div class="links">
+      <a class="ref" href="reference.html">Референс-чеклист (пустой)
+        <span>32 критерия без оценок и без имени модели</span>
+      </a>
+      <a class="ref" href="ranking.html">Рейтинг моделей
+        <span>сводка баллов по одному чеклисту</span>
+      </a>
+      <a class="ref" href="specs.html">Характеристики
+        <span>модели, размеры, форматы и железо сервера</span>
+      </a>
+    </div>
+
+    <div class="list">
+      <div class="item">
+        <a class="report-btn" href="reports/claude-sonnet-5.html">Отчет</a>
+        <a class="model" href="claude-sonnet-5.html">
+          <p class="name">Anthropic: Claude Sonnet 5</p>
+          <p class="meta">openrouter · сессия <code>ses_fe1a247f2ffegrqCGXi1WjvEVZ</code></p>
+        </a>
+      </div>
+      <div class="item">
+        <a class="report-btn" href="reports/ornith-1.5-35b-a3b-nvfp4.html">Отчет</a>
+        <a class="model" href="ornith-1.5-35b-a3b-nvfp4.html">
+          <p class="name">Ornith-1.5-35B-A3B-NVFP4</p>
+          <p class="meta">vllm · сессия <code>ses_fe198eb3dffec5vpfOrj0qmekt</code></p>
+        </a>
+      </div>
+      <div class="item">
+        <a class="report-btn" href="reports/qwen3.8-27b-nvfp4.html">Отчет</a>
+        <a class="model" href="qwen3.8-27b-nvfp4.html">
+          <p class="name">Qwen3.8-27B-NVFP4</p>
+          <p class="meta">vllm · сессия <code>ses_fe1904efeffe3P7oiVjGPVOGoG</code></p>
+        </a>
+      </div>
+      <div class="item">
+        <a class="report-btn" href="reports/qwen3.8-27b-uncensored-cyber.html">Отчет</a>
+        <a class="model" href="qwen3.8-27b-uncensored-cyber.html">
+          <p class="name">Qwen3.8-27B-Uncensored-Cyber</p>
+          <p class="meta">vllm · сессия <code>ses_fdcdca8c2ffevWU3z3l001omZC</code></p>
+        </a>
+      </div>
+      <div class="item">
+        <a class="report-btn" href="reports/ternary-bonsai-27b-q2_0.html">Отчет</a>
+        <a class="model" href="ternary-bonsai-27b-q2_0.html">
+          <p class="name">Ternary-Bonsai-27B-Q2_0</p>
+          <p class="meta">llama.cpp · сессия <code>ses_fe0b8506bffeKQbQOCwvh3Ps88</code></p>
+        </a>
+      </div>
+      <div class="item">
+        <a class="report-btn" href="reports/qwen3.6-35b-a3b-nvfp4.html">Отчет</a>
+        <a class="model" href="qwen3.6-35b-a3b-nvfp4.html">
+          <p class="name">Qwen3.6-35B-A3B-NVFP4</p>
+          <p class="meta">vllm · сессия <code>ses_fe1dd64a2ffe8qdM3qWu7ni8cq</code></p>
+        </a>
+      </div>
+      <div class="item">
+        <a class="report-btn" href="reports/qwen3.6-35b-a3b-claude-opus-distilled-nvfp4.html">Отчет</a>
+        <a class="model" href="qwen3.6-35b-a3b-claude-opus-distilled-nvfp4.html">
+          <p class="name">Qwen3.6-35B-A3B-Claude-Opus-Distilled-NVFP4</p>
+          <p class="meta">vllm · сессия <code>ses_fdc707d71ffeMs9RsqYSTdtADL</code></p>
+        </a>
+      </div>
+      <div class="item">
+        <a class="report-btn" href="reports/nvidia-nemotron-3.5-lightning-30b-a3b-nvfp4.html">Отчет</a>
+        <a class="model" href="nvidia-nemotron-3.5-lightning-30b-a3b-nvfp4.html">
+          <p class="name">NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4</p>
+          <p class="meta">vllm · сессия <code>ses_fe11e3715ffeREWG2u9xebshiM</code></p>
+        </a>
+      </div>
+      <div class="item">
+        <a class="report-btn" href="reports/muse-glimmer-30b-nvfp4.html">Отчет</a>
+        <a class="model" href="muse-glimmer-30b-nvfp4.html">
+          <p class="name">Muse-Glimmer-30B-NVFP4</p>
+          <p class="meta">vllm · сессия <code>ses_fe12a0d05ffegmDrQDvlB9nca1</code></p>
+        </a>
+      </div>
+      <div class="item">
+        <a class="report-btn" href="reports/qwen3.6-27b-mtp-gguf.html">Отчет</a>
+        <a class="model" href="qwen3.6-27b-mtp-gguf.html">
+          <p class="name">Qwen3.6-27B-MTP-GGUF</p>
+          <p class="meta">llama.cpp · сессия <code>ses_fe116d041ffe0o0wsiOCo2vffF</code></p>
+        </a>
+      </div>
+      <div class="item">
+        <a class="report-btn" href="reports/glm-4.7-flash-nvfp4.html">Отчет</a>
+        <a class="model" href="glm-4.7-flash-nvfp4.html">
+          <p class="name">GLM-4.7-Flash-NVFP4</p>
+          <p class="meta">vllm · сессия <code>ses_fe1635c6bffeLjYeslIOJkeMsK</code></p>
+        </a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

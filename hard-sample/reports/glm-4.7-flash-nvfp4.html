@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Отчет · GLM-4.7-Flash-NVFP4</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #071018;
+      --ink: #f3f6fb;
+      --muted: #9aabc0;
+      --line: rgba(160, 196, 232, .16);
+      --cyan: #5ee0c7;
+      --num: #7ec8ff;
+      --sans: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+      --mono: "Source Code Pro", ui-monospace, Menlo, Consolas, monospace;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; }
+    body {
+      font-family: var(--sans);
+      font-size: 17px;
+      line-height: 1.55;
+      color: var(--ink);
+      background:
+        radial-gradient(900px 420px at 8% -10%, rgba(94, 224, 199, .14), transparent 55%),
+        radial-gradient(720px 380px at 100% 0%, rgba(126, 200, 255, .12), transparent 50%),
+        repeating-linear-gradient(0deg, transparent 0 31px, rgba(126, 200, 255, .045) 31px 32px),
+        repeating-linear-gradient(90deg, transparent 0 31px, rgba(126, 200, 255, .045) 31px 32px),
+        linear-gradient(180deg, #0a1624, var(--bg));
+    }
+    .stage {
+      width: min(900px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 36px 0 64px;
+    }
+    .back {
+      display: inline-block;
+      margin: 0 0 18px;
+      color: var(--cyan);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 600;
+    }
+    .back:hover { text-decoration: underline; }
+    .kicker {
+      color: var(--cyan);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin: 0 0 10px;
+    }
+    h1 {
+      font-size: clamp(28px, 3.6vw, 40px);
+      font-weight: 700;
+      letter-spacing: -.02em;
+      line-height: 1.15;
+      margin: 0 0 10px;
+    }
+    .meta {
+      margin: 0 0 28px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+    .meta code {
+      font-family: var(--mono);
+      font-size: .92em;
+      color: var(--cyan);
+    }
+    .report {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 28px 30px;
+      background: linear-gradient(180deg, rgba(18, 34, 52, .82), rgba(10, 20, 32, .78));
+    }
+    .report h1, .report h2, .report h3, .report h4 {
+      color: var(--ink);
+      letter-spacing: -.01em;
+      margin: 1.4em 0 .55em;
+      line-height: 1.25;
+    }
+    .report h1 { font-size: 1.55em; margin-top: 0; }
+    .report h2 { font-size: 1.28em; color: var(--num); }
+    .report h3 { font-size: 1.12em; }
+    .report p { margin: 0 0 1em; }
+    .report ul, .report ol { margin: 0 0 1em; padding-left: 1.35em; }
+    .report li { margin: 0.25em 0; }
+    .report code {
+      font-family: var(--mono);
+      font-size: .9em;
+      color: var(--cyan);
+    }
+    .report pre {
+      margin: 0 0 1.1em;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: rgba(7, 16, 24, .72);
+      overflow-x: auto;
+      font-family: var(--mono);
+      font-size: 13.5px;
+      line-height: 1.5;
+      color: #d5e6f5;
+    }
+    .report pre code { color: inherit; }
+    .report table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0 0 1.2em;
+      font-size: 15px;
+    }
+    .report th, .report td {
+      border: 1px solid var(--line);
+      padding: 8px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+    .report th {
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      background: rgba(255,255,255,.03);
+    }
+    .report strong { color: #fff; font-weight: 600; }
+    .foot {
+      margin-top: 22px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+  </style>
+  <link rel="stylesheet" href="/assets/css/hard-sample-chrome.css">
+</head>
+<body>
+  <header class="osa-chrome" aria-label="Order Of Six Angles">
+    <div class="osa-chrome__inner">
+      <a class="osa-chrome__brand" href="/" aria-label="Order Of Six Angles">
+        <img class="osa-chrome__mark" src="/assets/images/orderofsixangles_art/ada.png" alt="Order Of Six Angles logo">
+        <span class="osa-chrome__copy">
+          <span class="osa-chrome__eyebrow">security research</span>
+          <span class="osa-chrome__title">Order Of Six Angles</span>
+        </span>
+      </a>
+      <nav class="osa-chrome__nav" aria-label="Primary navigation">
+        <a class="osa-chrome__link" href="/">Home</a>
+        <a class="osa-chrome__link" href="/ru/">RU</a>
+        <a class="osa-chrome__link" href="/translations/">Translations</a>
+        <a class="osa-chrome__link" href="/samples/">Samples</a>
+        <a class="osa-chrome__link is-active" href="/hard-sample/">Local LLM Testing</a>
+        <a class="osa-chrome__link" href="/art/">Art</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="stage">
+    <a class="back" href="../index.html">← Все модели</a>
+    <p class="kicker">Финальный ответ модели</p>
+    <h1>GLM-4.7-Flash-NVFP4</h1>
+    <div class="report">
+<h1>Полный статический анализ PE-файла</h1>
+<h2>Общая информация</h2>
+<p><strong>Тип файла</strong>: 64-битный PE (Portable executable for AMD64)  <br>
+<strong>База образа</strong>: 0x140000000  <br>
+<strong>Точка входа</strong>: <code>start @ 0x140045A50</code>  <br>
+<strong>Количество функций</strong>: 1278  <br>
+<strong>Количество строк</strong>: 806  </p>
+<h2>TLS-колбэки</h2>
+<p>PE содержит 3 TLS-колбэка, которые выполняются до точки входа PE:</p>
+<ul>
+<li>- <strong>TlsCallback_0</strong> @ 0x140024610 (размер: 626 байт)</li>
+<li>- <strong>TlsCallback_1</strong> @ 0x140045ae0 (размер: 118 байт)</li>
+<li>- <strong>TlsCallback_2</strong> @ 0x140045b70 (размер: 22 байта)</li>
+</ul>
+<p><strong>Примечание</strong>: TLS-колбэки выполняются перед точкой входа PE и выглядят как CRT/runtime - не декомпилировать, если не запрошено.</p>
+<h2>Импорты</h2>
+<h3>Ключевые модули импорта:</h3>
+<ol>
+<li>1. <strong>ADVAPI32</strong> (99 функций):</li>
+</ol>
+<p>   - Service management: <code>OpenServiceA</code>, <code>StartServiceA</code>, <code>ControlService</code>, <code>CloseServiceHandle</code><br>
+   - Registry manipulation: <code>RegCreateKeyExA</code>, <code>RegSetValueExA</code>, <code>RegQueryValueExA</code>, <code>RegOpenKeyExA</code><br>
+   - User account: <code>GetUserNameA</code></p>
+<ol>
+<li>2. <strong>CRYPT32</strong>: <code>CryptUnprotectData</code> - указывает на возможную работу с зашифрованными данными</li>
+</ol>
+<ol>
+<li>3. <strong>GDI32</strong>: <code>BitBlt</code>, <code>CreateCompatibleBitmap</code>, <code>GetDIBits</code>, <code>SelectObject</code> - указывает на функции захвата экрана или манипуляции графикой</li>
+</ol>
+<ol>
+<li>4. <strong>IPHLPAPI</strong>: <code>GetExtendedTcpTable</code> - получение сетевой информации</li>
+</ol>
+<ol>
+<li>5. <strong>KERNEL32</strong>: <code>AddVectoredExceptionHandler</code> - анти-отладочные/анти-анализные механизмы</li>
+</ol>
+<ol>
+<li>6. <strong>WINHTTP</strong>: 8 функций для HTTP-коммуникации:</li>
+</ol>
+<p>   - <code>WinHttpOpen</code>, <code>WinHttpConnect</code>, <code>WinHttpOpenRequest</code><br>
+   - <code>WinHttpSendRequest</code>, <code>WinHttpReceiveResponse</code><br>
+   - <code>WinHttpReadData</code>, <code>WinHttpCloseHandle</code></p>
+<ol>
+<li>7. <strong>CRYPT32</strong>, <strong>WINMM</strong>, <strong>ole32</strong>, <strong>gdiplus</strong> - дополнительные модули для работы с криптографией, мультимедиа и OLE</li>
+</ol>
+<h2>Строки (806 строк)</h2>
+<h3>Поведенческие индикаторы:</h3>
+<p><strong>Данные браузеров</strong>:</p>
+<ul>
+<li>- <code>[Firefox] Not running. Reading cookies (plaintext)...</code></li>
+<li>- <code>[Chrome] Not running. Decrypting cookies...</code></li>
+<li>- <code>[Edge] Not running. Decrypting cookies...</code></li>
+<li>- <code>mozilla\Firefox\Profiles</code> - путь к профилю Firefox</li>
+<li>- <code>oogle\Chrome\User Data\Default\Network\Cookies</code> - путь к куки Chrome</li>
+<li>- <code>icrosoft\Edge\User Data\Default\Network\Cookies</code> - путь к куки Edge</li>
+<li>- <code>Discord is not running. Cannot get AppData.</code></li>
+<li>- <code>Discord LevelDB not found.</code></li>
+<li>- <code>Telegram tdata not found.</code></li>
+<li>- <code>Telegram is not running.</code></li>
+</ul>
+<p><strong>Сетевая коммуникация</strong>:</p>
+<ul>
+<li>- <code>Initializing HTTP transport...</code></li>
+<li>- <code>HTTP transport initialized OK.</code></li>
+<li>- <code>WinHttpReceiveResponse FAILED</code></li>
+<li>- <code>HttpSendRequest FAILED (GetLastError=</code></li>
+<li>- <code>WinHttpConnect FAILED</code></li>
+<li>- <code>Register: HTTP error </code></li>
+<li>- <code>istering with C2: </code></li>
+</ul>
+<p><strong>Регистрация для C2</strong>:</p>
+<ul>
+<li>- <code>starting. C2=</code></li>
+<li>- <code>Registered. Entering main loop.</code></li>
+</ul>
+<p><strong>Системная информация</strong>:</p>
+<ul>
+<li>- <code>Software\Microsoft\Windows\CurrentVersion\Run</code> - ключ реестра для автозагрузки</li>
+</ul>
+<p><strong>Стек-overflow обработка</strong>:</p>
+<ul>
+<li>- <code>fatal runtime error: I/O error: operation failed to complete synchronously, aborting</code></li>
+</ul>
+<h2>Структура сегментов</h2>
+<ol>
+<li>1. <strong>.text</strong> (0x140001000 - 0x14006c000): Код (исполняемый)</li>
+<li>2. <strong>.rdata</strong> (0x14006c000 - 0x14008e628): Читаемые данные (строки, константы)</li>
+<li>3. <strong>.idata</strong> (0x14008e628 - 0x14008edf8): Таблица импорта</li>
+<li>4. <strong>.rdata</strong> (0x14008edf8 - 0x140095000): Данные</li>
+<li>5. <strong>.buildid</strong> (0x140095000 - 0x140096000): Build ID</li>
+<li>6. <strong>.data</strong> (0x140096000 - 0x1400a0000): Данные времени выполнения</li>
+<li>7. <strong>.pdata</strong> (0x1400a0000 - 0x1400a3000): Обработка исключений</li>
+<li>8. <strong>.tls</strong> (0x1400a3000 - 0x1400a4000): Потоковая локальная память</li>
+</ol>
+<h2>Основная функция (sub_140001000)</h2>
+<p>Функция <code>sub_140001000</code> (адрес: 0x140001000, размер: 2223 байта, 355 строк) - это основной механизм поведения:</p>
+<h3>Последовательность выполнения:</h3>
+<ol>
+<li>1. <strong>Инициализация HTTP-транспорта</strong>:</li>
+</ol>
+<p>   - Вызывает <code>sub_1400122FE()</code> - инициализация HTTP<br>
+   - Выводит: <code>Initializing HTTP transport...</code><br>
+   - Выводит: <code>HTTP transport initialized OK.</code></p>
+<ol>
+<li>2. <strong>Beacon-цикл (C2-связь)</strong>:</li>
+</ol>
+<p>   - Выводит: <code>Entering beacon loop...</code><br>
+   - Выводит: <code>Registered. Entering main loop.</code><br>
+   - Повторно проверяет соединение каждые 5-120 секунд (настраиваемый интервал)</p>
+<ol>
+<li>3. <strong>WinHTTP коммуникация</strong>:</li>
+</ol>
+<p>   - <code>WinHttpOpen</code> - открытие HTTP-сессии<br>
+   - <code>WinHttpConnect</code> - подключение к серверу<br>
+   - <code>WinHttpOpenRequest</code> - создание HTTP-запроса<br>
+   - <code>WinHttpSendRequest</code> - отправка запроса<br>
+   - <code>WinHttpReceiveResponse</code> - получение ответа<br>
+   - <code>WinHttpReadData</code> - чтение данных ответа</p>
+<ol>
+<li>4. <strong>Интервалы ожидания</strong>:</li>
+</ol>
+<p>   - Начальный интервал: 5 секунд<br>
+   - Максимальный интервал: 120 секунд<br>
+   - Используется <code>GetTickCount64()</code> для сжатия интервалов</p>
+<h3>Роль функции:</h3>
+<p>Это <strong>C2-мелвэз (beacon malware)</strong>, который периодически соединяется с C2-сервером для получения команд, передачи украденных данных и получения инструкций.</p>
+<h2>Поведение</h2>
+<h3>1. Кража данных браузеров</h3>
+<p>Малварь сканирует и пытается извлечь данные из следующих приложений:</p>
+<p><strong>Firefox</strong>:</p>
+<ul>
+<li>- Читает куки (в открытом виде) из профиля</li>
+<li>- Путь: <code>mozilla\Firefox\Profiles</code></li>
+</ul>
+<p><strong>Chrome</strong>:</p>
+<ul>
+<li>- Дешифрует куки</li>
+<li>- Путь: <code>oogle\Chrome\User Data\Default\Network\Cookies</code></li>
+</ul>
+<p><strong>Edge</strong>:</p>
+<ul>
+<li>- Дешифрует куки</li>
+<li>- Путь: <code>icrosoft\Edge\User Data\Default\Network\Cookies</code></li>
+</ul>
+<p><strong>Discord</strong>:</p>
+<ul>
+<li>- Пытается получить AppData</li>
+<li>- Ищет LevelDB данные</li>
+<li>- Выводит: <code>Discord is not running. Cannot get AppData. === Discord ===</code></li>
+</ul>
+<p><strong>Telegram</strong>:</p>
+<ul>
+<li>- Пытается получить tdata</li>
+<li>- Выводит: <code>Telegram tdata not found. === Telegram ===</code></li>
+</ul>
+<h3>2. C2-коммуникация</h3>
+<p>Малварь использует WinHTTP API для коммуникации с C2-сервером:</p>
+<ul>
+<li>- Инициализирует HTTP-транспорт</li>
+<li>- Регистрируется с C2-сервером</li>
+<li>- Входит в основной цикл beacon</li>
+<li>- Получает команды и инструкции от C2</li>
+</ul>
+<h3>3. Персистентность</h3>
+<p>Малварь использует реестр для персистентности:</p>
+<ul>
+<li>- Ключ: <code>Software\Microsoft\Windows\CurrentVersion\Run</code></li>
+<li>- Это позволяет малвари автоматически запускаться при каждой перезагрузке системы</li>
+</ul>
+<h3>4. Анти-анализ</h3>
+<p>Малварь использует векторный обработчик исключений:</p>
+<ul>
+<li>- <code>AddVectoredExceptionHandler(0, vectored_handler)</code></li>
+<li>- Это мешает отладке и анализу через точку останова</li>
+</ul>
+<h2>Вывод</h2>
+<p>Это <strong>C2-мелвэз (beacon malware)</strong> с фокусом на кражу учетных данных браузеров и коммуникацию с C2-сервером. Малварь:</p>
+<ol>
+<li>1. <strong>Целится</strong> в данные браузеров (Chrome, Edge, Firefox)</li>
+<li>2. <strong>Использует C2-коммуникацию</strong> через WinHTTP API</li>
+<li>3. <strong>Обеспечивает персистентность</strong> через реестр автозагрузки</li>
+<li>4. <strong>Содержит анти-отладочные механизмы</strong> для защиты от анализа</li>
+<li>5. <strong>Написана на Rust</strong> (обнаружен Rust runtime код)</li>
+<li>6. <strong>Использует TLS-колбэки</strong> для инициализации перед точкой входа</li>
+</ol>
+<p>Малварь представляет собой угрозу кражи учетных данных и может быть использована для кражи куки, паролей и другой чувствительной информации из браузеров и мессенджеров.</p>
+    </div>
+  </div>
+</body>
+</html>

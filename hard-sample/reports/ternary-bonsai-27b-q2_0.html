@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Отчет · Ternary-Bonsai-27B-Q2_0</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #071018;
+      --ink: #f3f6fb;
+      --muted: #9aabc0;
+      --line: rgba(160, 196, 232, .16);
+      --cyan: #5ee0c7;
+      --num: #7ec8ff;
+      --sans: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+      --mono: "Source Code Pro", ui-monospace, Menlo, Consolas, monospace;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; }
+    body {
+      font-family: var(--sans);
+      font-size: 17px;
+      line-height: 1.55;
+      color: var(--ink);
+      background:
+        radial-gradient(900px 420px at 8% -10%, rgba(94, 224, 199, .14), transparent 55%),
+        radial-gradient(720px 380px at 100% 0%, rgba(126, 200, 255, .12), transparent 50%),
+        repeating-linear-gradient(0deg, transparent 0 31px, rgba(126, 200, 255, .045) 31px 32px),
+        repeating-linear-gradient(90deg, transparent 0 31px, rgba(126, 200, 255, .045) 31px 32px),
+        linear-gradient(180deg, #0a1624, var(--bg));
+    }
+    .stage {
+      width: min(900px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 36px 0 64px;
+    }
+    .back {
+      display: inline-block;
+      margin: 0 0 18px;
+      color: var(--cyan);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 600;
+    }
+    .back:hover { text-decoration: underline; }
+    .kicker {
+      color: var(--cyan);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin: 0 0 10px;
+    }
+    h1 {
+      font-size: clamp(28px, 3.6vw, 40px);
+      font-weight: 700;
+      letter-spacing: -.02em;
+      line-height: 1.15;
+      margin: 0 0 10px;
+    }
+    .meta {
+      margin: 0 0 28px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+    .meta code {
+      font-family: var(--mono);
+      font-size: .92em;
+      color: var(--cyan);
+    }
+    .report {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 28px 30px;
+      background: linear-gradient(180deg, rgba(18, 34, 52, .82), rgba(10, 20, 32, .78));
+    }
+    .report h1, .report h2, .report h3, .report h4 {
+      color: var(--ink);
+      letter-spacing: -.01em;
+      margin: 1.4em 0 .55em;
+      line-height: 1.25;
+    }
+    .report h1 { font-size: 1.55em; margin-top: 0; }
+    .report h2 { font-size: 1.28em; color: var(--num); }
+    .report h3 { font-size: 1.12em; }
+    .report p { margin: 0 0 1em; }
+    .report ul, .report ol { margin: 0 0 1em; padding-left: 1.35em; }
+    .report li { margin: 0.25em 0; }
+    .report code {
+      font-family: var(--mono);
+      font-size: .9em;
+      color: var(--cyan);
+    }
+    .report pre {
+      margin: 0 0 1.1em;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: rgba(7, 16, 24, .72);
+      overflow-x: auto;
+      font-family: var(--mono);
+      font-size: 13.5px;
+      line-height: 1.5;
+      color: #d5e6f5;
+    }
+    .report pre code { color: inherit; }
+    .report table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0 0 1.2em;
+      font-size: 15px;
+    }
+    .report th, .report td {
+      border: 1px solid var(--line);
+      padding: 8px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+    .report th {
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      background: rgba(255,255,255,.03);
+    }
+    .report strong { color: #fff; font-weight: 600; }
+    .foot {
+      margin-top: 22px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+  </style>
+  <link rel="stylesheet" href="/assets/css/hard-sample-chrome.css">
+</head>
+<body>
+  <header class="osa-chrome" aria-label="Order Of Six Angles">
+    <div class="osa-chrome__inner">
+      <a class="osa-chrome__brand" href="/" aria-label="Order Of Six Angles">
+        <img class="osa-chrome__mark" src="/assets/images/orderofsixangles_art/ada.png" alt="Order Of Six Angles logo">
+        <span class="osa-chrome__copy">
+          <span class="osa-chrome__eyebrow">security research</span>
+          <span class="osa-chrome__title">Order Of Six Angles</span>
+        </span>
+      </a>
+      <nav class="osa-chrome__nav" aria-label="Primary navigation">
+        <a class="osa-chrome__link" href="/">Home</a>
+        <a class="osa-chrome__link" href="/ru/">RU</a>
+        <a class="osa-chrome__link" href="/translations/">Translations</a>
+        <a class="osa-chrome__link" href="/samples/">Samples</a>
+        <a class="osa-chrome__link is-active" href="/hard-sample/">Local LLM Testing</a>
+        <a class="osa-chrome__link" href="/art/">Art</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="stage">
+    <a class="back" href="../index.html">← Все модели</a>
+    <p class="kicker">Финальный ответ модели</p>
+    <h1>Ternary-Bonsai-27B-Q2_0</h1>
+    <div class="report">
+<h1>Полное статическое анализ PE-файла через V5 IDA</h1>
+<h2>Сводка</h2>
+<p><strong>Архитектура:</strong> 64-битный PE-файл, скомпилированный из <strong>Rust</strong> (подтверждено по строкам <code>RUST_BACKTRACE</code>, <code>_RNvMn...</code> Rust-модулям). Сложность: <strong>1278 функций</strong>, <strong>806 строк</strong>, <strong>8 сегментов</strong>.</p>
+<p><strong>TLS-колбэки выполняются до entry (CRT-инициализация) — не декомпилируются.</strong></p>
+<p>---</p>
+<h2>Структура</h2>
+<table>
+<tr><th>Параметр</th><th>Значение</th></tr>
+<tr><td>Формат</td><td>PE для AMD64</td></tr>
+<tr><td>Image Base</td><td><code>0x140000000</code></td></tr>
+<tr><td>Entry Point</td><td><code>start</code> @ <code>0x140045A50</code> (MinGW CRT startup)</td></tr>
+<tr><td>Сегменты</td><td><code>.text</code>, <code>.rdata</code>, <code>.idata</code>, <code>.rdata</code>, <code>.buildid</code>, <code>.data</code>, <code>.pdata</code>, <code>.tls</code></td></tr>
+</table>
+<p><strong>Импортируемые модули:</strong></p>
+<ul>
+<li>- <code>KERNEL32</code> (99), <code>USER32</code> (26), <code>ADVAPI32</code> (16), <code>api-ms-win-crt-runtime-l1-1-0</code> (14), <code>WS2_32</code> (13), <code>WINMM</code> (8), <code>WINHTTP</code> (8), <code>GDI32</code> (7), <code>bcrypt</code> (6), <code>api-ms-win-crt-stdio-l1-1-0</code> (6), <code>ole32</code> (4), <code>gdiplus</code> (4)</li>
+</ul>
+<p>---</p>
+<h2>Ключевые функции</h2>
+<h3>1. Browser Credential Extractor: <code>sub_14000F9D1</code> (0x14000F9D1, 3515 байт)</h3>
+<p><strong>Целевые приложения:</strong></p>
+<ul>
+<li>- <strong>Firefox</strong> (<code>firefox.exe</code>) — строка <code>&quot;[Firefox] Not running.\n[Firefox] Reading cookies (plaintext)...&quot;</code></li>
+<li>- <strong>Chrome</strong> (<code>chrome.exe</code>) — строка <code>&quot;[Chrome] Not running.\n[Chrome] Decrypting cookies...&quot;</code></li>
+<li>- <strong>Edge</strong> (<code>msedge.exe</code>) — строка <code>&quot;[Edge] Not running.\n[Edge] Decrypting cookies...&quot;</code></li>
+</ul>
+<p><strong>Механизм работы:</strong></p>
+<ul>
+<li>- Ищет исполняемые файлы браузеров через <code>FindFirstFileA</code>/<code>FindNextFileA</code></li>
+<li>- Считывает ковариантные данные из файлов (72 байта на запись)</li>
+<li>- Извлекает мастер-ключ для расшифровки</li>
+<li>- Применяет <code>CryptUnprotectData</code> (CRYPT32) для decrypt cookie data</li>
+<li>- Строит таблицы данных: <code>[timestamp, path_hash, decrypted_data]</code></li>
+</ul>
+<p><strong>Строки:</strong></p>
+<ul>
+<li>- <code>&quot;[Chrome] Not running.\n[Chrome] Decrypting cookies...&quot;</code> @ <code>0x140080120</code></li>
+<li>- <code>&quot;[Firefox] Not running.\n[Firefox] Reading cookies (plaintext)...&quot;</code> @ <code>0x14008029a</code></li>
+<li>- <code>&quot;Cannot decrypt master key.\n&quot;</code> @ <code>0x1400801dd</code></li>
+<li>- <code>&quot;chrome.exe&quot;</code> @ <code>0x140080116</code></li>
+<li>- <code>&quot;msedge.exe&quot;</code> @ <code>0x1400801f8</code></li>
+</ul>
+<p>---</p>
+<h3>2. Main Orchestrator: <code>sub_140003CA0</code> (0x140003CA0, 35822 байт)</h3>
+<p><strong>API-вызовы (из capability_map):</strong></p>
+<table>
+<tr><th>API</th><th>Кол-во вызовов</th><th>Назначение</th></tr>
+<tr><td><code>CreateProcessA</code></td><td>5</td><td>Запуск процессов</td></tr>
+<tr><td><code>OpenProcess</code></td><td>2</td><td>Открытие процессов</td></tr>
+<tr><td><code>RegCreateKeyExA</code></td><td>1</td><td>Создание реестровых ключей</td></tr>
+<tr><td><code>RegDeleteKeyA</code></td><td>2</td><td>Удаление ключей</td></tr>
+<tr><td><code>RegDeleteValueA</code></td><td>4</td><td>Удаление значений</td></tr>
+<tr><td><code>RegOpenKeyExA</code></td><td>9</td><td>Открытие ключей</td></tr>
+<tr><td><code>RegQueryValueExA</code></td><td>4</td><td>Чтение значений</td></tr>
+<tr><td><code>RegSetValueExA</code></td><td>4</td><td>Запись значений</td></tr>
+</table>
+<p><strong>Персистентность:</strong></p>
+<ul>
+<li>- Registry: <code>Software\\Microsoft\\Windows\\CurrentVersion\\Run</code> @ <code>0x14007FD88</code></li>
+<li>- Registry keys: <code>HKCR</code>, <code>HKEY_CLASSES_ROOT</code>, <code>HKEY_CURRENT_USER</code>, <code>HKEY_LOCAL_MACHINE</code> @ <code>0x1400806a8</code></li>
+</ul>
+<p><strong>API-вызов <code>CreateProcessA</code></strong> с флагом <code>SW_HIDE</code> (0x0) — запускает скрытые процессы.</p>
+<p>---</p>
+<h3>3. C2 Beacon: <code>sub_140001000</code> (0x140001000, 2223 байт)</h3>
+<p><strong>Инициализация:</strong></p>
+<pre><code>&quot;Initializing HTTP transport...&quot; @ 0x14007db29
+&quot;HTTP transport initialized.&quot; @ 0x14007db47
+&quot;Entering beacon loop...&quot; @ 0x14007db62
+&quot;Registered. Entering main loop.&quot; @ 0x140080dfb</code></pre>
+<p><strong>WinHTTP API:</strong></p>
+<ul>
+<li>- <code>WinHttpOpenRequest</code> с флагом <code>WINHTTP_FLAG_BYPASS_PROXY_CACHE</code> (0x100)</li>
+<li>- <code>WinHttpSendRequest</code> → <code>WinHttpReceiveResponse</code> → <code>WinHttpReadData</code></li>
+<li>- Отправка данных в чанках (8 байт)</li>
+</ul>
+<p><strong>Beacon loop:</strong></p>
+<pre><code>while !(sub_1400128AB()) {
+    Sleep(5000 &lt;&lt; v7)  // 5000ms - 120000ms интервал
+    WinHttp...
+}</code></pre>
+<p><strong>Обработка ответов C2:</strong></p>
+<ul>
+<li>- Чтение команд из HTTP-ответа</li>
+<li>- Декодирование 48-байтных записей</li>
+<li>- Вызов <code>sub_140003CA0</code> для выполнения команд</li>
+</ul>
+<p>---</p>
+<h2>Поведение malware</h2>
+<h3>1. Кража данных браузеров</h3>
+<table>
+<tr><th>Браузер</th><th>Статус-строка</th></tr>
+<tr><td>Firefox</td><td><code>&quot;[Firefox] Not running.\n[Firefox] Reading cookies (plaintext)...&quot;</code></td></tr>
+<tr><td>Chrome</td><td><code>&quot;[Chrome] Not running.\n[Chrome] Decrypting cookies...&quot;</code></td></tr>
+<tr><td>Edge</td><td><code>&quot;[Edge] Not running.\n[Edge] Decrypting cookies...&quot;</code></td></tr>
+</table>
+<p><strong>Механизм:</strong></p>
+<ol>
+<li>1. Поиск <code>.exe</code> браузеров в <code>AppData</code></li>
+<li>2. Чтение ковариантных данных (cookie files)</li>
+<li>3. Расшифровка через <code>CryptUnprotectData</code> (CRYPT32)</li>
+<li>4. Сбор данных в буфер для отправки</li>
+</ol>
+<h3>2. Кража Discord/Telegram</h3>
+<table>
+<tr><th>Приложение</th><th>Строка</th></tr>
+<tr><td>Discord</td><td><code>&quot;Discord is not running.\nCannot get AppData.\n=== Discord ===&quot;</code> @ <code>0x14007FFE</code></td></tr>
+<tr><td>Telegram</td><td><code>&quot;Telegram is not running.\n&quot;</code> @ <code>0x140080331</code></td></tr>
+</table>
+<h3>3. Персистентность</h3>
+<table>
+<tr><th>Механизм</th><th>Реализация</th></tr>
+<tr><td>Registry Run</td><td><code>Software\\Microsoft\\Windows\\CurrentVersion\\Run</code></td></tr>
+<tr><td>Registry Keys</td><td><code>HKCR</code>, <code>HKCU</code>, <code>HKLM</code> через <code>RegCreateKeyExA</code></td></tr>
+<tr><td>Process</td><td><code>CreateProcessA</code> с <code>SW_HIDE</code></td></tr>
+</table>
+<h3>4. C2-коммуникации</h3>
+<table>
+<tr><th>Параметр</th><th>Значение</th></tr>
+<tr><td>Протокол</td><td>WinHTTP (HTTP/HTTPS)</td></tr>
+<tr><td>Флаги</td><td><code>WINHTTP_FLAG_BYPASS_PROXY_CACHE</code> (0x100)</td></tr>
+<tr><td>Интервал</td><td>5000ms - 120000ms (настраиваемый)</td></tr>
+<tr><td>Чанки</td><td>8 байт данных</td></tr>
+</table>
+<p>---</p>
+<h2>IOCs (Indicators of Compromise)</h2>
+<h3>Статические IOCs</h3>
+<table>
+<tr><th>Тип</th><th>Значение</th></tr>
+<tr><td><strong>String</strong></td><td><code>&quot;[Firefox] Not running.\n[Firefox] Reading cookies (plaintext)...&quot;</code></td></tr>
+<tr><td><strong>String</strong></td><td><code>&quot;[Chrome] Not running.\n[Chrome] Decrypting cookies...&quot;</code></td></tr>
+<tr><td><strong>String</strong></td><td><code>&quot;[Edge] Not running.\n[Edge] Decrypting cookies...&quot;</code></td></tr>
+<tr><td><strong>String</strong></td><td><code>&quot;Discord is not running.\nCannot get AppData.\n=== Discord ===&quot;</code></td></tr>
+<tr><td><strong>String</strong></td><td><code>&quot;Software\\Microsoft\\Windows\\CurrentVersion\\Run&quot;</code></td></tr>
+<tr><td><strong>String</strong></td><td><code>&quot;Initializing HTTP transport...&quot;</code></td></tr>
+<tr><td><strong>String</strong></td><td><code>&quot;Entering beacon loop...&quot;</code></td></tr>
+<tr><td><strong>String</strong></td><td><code>&quot;RUST_BACKTRACE&quot;</code> (Rust-скомпилированный бинарник)</td></tr>
+<tr><td><strong>API</strong></td><td><code>CryptUnprotectData</code> (CRYPT32)</td></tr>
+<tr><td><strong>API</strong></td><td><code>WinHttpOpenRequest</code></td></tr>
+<tr><td><strong>API</strong></td><td><code>WinHttpSendRequest</code></td></tr>
+<tr><td><strong>API</strong></td><td><code>WinHttpReceiveResponse</code></td></tr>
+<tr><td><strong>API</strong></td><td><code>WinHttpReadData</code></td></tr>
+<tr><td><strong>API</strong></td><td><code>CreateProcessA</code></td></tr>
+<tr><td><strong>API</strong></td><td><code>OpenProcess</code></td></tr>
+<tr><td><strong>API</strong></td><td><code>RegCreateKeyExA</code></td></tr>
+<tr><td><strong>API</strong></td><td><code>RegSetValueExA</code></td></tr>
+<tr><td><strong>API</strong></td><td><code>RegDeleteKeyA</code></td></tr>
+<tr><td><strong>API</strong></td><td><code>RegDeleteValueA</code></td></tr>
+<tr><td><strong>API</strong></td><td><code>RegOpenKeyExA</code></td></tr>
+<tr><td><strong>API</strong></td><td><code>RegQueryValueExA</code></td></tr>
+<tr><td><strong>API</strong></td><td><code>RegDeleteValueA</code></td></tr>
+<tr><td><strong>API</strong></td><td><code>WinHttpOpenRequest</code></td></tr>
+<tr><td><strong>API</strong></td><td><code>WinHttpSendRequest</code></td></tr>
+<tr><td><strong>API</strong></td><td><code>WinHttpReceiveResponse</code></td></tr>
+<tr><td><strong>API</strong></td><td><code>WinHttpReadData</code></td></tr>
+<tr><td><strong>API</strong></td><td><code>CreateProcessA</code></td></tr>
+<tr><td><strong>API</strong></td><td><code>OpenProcess</code></td></tr>
+<tr><td><strong>API</strong></td><td><code>RegCreateKeyExA</code></td></tr>
+<tr><td><strong>API</strong></td><td><code>RegSetValueExA</code></td></tr>
+<tr><td><strong>API</strong></td><td><code>RegDeleteKeyA</code></td></tr>
+<tr><td><strong>API</strong></td><td><code>RegDeleteValueA</code></td></tr>
+<tr><td><strong>API</strong></td><td><code>RegOpenKeyExA</code></td></tr>
+<tr><td><strong>API</strong></td><td><code>RegQueryValueExA</code></td></tr>
+</table>
+<h3>Динамические IOCs (при выполнении)</h3>
+<table>
+<tr><th>Тип</th><th>Поведение</th></tr>
+<tr><td><strong>Registry</strong></td><td>Запись в <code>Software\\Microsoft\\Windows\\CurrentVersion\\Run</code></td></tr>
+<tr><td><strong>Registry</strong></td><td>Создание/удаление ключей <code>HKCR</code>, <code>HKCU</code>, <code>HKLM</code></td></tr>
+<tr><td><strong>Process</strong></td><td>Запуск скрытых процессов через <code>CreateProcessA</code></td></tr>
+<tr><td><strong>Network</strong></td><td>HTTP-запросы к C2-серверу</td></tr>
+<tr><td><strong>File</strong></td><td>Чтение ковариантных данных браузеров</td></tr>
+<tr><td><strong>API</strong></td><td>Вызов <code>CryptUnprotectData</code></td></tr>
+</table>
+<p>---</p>
+<h2>Резюме</h2>
+<p>Это <strong>Rust-скомпилированный credential/cookie stealer</strong> с функциями:</p>
+<ol>
+<li>1. <strong>Кража данных</strong> из Firefox, Chrome, Edge (cookies, session tokens)</li>
+<li>2. <strong>Кража Discord/Telegram</strong> данных (tokens, auth info)</li>
+<li>3. <strong>Персистентность</strong> через Registry Run и скрытые процессы</li>
+<li>4. <strong>C2-коммуникации</strong> через WinHTTP с настраиваемым интервалом beacon</li>
+<li>5. <strong>Обход прокси</strong> (<code>WINHTTP_FLAG_BYPASS_PROXY_CACHE</code>)</li>
+</ol>
+<p><strong>Архитектура Rust</strong> подтверждается по:</p>
+<ul>
+<li>- Строкам <code>RUST_BACKTRACE</code></li>
+<li>- Модульным именам <code>_RNvMn...</code></li>
+<li>- Обработка ошибок через <code>Result</code>-паттерны</li>
+<li>- Использование <code>alloc::string::String</code></li>
+</ul>
+<p><strong>Главный вызов:</strong> <code>sub_140003CA0</code> (35KB) — оркестратор всех операций, <code>sub_14000F9D1</code> (3.5KB) — браузер-крадер, <code>sub_140001000</code> (2.2KB) — C2-белек.</p>
+    </div>
+  </div>
+</body>
+</html>

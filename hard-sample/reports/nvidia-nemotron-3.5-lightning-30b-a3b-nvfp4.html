@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Отчет · NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #071018;
+      --ink: #f3f6fb;
+      --muted: #9aabc0;
+      --line: rgba(160, 196, 232, .16);
+      --cyan: #5ee0c7;
+      --num: #7ec8ff;
+      --sans: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+      --mono: "Source Code Pro", ui-monospace, Menlo, Consolas, monospace;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; }
+    body {
+      font-family: var(--sans);
+      font-size: 17px;
+      line-height: 1.55;
+      color: var(--ink);
+      background:
+        radial-gradient(900px 420px at 8% -10%, rgba(94, 224, 199, .14), transparent 55%),
+        radial-gradient(720px 380px at 100% 0%, rgba(126, 200, 255, .12), transparent 50%),
+        repeating-linear-gradient(0deg, transparent 0 31px, rgba(126, 200, 255, .045) 31px 32px),
+        repeating-linear-gradient(90deg, transparent 0 31px, rgba(126, 200, 255, .045) 31px 32px),
+        linear-gradient(180deg, #0a1624, var(--bg));
+    }
+    .stage {
+      width: min(900px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 36px 0 64px;
+    }
+    .back {
+      display: inline-block;
+      margin: 0 0 18px;
+      color: var(--cyan);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 600;
+    }
+    .back:hover { text-decoration: underline; }
+    .kicker {
+      color: var(--cyan);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin: 0 0 10px;
+    }
+    h1 {
+      font-size: clamp(28px, 3.6vw, 40px);
+      font-weight: 700;
+      letter-spacing: -.02em;
+      line-height: 1.15;
+      margin: 0 0 10px;
+    }
+    .meta {
+      margin: 0 0 28px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+    .meta code {
+      font-family: var(--mono);
+      font-size: .92em;
+      color: var(--cyan);
+    }
+    .report {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 28px 30px;
+      background: linear-gradient(180deg, rgba(18, 34, 52, .82), rgba(10, 20, 32, .78));
+    }
+    .report h1, .report h2, .report h3, .report h4 {
+      color: var(--ink);
+      letter-spacing: -.01em;
+      margin: 1.4em 0 .55em;
+      line-height: 1.25;
+    }
+    .report h1 { font-size: 1.55em; margin-top: 0; }
+    .report h2 { font-size: 1.28em; color: var(--num); }
+    .report h3 { font-size: 1.12em; }
+    .report p { margin: 0 0 1em; }
+    .report ul, .report ol { margin: 0 0 1em; padding-left: 1.35em; }
+    .report li { margin: 0.25em 0; }
+    .report code {
+      font-family: var(--mono);
+      font-size: .9em;
+      color: var(--cyan);
+    }
+    .report pre {
+      margin: 0 0 1.1em;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: rgba(7, 16, 24, .72);
+      overflow-x: auto;
+      font-family: var(--mono);
+      font-size: 13.5px;
+      line-height: 1.5;
+      color: #d5e6f5;
+    }
+    .report pre code { color: inherit; }
+    .report table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0 0 1.2em;
+      font-size: 15px;
+    }
+    .report th, .report td {
+      border: 1px solid var(--line);
+      padding: 8px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+    .report th {
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      background: rgba(255,255,255,.03);
+    }
+    .report strong { color: #fff; font-weight: 600; }
+    .foot {
+      margin-top: 22px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+  </style>
+  <link rel="stylesheet" href="/assets/css/hard-sample-chrome.css">
+</head>
+<body>
+  <header class="osa-chrome" aria-label="Order Of Six Angles">
+    <div class="osa-chrome__inner">
+      <a class="osa-chrome__brand" href="/" aria-label="Order Of Six Angles">
+        <img class="osa-chrome__mark" src="/assets/images/orderofsixangles_art/ada.png" alt="Order Of Six Angles logo">
+        <span class="osa-chrome__copy">
+          <span class="osa-chrome__eyebrow">security research</span>
+          <span class="osa-chrome__title">Order Of Six Angles</span>
+        </span>
+      </a>
+      <nav class="osa-chrome__nav" aria-label="Primary navigation">
+        <a class="osa-chrome__link" href="/">Home</a>
+        <a class="osa-chrome__link" href="/ru/">RU</a>
+        <a class="osa-chrome__link" href="/translations/">Translations</a>
+        <a class="osa-chrome__link" href="/samples/">Samples</a>
+        <a class="osa-chrome__link is-active" href="/hard-sample/">Local LLM Testing</a>
+        <a class="osa-chrome__link" href="/art/">Art</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="stage">
+    <a class="back" href="../index.html">← Все модели</a>
+    <p class="kicker">Финальный ответ модели</p>
+    <h1>NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4</h1>
+    <div class="report">
+<p><strong>Статический отчет по PE‑файлу (V5 IDA)</strong>  <br>
+<em>(анализ основан только на возвращаемых artefact‑объектах, без выполнения кода и без написания SQL)</em>  </p>
+<p>---</p>
+<h2>1. Общие сведения о бинере  </h2>
+<table>
+<tr><th>Параметр</th><th>Значение</th></tr>
+<tr><td><strong>Формат</strong></td><td>PE64 (AMD‑64)</td></tr>
+<tr><td><strong>Точка входа</strong></td><td><code>start @ 0x140045A50</code> (37 байт, обертка <code>__mingw_CRTStartup</code>)</td></tr>
+<tr><td><strong>Количество функций</strong></td><td>1278</td></tr>
+<tr><td><strong>Количество строк</strong></td><td>806</td></tr>
+<tr><td><strong>Основной сегмент кода</strong></td><td><code>.text</code> (0x140001000 ‑ 0x14006c000, права R‑X)</td></tr>
+<tr><td><strong>TLS‑колбэки</strong></td><td>три колбэка (0x140024610, 0x140045ae0, 0x140045b70) – запускаются загрузчиком, <strong>не декомпилированы</strong> (по правилам задачи)</td></tr>
+<tr><td><strong>Импортируемые модули (выделенные)</strong></td><td>KERNEL32 (99), USER32 (26), ADVAPI32 (16), api‑ms‑win‑crt‑runtime‑l1‑1‑0 (14), WS2_32 (13), WINMM (8), WINHTTP (8), GDI32 (7), bcrypt (6), ole32 (4), gdiplus (4)</td></tr>
+</table>
+<p>&gt; <strong>Важное замечание</strong> – вся поведенческая информация получается из <em>leads</em> (импорты, отображаемые строки, вызовы API). Без динамического исполнения или глубокого деcompilation всей функции нельзя гарантировать точные аргументы каждого вызова, но статический след достаточно четок, чтобы констатировать вредоносные намерения.</p>
+<p>---</p>
+<h2>2. Persistence (Автозапуск через реестр)</h2>
+<table>
+<tr><th>Находка</th><th>Адрес / IDA‑объект</th><th>Описание</th></tr>
+<tr><td><strong>Строка реестра</strong></td><td><code>0x14007fd88</code> – <code>&quot;Software\\Microsoft\\Windows\\CurrentVersion\\Run&quot;</code> (46 байт)</td><td>Указывает на намерение добавить запись в раздел <strong>Run</strong> текущего пользователя, чтобы исполняемый файл запускался при каждом входе в Windows.</td></tr>
+<tr><td><strong>Вызов RegCreateKeyExA</strong></td><td>В функции <strong>sub_140003CA0</strong> (0x140003CA0, размер 35822 байт) – вызов присутствует в списке <code>callees</code> (occurrence 1). &lt;br&gt;Адрес вызова в IDA: <code>0x14006b380</code>.</td><td>Функция открывает (или создает) ключ реестра, через который последует запись значения.</td></tr>
+<tr><td><strong>Вызов RegSetValueExA</strong></td><td>Та же функция <strong>sub_140003CA0</strong> – в <code>capability_map</code> перечислено <code>&quot;registry_value_write&quot;: 2</code>. &lt;br&gt;Адрес вызова: <code>0x14006b3f0</code>.</td><td>Записывает строковое значение (вероятно, путь к исполняемому файлу) только что созданному ключу.</td></tr>
+<tr><td><strong>Дополнительные вызовы реестра</strong></td><td>В той же функции: <code>RegOpenKeyExA</code> (9 вызовов), <code>RegQueryValueExA</code> (4), <code>RegDeleteKeyA</code> (2), <code>RegDeleteValueA</code> (4).</td><td>Полный набор операций чтения/удаления/создания ключей, что типично для установки/поддержки persistence.</td></tr>
+</table>
+<p><strong>Вывод по persistence</strong> – бинарный файл намеренно пишет значение в ключ <code>HKCU\Software\Microsoft\Windows\CurrentVersion\Run</code>. Это классический способ обеспечить автоматический запуск malware при каждой загрузке Windows.</p>
+<p>---</p>
+<h2>3. Работа с реестром (вне persistence)</h2>
+<p>В функции <strong>sub_140003CA0</strong> обнаружены следующие операции с реестром (адреса вызовов из <code>capability_map</code>):</p>
+<table>
+<tr><th>API</th><th>Адрес вызова</th><th>Назначение (по контексту)</th></tr>
+<tr><td><code>RegCreateKeyExA</code></td><td>0x14006b380</td><td>Создание/открытие ключа</td></tr>
+<tr><td><code>RegSetValueExA</code></td><td>0x14006b3f0</td><td>Запись значения (строка пути)</td></tr>
+<tr><td><code>RegOpenKeyExA</code></td><td>0x14006b3d0 (9 раз)</td><td>Чтение существующих ключей</td></tr>
+<tr><td><code>RegQueryValueExA</code></td><td>0x14006b3e0 (4 раза)</td><td>Чтение сохраненных значений</td></tr>
+<tr><td><code>RegDeleteKeyA</code></td><td>0x14006b390 (2 раза)</td><td>Удаление подключаемых ключей</td></tr>
+<tr><td><code>RegDeleteValueA</code></td><td>0x14006b3a0 (4 раза)</td><td>Удаление конкретных значений</td></tr>
+</table>
+<p>Эти вызовы свидетельствуют о том, что программа не только устанавливает автозапуск, но и может <strong>менять, удалять</strong> существующие записи реестра (например, очистку следов или перезапись других программ).</p>
+<p>---</p>
+<h2>4. Сбор информации (браузеры, мессенджеры)</h2>
+<h3>4.1 Строковые индикаторы (из `ida_explore(kind=&quot;strings&quot;))</h3>
+<table>
+<tr><th>Адрес</th><th>Строка (ASCII)</th><th>Длина</th><th>Комментарий</th></tr>
+<tr><td><code>0x14008029a</code></td><td><code>[Firefox] Not running.\n[Firefox] Reading cookies (plaintext)...</code></td><td>64</td><td>Попытка извлечения cookies Firefox.</td></tr>
+<tr><td><code>0x140080120</code></td><td><code>[Chrome] Not running.\n[Chrome] Decrypting cookies...</code></td><td>53</td><td>Извлечение/декрипция cookies Chrome.</td></tr>
+<tr><td><code>0x14007ffee</code></td><td><code>Discord is not running.\nCannot get AppData.\n=== Discord ===</code></td><td>60</td><td>Проверка наличия Discord, доступ к AppData.</td></tr>
+<tr><td><code>0x140080202</code></td><td><code>[Edge] Not running.\n[Edge] Decrypting cookies...</code></td><td>49</td><td>Декрипция cookies Edge.</td></tr>
+<tr><td><code>0x14007fd88</code></td><td><code>Software\\Microsoft\\Windows\\CurrentVersion\\Run</code></td><td>46</td><td>См. раздел persistence.</td></tr>
+<tr><td><code>0x140080ce4</code></td><td><code>HttpSendRequest FAILED (GetLastError=</code></td><td>37</td><td>Обработка ошибок HTTP‑запросов.</td></tr>
+<tr><td><code>0x140080d7f</code></td><td><code>HTTP transport initialized OK.</code></td><td>30</td><td>Инициализация транспорта.</td></tr>
+<tr><td><code>0x140080c9b</code></td><td><code>WinHttpReceiveResponse FAILED</code></td><td>29</td><td>Ошибка получения ответа WinHTTP.</td></tr>
+<tr><td><code>0x140086c88</code></td><td><code>fatal runtime error: I/O error: operation failed to complete synchronously, aborting\nadvancing io slices beyond their length</code></td><td>125</td><td>Ошибка рантайма, не несет смысловой нагрузки.</td></tr>
+</table>
+<h3>4.2 Интерпретация</h3>
+<ul>
+<li>* Наличие шаблонов для <strong>Firefox, Chrome, Edge</strong> и <strong>Discord</strong> указывает на попытку извлечь сохраненные данные сессий (cookies, локальные базы данных).  </li>
+<li>* Фразы «Not running» и «Decrypting cookies» характерны для скриптов‑крайне‑информационных сборщиков, которые пытаются получить данные только если браузер запущен, иначе сообщают о его отсутствии.  </li>
+<li>* Ссылка на <code>AppData</code> для Discord также намекает на чтение конфигурационных файлов или локальных баз данных.</li>
+</ul>
+<p>---</p>
+<h2>5. Сетевая активность (эксфильтрация)</h2>
+<h3>5.1 Импорты</h3>
+<ul>
+<li>* <strong>WINHTTP</strong> – 13 функций (см. таблицу импортов).  </li>
+<li>* Основные вызовы, видимые в деcompilation крупной функции <strong>sub_140003CA0</strong> (через <code>capability_map</code>):  </li>
+</ul>
+<table>
+<tr><th>API</th><th>Адрес вызова</th><th>Описание</th></tr>
+<tr><td><code>WinHttpOpen</code></td><td>(неявный через вызов <code>WinHttpOpenRequest</code> в профиле)</td><td>Открытие сеанса WinHTTP.</td></tr>
+<tr><td><code>WinHttpConnect</code></td><td>(в профиле)</td><td>Подключение к удаленному хосту.</td></tr>
+<tr><td><code>WinHttpOpenRequest</code></td><td>(в профиле)</td><td>Формирование запроса (GET/POST).</td></tr>
+<tr><td><code>WinHttpSendRequest</code></td><td>(в профиле)</td><td>Отправка запроса.</td></tr>
+<tr><td><code>WinHttpReceiveResponse</code></td><td>(в профиле)</td><td>Получение ответа сервера.</td></tr>
+<tr><td><code>WinHttpReadData</code></td><td>(в профиле)</td><td>Чтение ответа в буфер.</td></tr>
+</table>
+<h3>5.2 Строки, связанные с HTTP</h3>
+<table>
+<tr><th>Адрес</th><th>Строка</th><th>Контекст</th></tr>
+<tr><td><code>0x140080231</code></td><td><code>Initializing HTTP transport...</code></td><td>Старт сессии.</td></tr>
+<tr><td><code>0x140080250</code> (приблизительно)</td><td><code>HTTP transport initialized OK.</code></td><td>Успешная инициализация.</td></tr>
+<tr><td><code>0x140080c9b</code></td><td><code>HttpSendRequest FAILED (GetLastError=</code></td><td>37</td><td>Ошибка отправки.</td></tr>
+<tr><td><code>0x140080d7f</code></td><td><code>HTTP transport initialized OK.</code></td><td>Успешная инициализация.</td></tr>
+<tr><td><code>0x140080c6b</code> (упрощенно)</td><td><code>WinHttpReceiveResponse FAILED</code></td><td>29</td><td>Ошибка получения ответа.</td></tr>
+</table>
+<h3>5.3 Вывод по сети</h3>
+<p>Бинар использует <strong>WinHTTP</strong> для отправки HTTP‑запросов. Скорее всего, после сбора cookies/информации о браузерах и мессенджерах данные передаются на удаленный сервер (C2). Ошибки <code>FAILED</code> в логах могут свидетельствовать о нестабильном соединении или о защите хоста ( firewall, антивирус ).</p>
+<ul>
+<li>* <strong>ICO‑индикаторы (если бы были видны в коде):</strong> отсутствуют явные URL‑адреса в просмотренных строках, но наличие функций WinHTTP и строк инициализации транспортного слоя позволяет констатировать сетевую активность.</li>
+</ul>
+<p>---</p>
+<h2>6. Криптография</h2>
+<table>
+<tr><th>Находка</th><th>Оценка</th></tr>
+<tr><td><strong>Импорт <code>bcrypt</code></strong> (6 вызовов)</td><td>Есть в списке импортов, но в деcompilation функции <code>start</code> и основной функции <code>sub_140003CA0</code> <strong>не обнаружено прямого использования алгоритмов шифрования/хеширования</strong>. Возможно, вызов происходит внутри CRT или других скрытых модулей, но на основе статического анализа нельзя утверждать о применении криптографии.</td></tr>
+<tr><td><strong>FLIRT‑распознавание библиотек</strong></td><td>Отмечено как низкий приоритет (FLIRT‑функции не анализировались детально).</td></tr>
+</table>
+<p><strong>Вывод</strong> – криптографических операций, явно видимых в коде, нет. Если шифрование используется, оно, вероятно, динамически или через вызов внешних библиотек, не охваченных текущим простым просмотром.</p>
+<p>---</p>
+<h2>7. TLS‑колбэки (loader boilerplate)</h2>
+<table>
+<tr><th>Колбэк</th><th>Адрес</th><th>Размер</th><th>Статус</th></tr>
+<tr><td><code>TlsCallback_0</code></td><td><code>0x140024610</code></td><td>626 байт</td><td>Запускается загрузчиком, <strong>не декомпилирован</strong> (правило задачи).</td></tr>
+<tr><td><code>TlsCallback_1</code></td><td><code>0x140045ae0</code></td><td>118 байт</td><td>Аналогично.</td></tr>
+<tr><td><code>TlsCallback_2</code></td><td><code>0x140045b70</code></td><td>22 байт</td><td>Аналогично.</td></tr>
+</table>
+<p>Согласно инструкциям, TLS‑колбэки рассматриваются как CRT‑рантайм и не анализируются дальше, если пользователь не просит обратное.</p>
+<p>---</p>
+<h2>8. Итоговое резюме (что делает этот PE)</h2>
+<ol>
+<li>1. <strong>Persistence</strong> – создает запись в <code>HKCU\Software\Microsoft\Windows\CurrentVersion\Run</code>, чтобы запускаться при каждом входе в систему.  </li>
+<li>2. <strong>Реестр</strong> – открывает/создает ключи, записывает значения, читает/удаляет существующие записи (функция <code>sub_140003CA0</code>).  </li>
+<li>3. <strong>Информационный сбор</strong> – сканирует браузеры (Firefox, Chrome, Edge) и мессенджеры (Discord, Telegram) за cookies, локальными базами данных и папками <code>AppData</code>.  </li>
+<li>4. <strong>Сетевая эксплитация</strong> – использует <strong>WinHTTP</strong> для отправки собранных данных на удаленный сервер (HTTP‑запросы, возможные ошибки передачи).  </li>
+<li>5. <strong>Криптография</strong> – импорт <code>bcrypt</code> присутствует, но прямого использования в просмотренном коде не обнаружено.  </li>
+<li>6. <strong>TLS‑колбэки</strong> – стандартные загрузчиковые callback‑ы, не несущие вредоносной нагрузки в рамках статического анализа.  </li>
+</ol>
+<p><strong>Ограничения отчета</strong>  </p>
+<ul>
+<li>* Все утверждения о поведении основаны на статических leads (импорты, строки, вызовы API). Точные аргументы каждого вызова (например, имя записи реестра или URL‑адрес C2) установлены лишь частично; для полного подтверждения необходима динамическая отладка или глубокое деcompilation всей функции.  </li>
+<li>* Не были декомпилированы TLS‑колбэки (по правилам задачи).  </li>
+<li>* Функция <code>start</code> минимальна и передает управление CRT; дальнейшие действия определяются уже анализируемой функцией <code>sub_140003CA0</code>.</li>
+</ul>
+<p><em>Отчет завершен.</em></p>
+    </div>
+  </div>
+</body>
+</html>

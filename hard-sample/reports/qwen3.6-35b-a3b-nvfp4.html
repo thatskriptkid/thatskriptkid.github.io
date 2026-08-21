@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Отчет · Qwen3.6-35B-A3B-NVFP4</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #071018;
+      --ink: #f3f6fb;
+      --muted: #9aabc0;
+      --line: rgba(160, 196, 232, .16);
+      --cyan: #5ee0c7;
+      --num: #7ec8ff;
+      --sans: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+      --mono: "Source Code Pro", ui-monospace, Menlo, Consolas, monospace;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; }
+    body {
+      font-family: var(--sans);
+      font-size: 17px;
+      line-height: 1.55;
+      color: var(--ink);
+      background:
+        radial-gradient(900px 420px at 8% -10%, rgba(94, 224, 199, .14), transparent 55%),
+        radial-gradient(720px 380px at 100% 0%, rgba(126, 200, 255, .12), transparent 50%),
+        repeating-linear-gradient(0deg, transparent 0 31px, rgba(126, 200, 255, .045) 31px 32px),
+        repeating-linear-gradient(90deg, transparent 0 31px, rgba(126, 200, 255, .045) 31px 32px),
+        linear-gradient(180deg, #0a1624, var(--bg));
+    }
+    .stage {
+      width: min(900px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 36px 0 64px;
+    }
+    .back {
+      display: inline-block;
+      margin: 0 0 18px;
+      color: var(--cyan);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 600;
+    }
+    .back:hover { text-decoration: underline; }
+    .kicker {
+      color: var(--cyan);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin: 0 0 10px;
+    }
+    h1 {
+      font-size: clamp(28px, 3.6vw, 40px);
+      font-weight: 700;
+      letter-spacing: -.02em;
+      line-height: 1.15;
+      margin: 0 0 10px;
+    }
+    .meta {
+      margin: 0 0 28px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+    .meta code {
+      font-family: var(--mono);
+      font-size: .92em;
+      color: var(--cyan);
+    }
+    .report {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 28px 30px;
+      background: linear-gradient(180deg, rgba(18, 34, 52, .82), rgba(10, 20, 32, .78));
+    }
+    .report h1, .report h2, .report h3, .report h4 {
+      color: var(--ink);
+      letter-spacing: -.01em;
+      margin: 1.4em 0 .55em;
+      line-height: 1.25;
+    }
+    .report h1 { font-size: 1.55em; margin-top: 0; }
+    .report h2 { font-size: 1.28em; color: var(--num); }
+    .report h3 { font-size: 1.12em; }
+    .report p { margin: 0 0 1em; }
+    .report ul, .report ol { margin: 0 0 1em; padding-left: 1.35em; }
+    .report li { margin: 0.25em 0; }
+    .report code {
+      font-family: var(--mono);
+      font-size: .9em;
+      color: var(--cyan);
+    }
+    .report pre {
+      margin: 0 0 1.1em;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: rgba(7, 16, 24, .72);
+      overflow-x: auto;
+      font-family: var(--mono);
+      font-size: 13.5px;
+      line-height: 1.5;
+      color: #d5e6f5;
+    }
+    .report pre code { color: inherit; }
+    .report table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0 0 1.2em;
+      font-size: 15px;
+    }
+    .report th, .report td {
+      border: 1px solid var(--line);
+      padding: 8px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+    .report th {
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      background: rgba(255,255,255,.03);
+    }
+    .report strong { color: #fff; font-weight: 600; }
+    .foot {
+      margin-top: 22px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+  </style>
+  <link rel="stylesheet" href="/assets/css/hard-sample-chrome.css">
+</head>
+<body>
+  <header class="osa-chrome" aria-label="Order Of Six Angles">
+    <div class="osa-chrome__inner">
+      <a class="osa-chrome__brand" href="/" aria-label="Order Of Six Angles">
+        <img class="osa-chrome__mark" src="/assets/images/orderofsixangles_art/ada.png" alt="Order Of Six Angles logo">
+        <span class="osa-chrome__copy">
+          <span class="osa-chrome__eyebrow">security research</span>
+          <span class="osa-chrome__title">Order Of Six Angles</span>
+        </span>
+      </a>
+      <nav class="osa-chrome__nav" aria-label="Primary navigation">
+        <a class="osa-chrome__link" href="/">Home</a>
+        <a class="osa-chrome__link" href="/ru/">RU</a>
+        <a class="osa-chrome__link" href="/translations/">Translations</a>
+        <a class="osa-chrome__link" href="/samples/">Samples</a>
+        <a class="osa-chrome__link is-active" href="/hard-sample/">Local LLM Testing</a>
+        <a class="osa-chrome__link" href="/art/">Art</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="stage">
+    <a class="back" href="../index.html">← Все модели</a>
+    <p class="kicker">Финальный ответ модели</p>
+    <h1>Qwen3.6-35B-A3B-NVFP4</h1>
+    <div class="report">
+<h2>Статический анализ PE-бинарника (Rust/MinGW, x64)</h2>
+<h3>Общая информация</h3>
+<ul>
+<li>- <strong>Архитектура</strong>: AMD64, PE32+</li>
+<li>- <strong>Точка входа</strong>: <code>start</code> @ 0x140045A50 (MinGW CRT <code>__mingw_CRTStartup</code>)</li>
+<li>- <strong>TLS-коллбэки</strong>: 3 шт. (<code>TlsCallback_0</code> @ 0x140024610, <code>TlsCallback_1</code> @ 0x140045AE0, <code>TlsCallback_2</code> @ 0x140045B70) — все являются стандартными функциями библиотеки std Rust для управления thread-local storage; выполняются до входа в PE-точку</li>
+<li>- <strong>Выполнение</strong>: TLS-коллбэки загружаются до <code>pe_entry</code>; они выглядят как CRT/runtime и не несят вредоносной логики</li>
+<li>- <strong>Количество функций</strong>: 1278</li>
+<li>- <strong>Количество строк</strong>: 806</li>
+</ul>
+<h3>Импорт API-функций</h3>
+<p>Бинарник импортирует 12 DLL:</p>
+<ul>
+<li>- <strong>KERNEL32</strong> (99 импортов): <code>CreateProcessA</code>, <code>OpenProcess</code>, <code>AddVectoredExceptionHandler</code>, <code>CreateFileA</code>, <code>ReadFile</code>, <code>TerminateProcess</code>, <code>CloseHandle</code>, <code>Sleep</code>, <code>GetModuleFileNameA</code>, <code>GetTickCount64</code></li>
+<li>- <strong>ADVAPI32</strong> (16 импортов): <code>RegCreateKeyExA</code>, <code>RegOpenKeyExA</code>, <code>RegQueryValueExA</code>, <code>RegSetValueExA</code>, <code>RegDeleteKeyA</code>, <code>RegDeleteValueA</code>, <code>OpenSCManagerA</code>, <code>OpenServiceA</code>, <code>ControlService</code>, <code>EnumServicesStatusExA</code>, <code>StartServiceA</code>, <code>GetUserNameA</code></li>
+<li>- <strong>WINHTTP</strong> (8 импортов): <code>WinHttpOpen</code>, <code>WinHttpConnect</code>, <code>WinHttpOpenRequest</code>, <code>WinHttpSendRequest</code>, <code>WinHttpReceiveResponse</code>, <code>WinHttpReadData</code>, <code>WinHttpCloseHandle</code></li>
+<li>- <strong>CRYPT32</strong>: <code>CryptUnprotectData</code> (дешифровка Chrome/Edge master key)</li>
+<li>- <strong>GDI32</strong> (7 импортов): <code>BitBlt</code>, <code>GetDIBits</code>, <code>CreateCompatibleBitmap</code>, <code>CreateCompatibleDC</code>, <code>SelectObject</code>, <code>DeleteObject</code>, <code>DeleteDC</code></li>
+<li>- <strong>AVICAP32</strong>: <code>capCreateCaptureWindowA</code> (захват экрана)</li>
+<li>- <strong>WS2_32</strong> (13 импортов), <strong>IPHLPAPI</strong>: <code>GetExtendedTcpTable</code></li>
+<li>- <strong>bcrypt</strong> (6 импортов), <strong>USER32</strong> (26 импортов), <strong>ole32</strong>, <strong>gdiplus</strong></li>
+</ul>
+<h3>Поведенческий анализ</h3>
+<h4>1. Кража браузерных учётных данных (основной модуль <code>sub_14000F9D1</code>)</h4>
+<p>Функция проверяет наличие запущенных процессов браузеров и читает их профили:</p>
+<ul>
+<li>- <strong>Chrome</strong> (<code>chrome.exe</code>): ищет файлы <code>Cookies</code>, <code>Login Data</code> в профиле <code>%LocalAppData%\Google\Chrome\User Data\Default\</code>, читает SQLite-базы, дешифрует master key через <code>CryptUnprotectData</code></li>
+<li>- <strong>Edge</strong> (<code>msedge.exe</code>): аналогично, путь <code>%LocalAppData%\Microsoft\Edge\User Data\Default\</code></li>
+<li>- <strong>Firefox</strong> (<code>firefox.exe</code>): сканирует профили через <code>FindFirstFileA</code>/<code>FindNextFileA</code>, ищет файлы <code>cookies.sqlite</code>, <code>logins.json</code></li>
+<li>- <strong>Discord</strong>: кража токенов и cookie из <code>%AppData%\Discord\</code></li>
+<li>- <strong>Telegram</strong>: поиск данных в профиле Telegram Desktop</li>
+</ul>
+<p>Строки лога:</p>
+<ul>
+<li>- <code>&quot;[Chrome] Not running.\n[Chrome] Decrypting cookies...\n&quot;</code> @ 0x140080120</li>
+<li>- <code>&quot;[Edge] Not running.\n[Edge] Decrypting cookies...\n&quot;</code> @ 0x140080202</li>
+<li>- <code>&quot;Cannot decrypt master key.\n&quot;</code> @ 0x1400801dd</li>
+<li>- <code>&quot;Discord is not running.\n&quot;</code> @ 0x14007ffee</li>
+<li>- <code>&quot;Telegram is not running.\n&quot;</code> @ 0x140080331</li>
+</ul>
+<h4>2. HTTP-экстракция данных (C2-бэкдор)</h4>
+<p><strong>Функция-бэкон</strong>: <code>sub_140001000</code> (2223 байта)</p>
+<ul>
+<li>- Инициализация WinHTTP-транспорта: <code>&quot;Initializing HTTP transport...&quot;</code> @ 0x14007DB29</li>
+<li>- Бэкон-цикл с экспоненциальной задержкой: начальная задержка 5000 мс, удвоение при неудаче, максимум 60000 мс</li>
+<li>- <code>WinHttpOpen</code> → <code>WinHttpConnect</code> → <code>WinHttpOpenRequest</code> (GET) → <code>WinHttpSendRequest</code> → <code>WinHttpReceiveResponse</code> → <code>WinHttpReadData</code></li>
+<li>- Парсинг ответа от C2: извлекает задачи (длина + payload)</li>
+<li>- Вызов кражи данных: <code>sub_140003CA0(v35, v15 + v32, v33, v94)</code> — передача собранных данных в основной модуль кражи</li>
+</ul>
+<p><strong>Функция POST-загрузки</strong>: <code>sub_140012584</code> (678 байт)</p>
+<ul>
+<li>- <code>WinHttpOpenRequest</code> с методом POST (<code>&quot;aPost&quot;</code> @ 0x140080c9b контекст)</li>
+<li>- <code>WinHttpSendRequest</code> с телом запроса (украденные данные)</li>
+<li>- <code>WinHttpReceiveResponse</code> → <code>WinHttpReadData</code> для получения новых команд от C2</li>
+<li>- Строка ошибки: <code>&quot;WinHttpReceiveResponse FAILED&quot;</code> @ 0x140080c9b</li>
+</ul>
+<h4>3. Регистрация в автозагрузке (Persistence)</h4>
+<ul>
+<li>- Ключ реестра: <code>Software\\Microsoft\\Windows\\CurrentVersion\\Run</code> @ 0x14007fd88</li>
+<li>- Используется <code>RegCreateKeyExA</code>, <code>RegSetValueExA</code> для добавления записи</li>
+<li>- Также <code>RegOpenKeyExA</code> (9 вызовов), <code>RegQueryValueExA</code>, <code>RegDeleteValueA</code> (4 вызова), <code>RegDeleteKeyA</code> (2 вызова)</li>
+<li>- Строка: <code>&quot;HKCRHKEY_CLASSES_ROOTHKCUHKEY_CURRENT_USERHKLM&quot;</code> @ 0x1400806a8 — работа с несколькими корнями реестра</li>
+</ul>
+<h4>4. Захват экрана</h4>
+<ul>
+<li>- GDI32: <code>BitBlt</code>, <code>GetDIBits</code>, <code>CreateCompatibleBitmap</code>, <code>CreateCompatibleDC</code>, <code>SelectObject</code>, <code>DeleteObject</code>, <code>DeleteDC</code></li>
+<li>- AVICAP32: <code>capCreateCaptureWindowA</code></li>
+<li>- Строка модуля: <code>&quot;src/modules/screenshot.rs&quot;</code> @ 0x14007efb0</li>
+</ul>
+<h4>5. Управление службами (возможно, отключение антивирусов)</h4>
+<ul>
+<li>- <code>OpenSCManagerA</code>, <code>OpenServiceA</code>, <code>ControlService</code>, <code>EnumServicesStatusExA</code>, <code>StartServiceA</code>, <code>CloseServiceHandle</code></li>
+<li>- Вероятно, бинарник пытается остановить службы безопасности (антивирусы, брандмауэры)</li>
+</ul>
+<h4>6. Обход защиты и антиотладка</h4>
+<ul>
+<li>- <code>AddVectoredExceptionHandler</code> — регистрация VEH для обработки исключений</li>
+<li>- <code>OpenProcess</code> (2 вызова) — проверка на отладчики/процессы анализа</li>
+<li>- В бэкон-цикле: <code>sub_1400128AB()</code> и <code>sub_14001286D()</code> — функции анти-отладки/анти-анализа</li>
+<li>- Джиттер задержек: <code>GetTickCount64() % (2 * (v30 / 0x64) + 1) + v30 - v30 / 0x64</code></li>
+</ul>
+<h4>7. Создание процессов</h4>
+<ul>
+<li>- <code>CreateProcessA</code> (5 вызовов) — запуск процессов, возможно для проверки браузеров или выполнения задач от C2</li>
+<li>- <code>TerminateProcess</code>, <code>CloseHandle</code> — управление процессами</li>
+</ul>
+<h3>Структура бинарника</h3>
+<ul>
+<li>- <strong>Секции</strong>: <code>.text</code> (код), <code>.rdata</code> (данные/строки), <code>.idata</code> (импорт), <code>.data</code> (данные), <code>.pdata</code> (исключения), <code>.tls</code> (TLS-данные), <code>.buildid</code></li>
+<li>- <strong>TLS-данные</strong>: секция <code>.tls</code> @ 0x1400a3000–0x1400a4000</li>
+</ul>
+<h3>Итоговый вывод</h3>
+<p>Бинарник представляет собой <strong>стелс-вор учётных данных (info-stealer)</strong>, написанный на Rust (MinGW-компилятор). Основные функции:</p>
+<ol>
+<li>1. <strong>Кража браузерных cookie и паролей</strong> из Chrome, Edge, Firefox</li>
+<li>2. <strong>Кража токенов Discord и Telegram</strong></li>
+<li>3. <strong>Захват экрана</strong> (screenshot)</li>
+<li>4. <strong>HTTP-экстракция</strong> данных через WinHTTP с C2-сервером (бэкон-цикл с экспоненциальной задержкой и джиттером)</li>
+<li>5. <strong>Постоянство</strong> через реестр (<code>CurrentVersion\Run</code>)</li>
+<li>6. <strong>Подавление защиты</strong> через управление службами ADVAPI32</li>
+<li>7. <strong>Анти-отладка</strong> и обход анализа</li>
+</ol>
+<p>Бинарник не содержит жёстко закодированных URL C2 — адрес сервера, вероятно, загружается из ответа бэкон-запроса или конфигурируется отдельно. Дешифровка браузерных данных использует <code>CryptUnprotectData</code> (DPAPI) для master key Chrome/Edge.</p>
+    </div>
+  </div>
+</body>
+</html>

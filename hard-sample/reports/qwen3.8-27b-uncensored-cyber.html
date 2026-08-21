@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Отчет · Qwen3.8-27B-Uncensored-Cyber</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #071018;
+      --ink: #f3f6fb;
+      --muted: #9aabc0;
+      --line: rgba(160, 196, 232, .16);
+      --cyan: #5ee0c7;
+      --num: #7ec8ff;
+      --sans: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+      --mono: "Source Code Pro", ui-monospace, Menlo, Consolas, monospace;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; }
+    body {
+      font-family: var(--sans);
+      font-size: 17px;
+      line-height: 1.55;
+      color: var(--ink);
+      background:
+        radial-gradient(900px 420px at 8% -10%, rgba(94, 224, 199, .14), transparent 55%),
+        radial-gradient(720px 380px at 100% 0%, rgba(126, 200, 255, .12), transparent 50%),
+        repeating-linear-gradient(0deg, transparent 0 31px, rgba(126, 200, 255, .045) 31px 32px),
+        repeating-linear-gradient(90deg, transparent 0 31px, rgba(126, 200, 255, .045) 31px 32px),
+        linear-gradient(180deg, #0a1624, var(--bg));
+    }
+    .stage {
+      width: min(900px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 36px 0 64px;
+    }
+    .back {
+      display: inline-block;
+      margin: 0 0 18px;
+      color: var(--cyan);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 600;
+    }
+    .back:hover { text-decoration: underline; }
+    .kicker {
+      color: var(--cyan);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin: 0 0 10px;
+    }
+    h1 {
+      font-size: clamp(28px, 3.6vw, 40px);
+      font-weight: 700;
+      letter-spacing: -.02em;
+      line-height: 1.15;
+      margin: 0 0 10px;
+    }
+    .meta {
+      margin: 0 0 28px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+    .meta code {
+      font-family: var(--mono);
+      font-size: .92em;
+      color: var(--cyan);
+    }
+    .report {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 28px 30px;
+      background: linear-gradient(180deg, rgba(18, 34, 52, .82), rgba(10, 20, 32, .78));
+    }
+    .report h1, .report h2, .report h3, .report h4 {
+      color: var(--ink);
+      letter-spacing: -.01em;
+      margin: 1.4em 0 .55em;
+      line-height: 1.25;
+    }
+    .report h1 { font-size: 1.55em; margin-top: 0; }
+    .report h2 { font-size: 1.28em; color: var(--num); }
+    .report h3 { font-size: 1.12em; }
+    .report p { margin: 0 0 1em; }
+    .report ul, .report ol { margin: 0 0 1em; padding-left: 1.35em; }
+    .report li { margin: 0.25em 0; }
+    .report code {
+      font-family: var(--mono);
+      font-size: .9em;
+      color: var(--cyan);
+    }
+    .report pre {
+      margin: 0 0 1.1em;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: rgba(7, 16, 24, .72);
+      overflow-x: auto;
+      font-family: var(--mono);
+      font-size: 13.5px;
+      line-height: 1.5;
+      color: #d5e6f5;
+    }
+    .report pre code { color: inherit; }
+    .report table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0 0 1.2em;
+      font-size: 15px;
+    }
+    .report th, .report td {
+      border: 1px solid var(--line);
+      padding: 8px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+    .report th {
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      background: rgba(255,255,255,.03);
+    }
+    .report strong { color: #fff; font-weight: 600; }
+    .foot {
+      margin-top: 22px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+  </style>
+  <link rel="stylesheet" href="/assets/css/hard-sample-chrome.css">
+</head>
+<body>
+  <header class="osa-chrome" aria-label="Order Of Six Angles">
+    <div class="osa-chrome__inner">
+      <a class="osa-chrome__brand" href="/" aria-label="Order Of Six Angles">
+        <img class="osa-chrome__mark" src="/assets/images/orderofsixangles_art/ada.png" alt="Order Of Six Angles logo">
+        <span class="osa-chrome__copy">
+          <span class="osa-chrome__eyebrow">security research</span>
+          <span class="osa-chrome__title">Order Of Six Angles</span>
+        </span>
+      </a>
+      <nav class="osa-chrome__nav" aria-label="Primary navigation">
+        <a class="osa-chrome__link" href="/">Home</a>
+        <a class="osa-chrome__link" href="/ru/">RU</a>
+        <a class="osa-chrome__link" href="/translations/">Translations</a>
+        <a class="osa-chrome__link" href="/samples/">Samples</a>
+        <a class="osa-chrome__link is-active" href="/hard-sample/">Local LLM Testing</a>
+        <a class="osa-chrome__link" href="/art/">Art</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="stage">
+    <a class="back" href="../index.html">← Все модели</a>
+    <p class="kicker">Финальный ответ модели</p>
+    <h1>Qwen3.8-27B-Uncensored-Cyber</h1>
+    <div class="report">
+<p>Достаточно для полного отчёта — я прошёл через entry, main-монолит, process-сканнер, clipboard-VEH, WinHTTP, DPAPI и GDI-скриншот.</p>
+<h2>Что это</h2>
+<p>64-битный PE (AMD64, <code>image_base</code> 0x140000000), собранный <strong>Rust</strong> (MinGW CRT <code>start</code>→<code>__mingw_CRTStartup</code>→<code>fninit</code>, 3 TLS callback&#x27;а, <code>gimli</code>/<code>addr2line</code>/<code>rustc-demangle-0.1.27</code> в std). Это <strong>browser cookie stealer</strong>: Chrome/Edge/Firefox + Discord/Telegram. 1278 функций, 806 строк, 191 импорт / 12 DLL.</p>
+<h2>Вход и загрузка</h2>
+<ul>
+<li>- <code>start</code> @ 0x140045A50 → CRT init → <code>sub_140045F60</code> (fninit).</li>
+<li>- 3 TLS callback&#x27;а: <code>TlsCallback_0</code> @0x140024610 (626B, <code>std::sys::thread_local::guard</code>), <code>TlsCallback_1</code> @0x140045ae0 (118B → <code>sub_140069EE0(1)</code>), <code>TlsCallback_2</code> (22B). Порядок: 0 → 1 → 2.</li>
+<li>- <strong>main</strong> = <code>sub_140003CA0</code> @0x140003ca0, <strong>35822B</strong>, 7265 инстр., 819 вызовов, 189 уникальных калл. <code>degraded_lift_oversized</code>, 8071 строка.</li>
+<li>- Self-exec: <code>CreateFileA(..., GENERIC_READ=0x80000000, ...)</code> + цикл <code>ReadFile</code> чанками 0x100000 → <code>CreateProcessA</code> с <code>SW_HIDE</code>. На failure — <code>TerminateProcess</code>.</li>
+</ul>
+<h2>Ключевое по функциям</h2>
+<p><strong>Process-сканнер</strong> <code>sub_14000F9D1</code> (3515B): <code>Process32First/Next</code>, матчит <code>chrome.exe</code>/<code>msedge.exe</code>/<code>firefox.exe</code>, <code>FindFirstFileA</code>/<code>FindNextFileA</code>, <code>from_utf8_lossy</code>. Баннеры:</p>
+<ul>
+<li>- <code>[Chrome] Not running.\n[Chrome] Decrypting cookies...</code></li>
+<li>- <code>Cannot decrypt master key.\n</code></li>
+</ul>
+<p><strong>Clipboard-VEH</strong> <code>sub_14000E933</code> (2519B, <code>ULONG __stdcall(PVOID)</code>): <code>OpenClipboard(0)</code> → <code>GetClipboardData(CF_TEXT=1)</code> → <code>GlobalLock</code>, <code>GlobalAlloc(GMEM_MOVEABLE)</code>. Крипто-префиксы: <code>bc1</code>, <code>0x</code>, <code>ltc1</code>, <code>L</code>, <code>D</code>, <code>X</code>, <code>Q</code>, <code>t1/t3/zs</code>, <code>bitcoincash:</code>.</p>
+<p><strong>WinHTTP (C2)</strong> <code>sub_1400122FE</code> (646B):</p>
+<ul>
+<li>- <code>WinHttpOpen</code> UA = <code>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36</code>, <code>WINHTTP_ACCESS_TYPE_DEFAULT_PROXY</code>.</li>
+<li>- <code>WinHttpConnect(hSession, L&quot;127.0.0.1&quot;, 8443, 0)</code> — C2 на <strong>127.0.0.1:8443</strong>.</li>
+<li>- <code>WinHttpSetTimeouts(10000, 10000, 30000, 30000)</code>.</li>
+</ul>
+<p><strong>DPAPI</strong> <code>sub_140002E2A</code> (116B): <code>CryptUnprotectData(&amp;in, 0,0,0,0, 0, &amp;out)</code> (flags=0, без entropy) + <code>LocalFree</code>. Вызывается из main и из <code>sub_140011613</code> (master key Chrome).</p>
+<p><strong>GDI-скриншот</strong> <code>sub_14000D15F</code> (407B): <code>GetSystemMetrics(SM_CXSCREEN/SM_CYSCREEN)</code>, <code>GetDC</code>, <code>CreateCompatibleDC/Bitmap</code>, <code>SelectObject</code>, <code>BitBlt(..., SRCCOPY=0xCC0020)</code>, <code>GetDIBbits(DIB_RGB_COLORS)</code>. Выход — 24-bit BMP (магик <code>0x4d42</code>=&quot;BM&quot;).</p>
+<p><strong>Rust core float</strong>: <code>sub_14004B810</code> (4021B) + <code>sub_14004CD10</code> (4463B) — <code>0x402c921f</code>=1.5, <code>0x3ffe45f306dc9c88</code>=f64 magic, <code>0x3fff000000000000</code>.</p>
+<h2>main-калли (capability_map)</h2>
+<p><code>CreateProcessA</code>×5, <code>OpenProcess</code>×2, <code>RegCreateKeyExA</code>, <code>RegDeleteKeyA</code>×2, <code>RegDeleteValueA</code>×4, <code>RegOpenKeyExA</code>×9, <code>RegQueryValueExA</code>×4, <code>RegSetValueExA</code>×4 (+ ShellExecuteA SW_HIDE, CreateFileA/ReadFile). Строка <code>&quot;Unknown command&quot;</code>.</p>
+<h2>Замечания</h2>
+<ul>
+<li>- C2 на <code>127.0.0.1:8443</code> — локальный прослушиватель (WS2-сервер), а не прямой выход в интернет; реальный C2-хост, вероятно, приходит из конфига/команды.</li>
+<li>- main-монолит — типичный Rust <code>#[no_mangle]</code>-стек; 189 калли, часть — CRT/<code>core::fmt::Display</code>.</li>
+<li>- <code>sub_14004B810</code>/<code>sub_14004CD10</code> — float-конвертация core, не app-логика.</li>
+</ul>
+<p>Хотите, чтобы я раскрыл WS2-сервер (accept-цикл) и GDI-обёртку <code>sub_14000D4ED</code>, либо сразу <code>string_xrefs</code> по <code>127.0.0.1</code>/UA/баннерам?</p>
+    </div>
+  </div>
+</body>
+</html>

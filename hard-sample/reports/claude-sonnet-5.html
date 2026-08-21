@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Отчет · Anthropic: Claude Sonnet 5</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #071018;
+      --ink: #f3f6fb;
+      --muted: #9aabc0;
+      --line: rgba(160, 196, 232, .16);
+      --cyan: #5ee0c7;
+      --num: #7ec8ff;
+      --sans: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+      --mono: "Source Code Pro", ui-monospace, Menlo, Consolas, monospace;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; }
+    body {
+      font-family: var(--sans);
+      font-size: 17px;
+      line-height: 1.55;
+      color: var(--ink);
+      background:
+        radial-gradient(900px 420px at 8% -10%, rgba(94, 224, 199, .14), transparent 55%),
+        radial-gradient(720px 380px at 100% 0%, rgba(126, 200, 255, .12), transparent 50%),
+        repeating-linear-gradient(0deg, transparent 0 31px, rgba(126, 200, 255, .045) 31px 32px),
+        repeating-linear-gradient(90deg, transparent 0 31px, rgba(126, 200, 255, .045) 31px 32px),
+        linear-gradient(180deg, #0a1624, var(--bg));
+    }
+    .stage {
+      width: min(900px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 36px 0 64px;
+    }
+    .back {
+      display: inline-block;
+      margin: 0 0 18px;
+      color: var(--cyan);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 600;
+    }
+    .back:hover { text-decoration: underline; }
+    .kicker {
+      color: var(--cyan);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin: 0 0 10px;
+    }
+    h1 {
+      font-size: clamp(28px, 3.6vw, 40px);
+      font-weight: 700;
+      letter-spacing: -.02em;
+      line-height: 1.15;
+      margin: 0 0 10px;
+    }
+    .meta {
+      margin: 0 0 28px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+    .meta code {
+      font-family: var(--mono);
+      font-size: .92em;
+      color: var(--cyan);
+    }
+    .report {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 28px 30px;
+      background: linear-gradient(180deg, rgba(18, 34, 52, .82), rgba(10, 20, 32, .78));
+    }
+    .report h1, .report h2, .report h3, .report h4 {
+      color: var(--ink);
+      letter-spacing: -.01em;
+      margin: 1.4em 0 .55em;
+      line-height: 1.25;
+    }
+    .report h1 { font-size: 1.55em; margin-top: 0; }
+    .report h2 { font-size: 1.28em; color: var(--num); }
+    .report h3 { font-size: 1.12em; }
+    .report p { margin: 0 0 1em; }
+    .report ul, .report ol { margin: 0 0 1em; padding-left: 1.35em; }
+    .report li { margin: 0.25em 0; }
+    .report code {
+      font-family: var(--mono);
+      font-size: .9em;
+      color: var(--cyan);
+    }
+    .report pre {
+      margin: 0 0 1.1em;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: rgba(7, 16, 24, .72);
+      overflow-x: auto;
+      font-family: var(--mono);
+      font-size: 13.5px;
+      line-height: 1.5;
+      color: #d5e6f5;
+    }
+    .report pre code { color: inherit; }
+    .report table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0 0 1.2em;
+      font-size: 15px;
+    }
+    .report th, .report td {
+      border: 1px solid var(--line);
+      padding: 8px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+    .report th {
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      background: rgba(255,255,255,.03);
+    }
+    .report strong { color: #fff; font-weight: 600; }
+    .foot {
+      margin-top: 22px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+  </style>
+  <link rel="stylesheet" href="/assets/css/hard-sample-chrome.css">
+</head>
+<body>
+  <header class="osa-chrome" aria-label="Order Of Six Angles">
+    <div class="osa-chrome__inner">
+      <a class="osa-chrome__brand" href="/" aria-label="Order Of Six Angles">
+        <img class="osa-chrome__mark" src="/assets/images/orderofsixangles_art/ada.png" alt="Order Of Six Angles logo">
+        <span class="osa-chrome__copy">
+          <span class="osa-chrome__eyebrow">security research</span>
+          <span class="osa-chrome__title">Order Of Six Angles</span>
+        </span>
+      </a>
+      <nav class="osa-chrome__nav" aria-label="Primary navigation">
+        <a class="osa-chrome__link" href="/">Home</a>
+        <a class="osa-chrome__link" href="/ru/">RU</a>
+        <a class="osa-chrome__link" href="/translations/">Translations</a>
+        <a class="osa-chrome__link" href="/samples/">Samples</a>
+        <a class="osa-chrome__link is-active" href="/hard-sample/">Local LLM Testing</a>
+        <a class="osa-chrome__link" href="/art/">Art</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="stage">
+    <a class="back" href="../index.html">← Все модели</a>
+    <p class="kicker">Финальный ответ модели</p>
+    <h1>Anthropic: Claude Sonnet 5</h1>
+    <div class="report">
+<p>Все данные собраны в достаточном объёме. Формирую итоговый отчёт.</p>
+<h2>Отчёт по статическому анализу PE-файла</h2>
+<h3>Общие сведения</h3>
+<p>64-битный PE (AMD64), написан на <strong>Rust</strong> (характерные символы <code>std::sys::...</code>, <code>core::</code>, <code>alloc::</code>, пути <code>src/modules/*.rs</code>). Точка входа <code>start</code> (0x140045A50), 1278 функций, 806 строк, 8 секций (.text/.rdata/.idata/.buildid/.data/.pdata/.tls).</p>
+<p><strong>TLS-каллбэки</strong> выполняются до основной точки входа: <code>TlsCallback_0</code> (0x140024610) — стандартный код Rust runtime <code>std::sys::...thread_local::guard::windows::tls_callback</code>; <code>TlsCallback_1</code>/<code>TlsCallback_2</code> — короткие функции инициализации CRT/TLS-индексов. Все три являются штатным Rust/CRT-обвязочным кодом, не анализировались подробно по правилам задачи.</p>
+<h3>Архитектура вредоносной программы</h3>
+<p>Строки путей исходников однозначно выдают модульную структуру полнофункционального <strong>RAT/бота с C2-управлением</strong>, реализованного на Rust:</p>
+<pre><code>src/modules/network.rs     – HTTP(S)-транспорт к C2, регистрация, поллинг задач
+src/modules/stealer.rs     – кража данных браузеров/мессенджеров/кошельков
+src/modules/persist.rs     – закрепление в системе
+src/modules/registry.rs    – работа с реестром
+src/modules/services.rs    – перечисление/управление службами Windows
+src/modules/screenshot.rs  – снятие скриншотов экрана
+src/modules/webcam.rs      – захват изображения с веб-камеры
+src/modules/keylog.rs      – кейлоггер
+src/modules/clipboard.rs   – чтение/подмена буфера обмена
+src/modules/clipper.rs     – криптоклиппер (подмена адресов кошельков)
+src/modules/ransomware.rs  – модуль шифрования файлов (ransomware)
+src/modules/postex.rs      – постэксплуатация (перечисление TCP-соединений и т.д.)
+src/modules/socks5.rs      – SOCKS5-прокси (туннелирование трафика через жертву)
+src/modules/fun.rs         – &quot;шуточные&quot; функции (голосовой вывод через PowerShell/SAPI)</code></pre>
+<h3>Сетевое взаимодействие с C2 (<code>sub_140001000</code> — основной цикл бота)</h3>
+<ul>
+<li>- Пользовательский агент: <code>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36</code>.</li>
+<li>- Транспорт — WinHTTP (<code>WinHttpOpen</code>/<code>WinHttpConnect</code>/<code>WinHttpOpenRequest</code>/<code>WinHttpSendRequest</code>/<code>WinHttpReceiveResponse</code>/<code>WinHttpReadData</code>), с флагом <code>WINHTTP_FLAG_BYPASS_PROXY_CACHE</code>.</li>
+<li>- <strong>Адрес C2 в исследуемом образце — <code>127.0.0.1:8443</code></strong> (<code>WinHttpConnect(hSession, &quot;127.0.0.1&quot;, 0x20FB, 0)</code>), что явно указывает на тестовую/девелоперскую сборку, а не на боевую конфигурацию с реальным внешним адресом.</li>
+<li>- Эндпоинты, наблюдаемые в строках: <code>/api/rat/register?id=</code>, <code>/api/rat/clipper_log</code>, <code>/api/rat/stream</code>.</li>
+<li>- Логика: печатает диагностику (&quot;Initializing HTTP transport...&quot;, &quot;HTTP transport initialized.&quot;) → цикл регистрации с экспоненциальной задержкой (5000мс·2^n, максимум 60с) → после успешной регистрации (&quot;Registered. Entering main loop.&quot;) входит в цикл поллинга задач GET-запросом, разбирает ответ на блоки задач (ID+длина), каждую задачу передаёт в диспетчер команд <code>sub_140003CA0(cmd_id, data, len, ...)</code>, результат каждой задачи отправляет обратно POST-запросом через <code>sub_140012584</code>. При установке определённого флага в ответе бот вызывает <code>ExitProcess(0)</code> (команда самоуничтожения/остановки).</li>
+</ul>
+<h3>Диспетчер команд (<code>sub_140003CA0</code>, ~35 КБ кода)</h3>
+<p>Огромная функция-роутер (не удалось полностью раскрыть декомпилятором из-за размера — анализ проведён по capability map/lift-профилю), вызывает:</p>
+<ul>
+<li>- <code>CreateProcessA</code>, <code>OpenProcess</code> — запуск и работа с процессами (в т.ч. паттерн <strong>process hollowing</strong>: <code>CreateProcessA</code> в suspended-режиме → чтение/подмена образа через <code>ReadFile</code>/<code>WriteProcessMemory</code>-подобный код → <code>ResumeThread</code>, что видно в извлечённом фрагменте оптимизированного лифта);</li>
+<li>- <code>RegCreateKeyExA/RegOpenKeyExA/RegSetValueExA/RegDeleteValueA/RegDeleteKeyA/RegQueryValueExA/RegEnumKeyExA/RegEnumValueA</code> — полный набор операций с реестром (чтение/запись/удаление ключей и значений);</li>
+<li>- <code>OpenSCManagerA/OpenServiceA/StartServiceA/ControlService/EnumServicesStatusExA/CloseServiceHandle</code> — перечисление и управление службами Windows (запуск/останов/контроль сторонних служб, потенциально security-агентов);</li>
+<li>- <code>ShellExecuteA</code> с <code>nShowCmd = SW_HIDE</code> — скрытый запуск команд;</li>
+<li>- Строка <code>&quot;Unknown command&quot;</code> подтверждает наличие маршрутизации по числовому коду команды с fallback-обработчиком неизвестной команды.</li>
+</ul>
+<h3>Кража данных (<code>stealer.rs</code>)</h3>
+<ul>
+<li>- <strong>Discord</strong>: поиск токенов (маркер <code>cord_token_</code>, &quot;No tokens found.&quot;, &quot;&lt;N&gt; token(s).&quot;) — типичное извлечение Discord-токенов из LevelDB/Local Storage.</li>
+<li>- <strong>Браузеры (Chrome/Edge)</strong>: строки &quot;[Chrome] Decrypting cookies...&quot;, &quot;[Edge] Decrypting cookies...&quot; — расшифровка cookies через <code>CryptUnprotectData</code> (DPAPI) для старого формата (v10) и через <strong>BCrypt AES-GCM</strong> для нового формата <strong>v20</strong> (проверено кодом функции <code>sub_140010CBA</code>): открывается провайдер <code>BCryptOpenAlgorithmProvider(L&quot;AES&quot;)</code>, режим <code>ChainingModeGCM</code>, <code>BCryptGenerateSymmetricKey</code> с DPAPI-расшифрованным master key, затем <code>BCryptDecrypt</code> с 12-байтным nonce/16-байтным auth-tag — точное соответствие текущей схеме шифрования cookies Chrome/Chromium (App-Bound / v10/v20 encryption).</li>
+<li>- <strong>Firefox</strong>: &quot;[Firefox] Reading cookies (plaintext)...&quot; — чтение cookies.sqlite без расшифровки (для профилей без master password/DPAPI-защиты).</li>
+<li>- <strong>Telegram</strong>: строка &quot;Telegram is not running.&quot; — кража сессии/данных Telegram.</li>
+<li>- <strong>Криптокошельки</strong>: пути <code>wallets\wallet.dat</code> (Bitcoin Core), <code>Electrum\wallets</code>, ключ реестра/маркер <code>bitcoin_wallet</code>; строка &quot;No wallets found.&quot; при отсутствии.</li>
+<li>- Используется <code>GetUserNameA</code> (сбор имени пользователя, вероятно как часть ID/отпечатка жертвы).</li>
+</ul>
+<h3>Закрепление в системе (<code>persist.rs</code>)</h3>
+<p>Обнаруженные механизмы:</p>
+<ol>
+<li>1. <strong>Реестр Run</strong>: строка <code>Software\Microsoft\Windows\CurrentVersion\Run</code> (автозапуск при логоне).</li>
+<li>2. <strong>Собственный конфигурационный ключ</strong>: <code>RegCreateKeyExA(HKEY_LOCAL_MACHINE, &quot;Software\\RATConfig&quot;, ..., KEY_WRITE)</code>, <code>RegSetValueExA(hKey, &quot;persist_name&quot;, REG_SZ, ...)</code> — функция <code>sub_14000F550</code> создаёт ключ <code>HKLM\Software\RATConfig</code> и пишет туда значение <code>persist_name</code> (хранение имени/пути закреплённой копии).</li>
+<li>3. <strong>Ярлык (.lnk)</strong> — упоминание расширения <code>.lnk</code> рядом с батник-логикой самоудаления (вероятно, размещение ярлыка в папке автозагрузки).</li>
+<li>4. <strong>Плановые задачи</strong>: строка <code>schtasks /delete /tn &quot;%s&quot; /f</code> — управление(удаление) запланированных задач.</li>
+<li>5. <strong>Самоудаление</strong>: собранный из строковых фрагментов batch-скрипт:</li>
+</ol>
+<p>   ```<br>
+   :d<br>
+   del &quot;&lt;путь&gt;&quot;<br>
+   if exist &quot;&lt;путь&gt;&quot; goto d<br>
+   del &quot;&lt;bat&gt;&quot;<br>
+   ```<br>
+   запускаемый через <code>cmd.exe /c &quot;&lt;bat&gt;&quot;</code> — классическая техника самоуничтожения исполняемого файла после выполнения задачи.</p>
+<h3>Криптоклиппер (<code>clipper.rs</code>)</h3>
+<p>Модуль подмены адресов криптокошельков в буфере обмена. В данных найден список поддерживаемых валют по меткам: <strong>BTC, ETH, XMR, LTC, DOGE, DASH, BCH, ZEC</strong>, а также образцы жёстко закодированных адресов подмены, например:</p>
+<ul>
+<li>- <code>ltc1...</code> (Litecoin, bech32)</li>
+<li>- <code>bitcoincash:t1t3zs...</code> (Bitcoin Cash)</li>
+</ul>
+<p>Логика (через <code>OpenClipboard/GetClipboardData/SetClipboardData/EmptyClipboard/CloseClipboard</code>) отслеживает содержимое буфера обмена, при обнаружении паттерна адреса заменяет его на подставной адрес злоумышленника и отправляет лог подмены на C2 через эндпоинт <code>/api/rat/clipper_log</code>.</p>
+<h3>Модуль шифрования файлов (<code>ransomware.rs</code>)</h3>
+<p>Присутствует отдельный модуль с маркером зашифрованных файлов <code>ENCRYPTED_RAT_1</code> и полем <code>encrypted_key</code> (для хранения зашифрованного ключа сессии внутри артефакта/заметки), что указывает на реализацию файлового шифровальщика (ransomware-функциональность) как часть многофункционального бота.</p>
+<h3>Слежка/сбор данных</h3>
+<ul>
+<li>- <strong>Скриншоты</strong>: <code>BitBlt/CreateCompatibleDC/CreateCompatibleBitmap/GetDIBits/SelectObject/DeleteObject/DeleteDC</code> + GDI+ (<code>GdiplusStartup/GdipCreateBitmapFromHBITMAP/GdipSaveImageToStream/GdipDisposeImage</code>) — захват экрана и кодирование в графический формат (вероятно JPEG/PNG) для отправки на C2 (эндпоинт <code>/api/rat/stream</code>).</li>
+<li>- <strong>Веб-камера</strong>: <code>capCreateCaptureWindowA</code> (VfW), строка &quot;Error: no webcam found&quot; — захват изображения с камеры.</li>
+<li>- <strong>Микрофон</strong>: полный набор WinMM audio-in API (<code>waveInOpen/waveInPrepareHeader/waveInAddBuffer/waveInStart/waveInStop/waveInReset/waveInClose/waveInUnprepareHeader</code>) — запись звука с микрофона.</li>
+<li>- <strong>Кейлоггер</strong>: отдельный модуль <code>keylog.rs</code> (глобальный перехват нажатий клавиш, реализация не декомпилирована подробно, но модуль присутствует и связан со сборкой строк отчёта).</li>
+<li>- <strong>Буфер обмена</strong>: чтение текста/изображений из clipboard (&quot;Error: no text in clipboard&quot;, &quot;Error: no image in clipboard&quot;).</li>
+<li>- <strong>Сетевая разведка (<code>postex.rs</code>)</strong>: <code>GetExtendedTcpTable</code> (IPHLPAPI) + таблица состояний TCP-соединений (<code>CLOSED/LISTENING/SYN_SENT/ESTABLISHED/...</code>) и форматированный заголовок <code>PROTO LOCAL ADDRESS REMOTE ADDRESS STATE PID</code> — аналог <code>netstat</code>, вероятно для сбора данных о запущенных соединениях жертвы.</li>
+<li>- <strong>SOCKS5-прокси (<code>socks5.rs</code>)</strong>: полный набор Winsock-функций (<code>socket/bind/listen/accept/connect/recv/send/setsockopt/closesocket/WSAStartup/WSACleanup</code>) — реализация локального SOCKS5-сервера, позволяющего злоумышленнику туннелировать трафик через заражённую машину (пивотинг).</li>
+<li>- <strong>&quot;Развлекательный&quot; модуль (<code>fun.rs</code>)</strong>: генерация PowerShell-команды <code>Add-Type -AssemblyName System.Speech; $s = New-Object System.Speech.Synthesis.SpeechSynthesizer; $s.Speak(&#x27;...&#x27;)</code> — озвучивание произвольного текста через SAPI (типичная &quot;prank&quot;-функция школьных/скрипт-кидди RAT-конструкторов).</li>
+</ul>
+<h3>Прочее</h3>
+<ul>
+<li>- <code>AddVectoredExceptionHandler</code> вызывается из одной функции (0x1400136B0), что соответствует штатному обработчику стека Rust runtime (stack overflow guard), не выявлено признаков применения как анти-дебаг техники за пределами этого стандартного использования.</li>
+<li>- Импорт <code>bcrypt.dll</code> (<code>BCryptOpenAlgorithmProvider/BCryptGenerateSymmetricKey/BCryptSetProperty/BCryptDecrypt/BCryptDestroyKey/BCryptCloseAlgorithmProvider</code>) используется исключительно для расшифровки cookies Chrome/Edge по алгоритму AES-256-GCM, других явных случаев использования BCrypt (например, для собственного протокола C2) в проверенном коде не обнаружено.</li>
+<li>- <code>CRYPT32.CryptUnprotectData</code> используется для получения DPAPI master key браузера перед AES-GCM расшифровкой cookies (v10) — стандартная последовательность атаки на Chromium-хранилище.</li>
+</ul>
+<h3>Итоговая характеристика</h3>
+<p>Файл представляет собой <strong>многофункциональный Rust-бот класса RAT/stealer/clipper с встроенным модулем шифрования файлов</strong>, управляемый по HTTP(S) через WinHTTP с C2-сервером (в данной сборке заданным как <code>127.0.0.1:8443</code>, что указывает на тестовый/девелоперский образец). Функциональность подтверждена кодом: кража токенов Discord, cookies Chrome/Edge (AES-GCM v20)/Firefox, данных Telegram и криптокошельков (Bitcoin/Electrum); закрепление через <code>Run</code>-ключ реестра, собственный ключ <code>HKLM\Software\RATConfig</code>, запланированные задачи и самоудаляющийся batch-скрипт; удалённое исполнение команд, управление процессами (включая паттерн process hollowing) и службами Windows; скриншоты, захват веб-камеры и микрофона, кейлоггинг, перехват/подмена буфера обмена (криптоклиппер BTC/ETH/XMR/LTC/DOGE/DASH/BCH/ZEC); сетевая разведка TCP-соединений; встроенный SOCKS5-прокси для туннелирования трафика через заражённый хост.</p>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Отчет · Qwen3.8-27B-NVFP4</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #071018;
+      --ink: #f3f6fb;
+      --muted: #9aabc0;
+      --line: rgba(160, 196, 232, .16);
+      --cyan: #5ee0c7;
+      --num: #7ec8ff;
+      --sans: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+      --mono: "Source Code Pro", ui-monospace, Menlo, Consolas, monospace;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; }
+    body {
+      font-family: var(--sans);
+      font-size: 17px;
+      line-height: 1.55;
+      color: var(--ink);
+      background:
+        radial-gradient(900px 420px at 8% -10%, rgba(94, 224, 199, .14), transparent 55%),
+        radial-gradient(720px 380px at 100% 0%, rgba(126, 200, 255, .12), transparent 50%),
+        repeating-linear-gradient(0deg, transparent 0 31px, rgba(126, 200, 255, .045) 31px 32px),
+        repeating-linear-gradient(90deg, transparent 0 31px, rgba(126, 200, 255, .045) 31px 32px),
+        linear-gradient(180deg, #0a1624, var(--bg));
+    }
+    .stage {
+      width: min(900px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 36px 0 64px;
+    }
+    .back {
+      display: inline-block;
+      margin: 0 0 18px;
+      color: var(--cyan);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 600;
+    }
+    .back:hover { text-decoration: underline; }
+    .kicker {
+      color: var(--cyan);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin: 0 0 10px;
+    }
+    h1 {
+      font-size: clamp(28px, 3.6vw, 40px);
+      font-weight: 700;
+      letter-spacing: -.02em;
+      line-height: 1.15;
+      margin: 0 0 10px;
+    }
+    .meta {
+      margin: 0 0 28px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+    .meta code {
+      font-family: var(--mono);
+      font-size: .92em;
+      color: var(--cyan);
+    }
+    .report {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 28px 30px;
+      background: linear-gradient(180deg, rgba(18, 34, 52, .82), rgba(10, 20, 32, .78));
+    }
+    .report h1, .report h2, .report h3, .report h4 {
+      color: var(--ink);
+      letter-spacing: -.01em;
+      margin: 1.4em 0 .55em;
+      line-height: 1.25;
+    }
+    .report h1 { font-size: 1.55em; margin-top: 0; }
+    .report h2 { font-size: 1.28em; color: var(--num); }
+    .report h3 { font-size: 1.12em; }
+    .report p { margin: 0 0 1em; }
+    .report ul, .report ol { margin: 0 0 1em; padding-left: 1.35em; }
+    .report li { margin: 0.25em 0; }
+    .report code {
+      font-family: var(--mono);
+      font-size: .9em;
+      color: var(--cyan);
+    }
+    .report pre {
+      margin: 0 0 1.1em;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: rgba(7, 16, 24, .72);
+      overflow-x: auto;
+      font-family: var(--mono);
+      font-size: 13.5px;
+      line-height: 1.5;
+      color: #d5e6f5;
+    }
+    .report pre code { color: inherit; }
+    .report table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0 0 1.2em;
+      font-size: 15px;
+    }
+    .report th, .report td {
+      border: 1px solid var(--line);
+      padding: 8px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+    .report th {
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      background: rgba(255,255,255,.03);
+    }
+    .report strong { color: #fff; font-weight: 600; }
+    .foot {
+      margin-top: 22px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+  </style>
+  <link rel="stylesheet" href="/assets/css/hard-sample-chrome.css">
+</head>
+<body>
+  <header class="osa-chrome" aria-label="Order Of Six Angles">
+    <div class="osa-chrome__inner">
+      <a class="osa-chrome__brand" href="/" aria-label="Order Of Six Angles">
+        <img class="osa-chrome__mark" src="/assets/images/orderofsixangles_art/ada.png" alt="Order Of Six Angles logo">
+        <span class="osa-chrome__copy">
+          <span class="osa-chrome__eyebrow">security research</span>
+          <span class="osa-chrome__title">Order Of Six Angles</span>
+        </span>
+      </a>
+      <nav class="osa-chrome__nav" aria-label="Primary navigation">
+        <a class="osa-chrome__link" href="/">Home</a>
+        <a class="osa-chrome__link" href="/ru/">RU</a>
+        <a class="osa-chrome__link" href="/translations/">Translations</a>
+        <a class="osa-chrome__link" href="/samples/">Samples</a>
+        <a class="osa-chrome__link is-active" href="/hard-sample/">Local LLM Testing</a>
+        <a class="osa-chrome__link" href="/art/">Art</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="stage">
+    <a class="back" href="../index.html">← Все модели</a>
+    <p class="kicker">Финальный ответ модели</p>
+    <h1>Qwen3.8-27B-NVFP4</h1>
+    <div class="report">
+<p>I now have code-confirmed evidence for every major module. I have enough to write the complete report.</p>
+<p>---</p>
+<h1>Статический анализ PE (V5 IDA) — итоговый отчёт</h1>
+<h2>1. Общий вердикт</h2>
+<p>Файл — <strong>64-битный Windows PE (AMD64)</strong>, собранный на <strong>Rust</strong> (MinGW-w64 CRT). Это полнофункциональный <strong>инфостилер / RAT</strong> с HTTP-C2, beacon-циклом, TLV-протоколом команд и набором модулей: кража cookie браузеров, токенов Discord/Telegram, криптовалютных кошельков, кейлоггер, буфер обмена, скриншоты, веб-камера, микрофон, реестр, сервисы, сеть, перечисление/инъекция процессов, BOF/PE-инъекция, рантайм-рансом (удаление теневых копий), персистентность в реестре, TTS-«развлечение», SOCKS5.</p>
+<table>
+<tr><th>Параметр</th><th>Значение</th></tr>
+<tr><td>Image base</td><td><code>0x140000000</code></td></tr>
+<tr><td>Точка входа (OEP)</td><td><code>start</code> @ <code>0x140045A50</code></td></tr>
+<tr><td>Функций / строк / сегментов</td><td>1278 / 806 / 8</td></tr>
+<tr><td><code>.text</code></td><td><code>0x140001000</code>–<code>0x14006C000</code></td></tr>
+<tr><td><code>.idata</code></td><td><code>0x14008E628</code>–<code>0x14008EDF8</code></td></tr>
+</table>
+<p><strong>TLS-колбэки</strong> (loader boilerplate, порядок: <code>TlsCallback_0</code> → <code>TlsCallback_1</code> → <code>TlsCallback_2</code> → OEP):</p>
+<ul>
+<li>- <code>TlsCallback_0</code> @ <code>0x140024610</code> — Rust <code>std::sys::thread_local</code> guard (<code>_RNvNtNtNtNtCs1NhsA7xdTVp_3std3sys12thread_local5guard7windows12tls_callback</code>);</li>
+<li>- <code>TlsCallback_1</code> @ <code>0x140045AE0</code> (118 B), <code>TlsCallback_2</code> @ <code>0x140045B70</code> (22 B).</li>
+</ul>
+<h2>2. Поток выполнения (вход → main → beacon)</h2>
+<p>Цепочка подтверждена по коду:<br>
+<code>start</code> @ <code>0x140045A50</code> → <code>__mingw_CRTStartup</code> @ <code>0x140045830</code> (вызов user main @ <code>0x1400459F8</code>) → <code>sub_1400136B0</code> (Rust main wrapper) → <code>sub_140002040(sub_140002644)</code> → <strong><code>sub_140001000</code></strong> @ <code>0x140001000</code> (2223 B) — <strong>основной beacon-цикл</strong>.</p>
+<h2>3. C2 и сетевое поведение</h2>
+<p>C2-конфигурация <strong>зашита в коде</strong> (подтверждено по <code>.rdata</code> и коду <code>sub_1400122FE</code>):</p>
+<table>
+<tr><th>Элемент</th><th>Значение</th><th>Адрес</th></tr>
+<tr><td>Хост</td><td><code>127.0.0.1</code> (len 9)</td><td><code>0x14007DAF0</code></td></tr>
+<tr><td>Порт</td><td><code>8443</code> (<code>0x20FB</code>)</td><td>рядом с хостом</td></tr>
+<tr><td>Базовый путь</td><td><code>/api/rat/</code></td><td><code>0x140080EE0</code></td></tr>
+<tr><td>Команды</td><td><code>/commands</code></td><td><code>0x140080EE0</code></td></tr>
+<tr><td>Регистрация</td><td><code>/api/rat/register?id=</code></td><td>фрагмент <code>0x140080F8C</code></td></tr>
+<tr><td>User-Agent</td><td><code>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36</code></td><td><code>0x14007F000</code></td></tr>
+<tr><td>Таймауты</td><td><code>WinHttpSetTimeouts(10000,10000,30000,30000)</code></td><td><code>sub_1400122FE</code></td></tr>
+<tr><td>Отладка</td><td><code>RAT starting. C2=</code></td><td>в строках</td></tr>
+</table>
+<p>Транспорт — <strong>WinHTTP</strong> (<code>WinHttpOpen</code>/<code>WinHttpConnect</code>/<code>WinHttpOpenRequest</code>/<code>WinHttpSendRequest</code>/<code>WinHttpReceiveResponse</code>/<code>WinHttpReadData</code>). Инициализация — <code>sub_1400122FE</code> @ <code>0x1400122FE</code>; POST-хелпер — <code>sub_140012584</code> @ <code>0x140012584</code>; UTF-8→UTF-16 — <code>sub_14000223A</code>.</p>
+<p>&gt; ⚠️ Хост <code>127.0.0.1</code> — loopback. Это либо <strong>dev/test-сборка</strong>, либо хост переопределяется во время работы (в <code>sub_1400122FE</code> загрузка конфига из файла не найдена). Реальный C2 в боевой сборке будет другим.</p>
+<h2>4. Beacon-цикл и протокол команд</h2>
+<p><code>sub_140001000</code>:</p>
+<ol>
+<li>1. Инициализация транспорта (<code>sub_1400122FE</code>).</li>
+<li>2. <strong>Регистрация</strong> с ретраями (4 попытки, <code>Sleep(5000&lt;&lt;n)</code>, кап 60000 мс).</li>
+<li>3. Основной цикл: <code>GET /commands</code> (ответ ≤ <code>0x10000</code> = 64 КБ), разбор <strong>TLV-потока</strong>: <code>4B длина + 4B тип + payload</code>, обработка через <code>sub_140003CA0</code>.</li>
+<li>4. Управление: <strong>тип 70 (<code>0x46</code>)</strong> обновляет интервал (<code>dword_140096004</code>); <strong>бит 0 флага</strong> → <code>ExitProcess(0)</code>; сон <code>1000*dword_140096000</code> с <strong>джиттером ±10%</strong> (<code>GetTickCount64</code>).</li>
+</ol>
+<p><strong>Диспетчер команд</strong> — <code>sub_140003CA0</code> @ <code>0x140003CA0</code> (35 822 B, конец <code>0x14000C88E</code>), монолитный (Rust встраивает все обработчики). В прологе подтверждена <strong>проверка диапазона ID</strong>:</p>
+<pre><code>inc  esi            ; esi = a1 = command_id
+cmp  esi, 0x6F
+ja   default        ; command_id &gt;= 0x6F  → &quot;Unknown command&quot;</code></pre>
+<p>т.е. валидные ID команд — <strong><code>0x00..0x6E</code> (0..110)</strong>, далее — <code>Unknown command</code> (строка @ <code>0x14007EEE0</code>, код @ <code>0x14000729B</code>). Дальше — диспетчеризация по таблице указателей.</p>
+<h2>5. Регистрация и agent ID</h2>
+<p><code>sub_1400128AB</code> @ <code>0x1400128AB</code>:</p>
+<ul>
+<li>- Собирает sysinfo (<code>GetComputerNameA</code>, <code>GetUserNameA</code>, проверка ОС).</li>
+<li>- <strong>Agent ID</strong> = 32 hex-символа из 16-байтного хэша (<code>sub_1400028A9</code>): <strong>FNV-1a</strong> (seed <code>0x811C9DC5</code>, prime <code>0x01000193</code>) от имени компьютера <strong>XOR</strong> <code>GetTickCount64()</code>; при нуле — <code>0x1234567890ABCDEF</code>. Хранится в <code>xmmword_14009EA08/14009EA18</code>.</li>
+<li>- <code>POST /api/rat/register?id=&lt;id&gt;</code> с телом <strong>322 байта</strong> (<code>0x142</code>) через <code>sub_140012584</code>.</li>
+<li>- Ответ: <code>u32 интервал</code> (≤3600 → <code>dword_140096004</code>) + <code>u32 джиттер</code> (≤100 → <code>dword_140096000</code>).</li>
+</ul>
+<h2>6. Модули (возможности) — подтверждено строками и кодом</h2>
+<p>Структура проекта (из строк-путей в <code>.rdata</code>): <code>src/main.rs</code>, <code>src/transport/beacon.rs</code>, <code>src/engine/{commands,exec,fs,ps}.rs</code>, <code>src/modules/{stealer,ransomware,screenshot,clipboard,registry,services,network,clipper,persist,keylog,postex,socks5,webcam,fun}.rs</code>, <code>src/util/{sysinfo,string,crypto,sqlite}.rs</code>.</p>
+<table>
+<tr><th>Модуль</th><th>Доказательства (адреса)</th></tr>
+<tr><td><strong>Stealer / cookie</strong></td><td><code>sub_14000F9D1</code> (вызов из диспетчера @ <code>0x140003D4C</code>): <code>chrome.exe</code> @ <code>0x140080116</code>, <code>msedge.exe</code> @ <code>0x1400801F8</code>, <code>firefox.exe</code>; <code>[Chrome] Not running.\n[Chrome] Decrypting cookies...\n</code> @ <code>0x140080120</code>, <code>Cannot decrypt master key.\n</code> @ <code>0x1400801DD</code>, <code>[Firefox] Reading cookies (plaintext)...</code> @ <code>0x14008029A</code>. Chrome/Edge: <code>Local State</code> → DPAPI → AES; Firefox: <code>FindFirstFileA/FindNextFileA</code> по <code>cookies.sqlite</code> (plaintext).</td></tr>
+<tr><td><strong>Крипто cookie</strong></td><td><code>sub_140010CBA</code> @ <code>0x140010CBA</code>: <code>BCryptOpenAlgorithmProvider(L&quot;AES&quot;)</code>, <code>BCryptSetProperty(L&quot;ChainingMode&quot;,&quot;C&quot;)</code> (CBC), <code>BCryptGenerateSymmetricKey</code> (16B IV), <code>BCryptDecrypt</code>; версии <strong><code>v10</code>/<code>v20</code></strong> (константы <code>0x303176</code>/<code>0x303276</code>); <code>No cookies could be decrypted.\n</code> @ <code>0x140080480</code>. DPAPI-хелпер <code>sub_140002E2A</code>: <code>CryptUnprotectData</code> (без энтропии).</td></tr>
+<tr><td><strong>Discord / Telegram</strong></td><td><code>discord.exe</code> @ <code>0x14007FFE3</code>, <code>.ldb.log</code> @ <code>0x140080080</code>, <code>Discord LevelDB not found.\n</code> @ <code>0x14008004B</code>, <code>=== Discord ===</code> @ <code>0x14007FFEE</code>, <code>telegram.exe</code> @ <code>0x1400054D9</code>, <code>Telegram tdata not found.\n=== Telegram ===</code> @ <code>0x140080376</code>, <code>No tokens found.\n</code> @ <code>0x1400800BD</code>.</td></tr>
+<tr><td><strong>Кошельки</strong></td><td><code>bitcoin_wallet</code> @ <code>0x14008060C</code>, <code>No wallets found.\n</code> @ <code>0x140080677</code>.</td></tr>
+<tr><td><strong>Кейлоггер</strong></td><td>Поток <code>StartAddress</code> @ <code>0x14000D893</code>: <code>SetWindowsHookExA(13 /<em>WH_KEYBOARD_LL</em>/, fn, GetModuleHandleA(NULL), 0)</code> + цикл <code>GetMessageA/TranslateMessage/DispatchMessageA</code>. Колбэк <code>fn</code> @ <code>0x14000D941</code>: <code>ToUnicodeEx</code>, <code>GetForegroundWindow</code>+<code>GetWindowTextA</code> (заголовок окна), буфер <code>byte_14006DAF0</code> (64 КБ, инд. <code>qword_14009EAD0</code>), спец-клавиши: <code>0x08</code> (Backspace) @ <code>0x14007F100</code>, <code>0x09</code> (Tab) @ <code>0x14007F101</code>, <code>[ESC]</code> @ <code>0x14007F102</code>, Enter/Space; <code>GetAsyncKeyState(16)</code> (Shift).</td></tr>
+<tr><td><strong>Буфер обмена</strong></td><td><code>GetClipboardData</code> @ <code>0x140006269</code> (текст) и <code>0x140006805</code> (изображение); <code>Error: no text in clipboard</code> @ <code>0x140080C60</code>, <code>Error: no image in clipboard</code> @ <code>0x14007F908</code>, <code>Error: cannot open clipboard</code> @ <code>0x14007F870</code>.</td></tr>
+<tr><td><strong>Скриншот</strong></td><td>GDI+ (<code>GdipCreateBitmapFromHBITMAP</code>, <code>GdipSaveImageToStream</code> → PNG); <code>Error: invalid bitmap</code> @ <code>0x14007F8C0</code>.</td></tr>
+<tr><td><strong>Веб-камера</strong></td><td><code>capCreateCaptureWindowA</code> @ <code>0x14000679B</code>; <code>Webcam</code> @ <code>0x14007F7F3</code>, <code>Error: no webcam found</code> @ <code>0x14007F828</code>, <code>Error: cannot create capture window</code> @ <code>0x14007F958</code>.</td></tr>
+<tr><td><strong>Микрофон</strong></td><td>WINMM <code>waveInOpen</code> @ <code>0x14000ABAC</code> (+ <code>waveIn*</code>).</td></tr>
+<tr><td><strong>Реестр</strong></td><td><code>RegSetValueExA</code> @ <code>0x140009F66</code>/<code>0x14000BFE2</code>, <code>RegOpenKeyExA</code> ×9, <code>RegDeleteValueA</code> ×4, <code>RegDeleteKeyA</code> ×2; дамп: <code>[Subkeys]\n</code> @ <code>0x140080788</code>, <code>\n[Values]\n</code> @ <code>0x1400807B7</code>, <code>(Default)</code> @ <code>0x1400807E0</code>, <code>BINARY</code>/<code>DWORD</code>/<code>EXPAND_SZ</code>/<code>MULTI_SZ</code> @ <code>0x1400807F4..</code>; <code>registry</code> @ <code>0x14007E8E8</code>; <code>Error: need path\valuename</code> @ <code>0x1400808B8</code>.</td></tr>
+<tr><td><strong>Сервисы</strong></td><td><code>EnumServicesStatusExA</code> @ <code>0x140006D08</code>/<code>0x140006D88</code>; <code>RunningStoppedOther</code> @ <code>0x140080B50</code>.</td></tr>
+<tr><td><strong>Сеть</strong></td><td><code>GetExtendedTcpTable</code> @ <code>0x140005ABE</code>/<code>0x140005B05</code>; заголовок <code>PROTO  LOCAL ADDRESS...</code> @ <code>0x140005B4A</code>.</td></tr>
+<tr><td><strong>Процессы / инъекция</strong></td><td><code>CreateProcessA</code> @ <code>0x14000A19A</code>, <code>0x14000C82E</code>; <code>OpenProcess</code> ×2; <code>NAME STATE PID DISPLAY</code> @ <code>0x140006DC8</code>, <code>Error: invalid PID</code> @ <code>0x140006E2F</code>, <code>system_stop</code> @ <code>0x14007E780</code>. Инъекция-хелпер <strong><code>sub_14000DD36</code></strong> @ <code>0x14000DD36</code>: <code>OpenProcess(0x1F0FFF, 0, pid)</code> (полные права), `VirtualAllocEx(..., MEM_COMMIT</td><td>MEM_RESERVE, PAGE_EXECUTE_READWRITE)<code>, </code>WriteProcessMemory<code>, </code>CreateRemoteThread`.</td></tr>
+<tr><td><strong>BOF-инъекция</strong></td><td><code>Error: only x64 BOF supported</code> @ <code>0x14007F690</code>, <code>Error: no &#x27;go&#x27; entry point in BOF</code> @ <code>0x14007F548</code>, <code>Error: invalid COFF sections</code> @ <code>0x14007F5E8</code>, <code>Error: COFF too small</code> @ <code>0x14007F6E0</code>.</td></tr>
+<tr><td><strong>PE-инъекция</strong></td><td><code>Error: only x64 PE supported</code> @ <code>0x14007F358</code>, <code>Error: invalid PE signature</code> @ <code>0x14007F3A8</code>, <code>Error: invalid PE header</code> @ <code>0x14007F3F8</code>, <code>Error: not a PE file</code> @ <code>0x14007F448</code>, <code>Error: PE too small</code> @ <code>0x14007F490</code>, <code>Error: VirtualAlloc failed</code> @ <code>0x14007F308</code>.</td></tr>
+<tr><td><strong>Рансом</strong></td><td><code>vssadmin delete shadows /all /quiet</code> @ <code>0x14007F7D0</code> (удаление теневых копий); <code>src/modules/ransomware.rs</code>.</td></tr>
+<tr><td><strong>Персистентность</strong></td><td><code>sub_14000F550</code> @ <code>0x14000F550</code>: <code>RegCreateKeyExA(HKCU /<em>0x80000001</em>/, &quot;Software\\RATConfig&quot;, ..., KEY_WRITE)</code> + <code>RegSetValueExA(hKey, &quot;persist_name&quot;, 0, REG_SZ, name, len)</code> (имя ≤ 63 симв.). Плюс <code>Software\Microsoft\Windows\CurrentVersion\Run</code> @ <code>0x14007FD88</code> (автозагрузка).</td></tr>
+<tr><td><strong>TTS «fun»</strong></td><td>PowerShell @ <code>0x14007F016</code>: <code>powershell -Command &quot;Add-Type -AssemblyName System.Speech; $s = New-Object System.Speech.Synthesis.SpeechSynthesizer; $s.Speak(&#x27;</code> + msg + <code>&#x27;)&quot;</code>; <code>CreateProcessA</code> @ <code>0x14000C82E</code>.</td></tr>
+<tr><td><strong>SOCKS5</strong></td><td><code>WS2_32</code> (<code>socket/bind/listen/accept/connect/send/recv</code>); <code>src/modules/socks5.rs</code>.</td></tr>
+<tr><td><strong>Файлы / exec / sysinfo</strong></td><td><code>Error: need src and dst</code> @ <code>0x14007E4E0</code>, <code>Error: need path and data</code> @ <code>0x14007E648</code>; <code>=== System Info ===\n</code> @ <code>0x1400050B0</code>, <code>x64x86ARMARM64Unknown</code> @ <code>0x1400052B3</code>.</td></tr>
+</table>
+<h2>7. Персистентность (точные пути)</h2>
+<ul>
+<li>- <strong>Автозагрузка:</strong> <code>HKCU\Software\Microsoft\Windows\CurrentVersion\Run</code> (строка @ <code>0x14007FD88</code>).</li>
+<li>- <strong>Конфиг RAT:</strong> <code>HKCU\Software\RATConfig</code>, значение <strong><code>persist_name</code></strong> (<code>REG_SZ</code>, ≤ 63 симв.) — <code>sub_14000F550</code> (<code>RegCreateKeyExA</code> @ <code>0x14000F609</code>, <code>RegSetValueExA</code> @ <code>0x14000F663</code>).</li>
+</ul>
+<h2>8. Криптография</h2>
+<ul>
+<li>- <strong>DPAPI</strong> — <code>CryptUnprotectData</code> (без энтропии, <code>sub_140002E2A</code>) для master-key Chrome/Edge.</li>
+<li>- <strong>AES-CBC</strong> — BCrypt (<code>BCryptOpenAlgorithmProvider(L&quot;AES&quot;)</code>, <code>ChainingMode=C</code>, 16B IV, <code>BCryptDecrypt</code>), версии cookie <code>v10</code>/<code>v20</code>.</li>
+<li>- <strong>FNV-1a</strong> (seed <code>0x811C9DC5</code>, prime <code>0x01000193</code>) — генерация agent ID.</li>
+</ul>
+<h2>9. IOCs</h2>
+<ul>
+<li>- <strong>Сеть:</strong> хост <code>127.0.0.1</code>, порт <code>8443</code>; пути <code>/api/rat/</code>, <code>/commands</code>, <code>/api/rat/register?id=</code>; UA <code>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36</code>.</li>
+<li>- <strong>Реестр:</strong> <code>HKCU\Software\Microsoft\Windows\CurrentVersion\Run</code>, <code>HKCU\Software\RATConfig</code> (значение <code>persist_name</code>).</li>
+<li>- <strong>Процессы/файлы:</strong> <code>chrome.exe</code>, <code>msedge.exe</code>, <code>firefox.exe</code>, <code>discord.exe</code>, <code>telegram.exe</code>; <code>.ldb.log</code>, <code>cookies.sqlite</code>, <code>Local State</code>, <code>tdata</code>, <code>bitcoin_wallet</code>.</li>
+<li>- <strong>Команды:</strong> <code>vssadmin delete shadows /all /quiet</code>; <code>powershell -Command &quot;Add-Type -AssemblyName System.Speech; ...SpeechSynthesizer; ...Speak(...)&quot;</code>.</li>
+<li>- <strong>Строки-маркеры:</strong> <code>RAT starting. C2=</code>, <code>=== Discord ===</code>, <code>=== Telegram ===</code>, <code>=== System Info ===</code>, <code>No cookies could be decrypted.</code>, <code>Cannot decrypt master key.</code>, <code>Unknown command</code>.</li>
+<li>- <strong>Пути исходников (debug):</strong> <code>src/modules/<em>.rs</code>, <code>src/transport/beacon.rs</code>, <code>src/util/</em>.rs</code>, <code>src/main.rs</code>.</li>
+</ul>
+<h2>10. Ограничения анализа</h2>
+<ol>
+<li>1. <strong>Хост C2 = <code>127.0.0.1</code></strong> — loopback; вероятно dev/test-сборка или рантайм-переопределение (загрузка конфига не найдена). Боевой адрес в этой сборке отсутствует.</li>
+<li>2. <strong>Диспетчер <code>sub_140003CA0</code></strong> (35 КБ) — монолитный; полная декомпиляция недоступна (oversized lift). Подтверждены: диапазон ID <code>0x00..0x6E</code>, <code>Unknown command</code>, и все обработчики по строкам/вызовам API. Точное числовое соответствие каждого ID конкретному модулю не восстановлено полностью.</li>
+<li>3. Строки Rust ссылаются через таблицы <code>(ptr,len)</code> в <code>.rdata</code> (прямых code-xref нет), поэтому связь «строка → код» выстроена через <code>from_addr</code> и <code>api_callsites</code>.</li>
+</ol>
+<p>Если нужно, могу: (а) восстановить точную таблицу «ID команды → модуль» по таблице указателей в прологе диспетчера; (б) детализировать конкретный модуль (например, рансом или SOCKS5); (в) выгрузить список всех импортов по DLL.</p>
+    </div>
+  </div>
+</body>
+</html>
